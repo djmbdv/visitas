@@ -10,6 +10,7 @@ class HomeController extends Controller
 {
 	
 	function index(){
-		return 1;
+
+		return (new MainView())->render(array(["var" => 1,]));
 	}
 }

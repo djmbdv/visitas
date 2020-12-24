@@ -7,8 +7,8 @@ require_once "core/View.php";
 class MainView extends View
 {
 	
-	function __construct(argument)
+	function config()
 	{
-		# code...
+		$this->set_template("layout");
 	}
 }

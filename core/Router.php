@@ -14,12 +14,16 @@ class Router {
 	function __construct($str = "") 
 	{
 		if($str != "")$this->set_link($str);
+		$this->array = [];
 	}
 
 
 	function set_link($str){
 		$this->link = $str;
-		list($this->head, $this->teil) = preg_split ('/\//',$this->link, 2);
+		
+		$l = preg_split ('/\//',$this->link, 2);
+		$this->head = $l[0];
+	 	$this->teil = isset($l[1])?$l[1]:null;
 	}
 
 	function get_head(){
@@ -30,7 +34,7 @@ class Router {
 		if (get_class($controller_or_subrouter)== 'Router') {
 			$controller_or_subrouter->set_link($this->tail);
 		}
-		$this->$array[] = array("$head_value" => [$controller_or_subrouter,$method] );
+		$this->array["$head_value"] =  [$controller_or_subrouter,$method];
 	}
 
 	function setNoRoute($controller,$method){
@@ -38,8 +42,11 @@ class Router {
 	}
 
 	function call(){
-		if(isset($array[$this->head])){
-			$array[$this->head][0]->main_method($array[$this->head][1],($array[$this->head][2]));
+		//var_dump($this->array);
+		if(isset($this->array[$this->head])){
+			$this->array[$this->head][0]->main_method(
+				$this->array[$this->head][1],
+				$this->tail);
 		}
 	}
 }
