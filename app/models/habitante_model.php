@@ -10,6 +10,10 @@ class HabitanteModel extends Model
 	
 	function __construct(argument)
 	{
-		# code...
+		self::$types_array = array(
+		'nombre' => "VARCHAR( 150 ) NOT NULL",
+		'edificio' => "INT( 11 ) NOT NULL",
+		'foto' = 'varchar( 100 ) NOT NULL'
+ 	);
 	}
 }

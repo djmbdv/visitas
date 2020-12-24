@@ -4,11 +4,15 @@ require_once "core/Model.php";
 /**
  * 
  */
-class VisitaModel extends AnotherClass
+class VisitaModel extends Model
 {
-	
-	function __construct(argument)
-	{
-		# code...
-	}
+	public $nombre;
+	public $destino;
+	public $foto;
+	function __construct(argument){
+		self::$types_array = array(
+		'nombre' => "VARCHAR( 150 ) NOT NULL",
+		'destino' => "INT( 11 ) NOT NULL",
+		'foto' = 'varchar ( 100 ) NOT NULL'
+ 	);	
 }

@@ -4,11 +4,11 @@ require_once "core/View.php";
 /**
  * 
  */
-class MainView extends View
+class LoginView extends View
 {
 	
 	function config()
 	{
-		$this->set_template("layout");
+		$this->set_template("login");
 	}
 }
