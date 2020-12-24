@@ -13,17 +13,18 @@ class View {
         $this->config();
     }
 
-    public set_template($template_name){
+    public function set_template($template_name){
         require_once "app/views/templates/".$template_name.".template.php";
         $t = ucfirst($template_name)."Template";
-        $template = new $t($this->model);
+        $this->template = new $t($this->model);
     }
 
     public function config(){
 
     }
 
-    public function render($name, $noInclude = false) {
+    public function render( $noInclude = false) {
+       // var_dump($this)
         if (isset($this->template)) {
             $this->template->render();
         }

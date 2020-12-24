@@ -41,8 +41,8 @@ abstract class Controller
  */
 abstract class ControllerRest extends Controller
 {
-	public function main_method(){
-
+	public function main_method($method = "index",$argument =  null){
+ 
 	}
 	
 }
