@@ -25,6 +25,19 @@ function autoload_view($nombreClase) {
 	}
 }
 
-
-
 spl_autoload_register('autoload_view');
+
+function autoload_model($nombreClase) {
+	if(preg_match("/([\S]*)Model/", $nombreClase, $matches)){
+		$archivo = "app/model/".strtolower($matches[1]).'_model.php';
+		if(file_exists($archivo)) {
+        	require_once($archivo);
+    	} else {
+       		 die("El archivo $archivo no se ha podido encontrar.");
+    	}
+	}
+}
+
+
+
+spl_autoload_register('autoload_model');

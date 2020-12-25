@@ -17,7 +17,7 @@ abstract class Controller
 	}
 
 	public function error(){
-		print_r("Controller error: Método no encontredo");
+		print_r("Controller error: Método no encontrado");
 		exit(1);
 	}
 

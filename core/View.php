@@ -7,7 +7,7 @@ class View {
 
     public $template;
 
-    public function __construct($model) {
+    public function __construct($model=  array() )  {
 
         $this->model = $model;
         $this->config();

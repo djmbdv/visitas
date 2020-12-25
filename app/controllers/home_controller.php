@@ -10,7 +10,11 @@ class HomeController extends Controller
 {
 	
 	function index(){
-		$hola = new MainView(array(["var" => 1,]));
-		return $hola->render();
+		$main_view = new MainView(array());
+		return $main_view->render();
+	}
+	function error(){
+		$error_view = new ErrorView();
+		return $error_view->render();
 	}
 }

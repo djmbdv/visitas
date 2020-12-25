@@ -37,8 +37,8 @@ class Router {
 		$this->array["$head_value"] =  [$controller_or_subrouter,$method];
 	}
 
-	function setNoRoute($controller,$method){
-		$this->noRoute =  array("$controller" => $method ); 
+	function setNoRoute($controller,$method ){
+		$this->noRoute =  array("controller" => $controller, "method" => $method ); 
 	}
 
 	function call(){
@@ -47,6 +47,8 @@ class Router {
 			$this->array[$this->head][0]->main_method(
 				$this->array[$this->head][1],
 				$this->tail);
+		}else if (isset($this->noRoute)) {
+			$this->noRoute["controller"]->main_method($this->noRoute["method"]);
 		}
 	}
 }
