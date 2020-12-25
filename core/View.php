@@ -23,10 +23,9 @@ class View {
 
     }
 
-    public function render( $noInclude = false) {
-       // var_dump($this)
+    public function render() {
         if (isset($this->template)) {
-            $this->template->render();
+            $this->template->draw();
         }
     }
 }

@@ -14,7 +14,7 @@ class LayoutTemplate extends Template
 
 	function render(){
 		$this->render_part('header');
-		echo "Hola mundo";
+		$this->render_child();
 		$this->render_part('footer');
 	}
 }

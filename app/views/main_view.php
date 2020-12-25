@@ -9,6 +9,6 @@ class MainView extends View
 	
 	function config()
 	{
-		$this->set_template("layout");
+		$this->set_template("home");
 	}
 }
