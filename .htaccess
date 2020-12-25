@@ -1,4 +1,4 @@
-
 RewriteEngine On
 RewriteBase /
-RewriteRule ^([.]*)$ index.php?g=$1
+##RewriteCond  "%{QUERY_STRING}" !"^vendor"
+RewriteRule ^([A-Za-z0-9/]*)$ "index.php?g=$1" [NC]
