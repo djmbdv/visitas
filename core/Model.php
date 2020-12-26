@@ -48,11 +48,36 @@ abstract class Model{
 	public static function get_index(){
 		return self::$index_name;
 	}
-	
+
 	public function __construct(){	
 		if (!self::table_exist()) {
 			self::create_table();
 		}
+	}
+
+	public static function all($count = null, $page = null){
+		$pdo = DB::get();
+		$table = self::get_table_name();
+		$index = self::$index_name; 
+		$sql = "select $index from $table";
+		if(!is_null($count)){
+			$sql .=" limit $count";
+			if (!is_null($page)) {
+				$offset = intval($page)*intval($count) - 1;
+				$sql.=" offset $offset";;
+			}
+		}
+		$stmt = $pdo->prepare($sql);
+		$stmt->execute();
+		$res = $stmt->fetchAll(PDO::FETCH_ASSOC);
+		$array  = [];
+		$c = get_called_class();
+		foreach ($res as $key => $value) {
+			$m = new $c();
+			$m->{$index} = $value;
+			$array[] = $m;
+		}
+		return $array;
 	}
 
 	public function get_key(){

@@ -18,11 +18,20 @@ class Router {
 	}
 
 
-	function set_link($str){
+	public function set_link($str){
 		$this->link = $str;
 		$l = preg_split ('/\//',$this->link, 2);
+		
 		$this->head = $l[0];
 	 	$this->tail = isset($l[1])?$l[1]:null;
+	 //	var_dump($this->array);
+	 	if(!is_null($this->array))
+	 	foreach ($this->array as $key => $value) {
+	 		if(get_class($this->array[$key][0]) == "Router"){
+	 			$this->array[$key][0]->set_link($this->tail);
+	 			$this->array[$key][0]->noRoute = $this->noRoute;
+	 		}
+	 	}
 	}
 
 	function get_head(){
@@ -43,6 +52,7 @@ class Router {
 	}
 
 	function call(){
+	//	var_dump($this->link);
 		if(isset($this->array[$this->head])){
 			if (get_class($this->array[$this->head][0])== 'Router') {
 				$this->array[$this->head][0]->call();

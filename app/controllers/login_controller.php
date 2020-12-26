@@ -11,11 +11,11 @@ require_once "core/Controller.php";
 class LoginController extends ControllerRest
 {
 
-	function get(){
+	function get($argument  = null){
 		$lv = new LoginView(array(["var" => 1,]));
 		return $lv->render();
 	}
-	function post(){
+	function post($argument = null){
 		$user = $_POST['username'];
 		$password = $_POST['password'];
 		if(UserModel::login($user,$password)){

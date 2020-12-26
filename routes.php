@@ -12,18 +12,26 @@ $main_router->link("logout",$lc,"logout");
 
 
 
-// Rutas /registro
-$rc = new RegistroController();
+// ruta /registro
+	$rc = new RegistroController();
 
-$vc = new VisitasController();
-$router_registro = new Router();
-$router_registro->link("",$rc);
-
-
-$router_registro->link("visitas",$vc);
-
-$main_router->link("registro",$router_registro);
+		
+	$registro_router = new Router();
+	$registro_router->link("",$rc);
 
 
+		//ruta /registro/visitas
+		$vc = new VisitasController();
+		$visitas_router = new Router();
+		$visitas_router->link("add", $vc, "add");
+		$visitas_router->link("view",$vc, "view");
+		$visitas_router->link("", $vc);
+	
+// var_dump($registro_router);
+
+	$registro_router->link("visitas",$visitas_router);
+
+$main_router->link("registro",$registro_router);
+//var_dump($main_router);
 
 $main_router->call();
