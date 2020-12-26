@@ -14,6 +14,9 @@ class TopbarTemplate extends Template
 
  <nav class="navbar navbar-expand navbar-dark bg-dark   topbar mb-4 static-top shadow" >
           <!-- Sidebar Toggle (Topbar) -->
+          <a class="navbar-brand mr-0 mr-md-2" href="/" aria-label="Visitas">
+            <img src="<?= $this->S('images/casita.png')?>" style="max-height: 50px;border-radius: 10px;" />
+</a>
           <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
             <i class="fa fa-bars"></i>
           </button>
@@ -36,9 +39,7 @@ class TopbarTemplate extends Template
                 </h6>
                 <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
               </div>
-            </li>
-
-          
+            </li>       
 
             <div class="topbar-divider d-none d-sm-block"></div>
 

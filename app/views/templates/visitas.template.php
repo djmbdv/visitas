@@ -11,8 +11,8 @@ class VisitasTemplate extends Template{
 <div class="container">
 	<div class="row">
 	<h1 class="text-center">Visitas</h1>
-	<a href="./add" class="btn btn-warning">Nueva visita</a>
-	<div class="card">
+	<a href="./add" class="btn btn-warning m-3">Nueva visita</a>
+	<hr/>
 		<table class="table table-dark">
 			<thead>
     <tr>
@@ -21,9 +21,13 @@ class VisitasTemplate extends Template{
 <?php endforeach; ?>
     </tr>
   </thead>
-			<?php print_r($this->T('visitas')) ?>
+  <tbody>
+<?php foreach($this->T('visitas') as $visita): ?>
+<th></th>
+<?php endforeach; ?>
+</tbody>
 		</table>
-	</div>
+	
 </div>
 <?php 
 

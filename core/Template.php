@@ -57,6 +57,10 @@ class Template
 	public function S($res){
 		return Config::$base_url."/_static/$res";
 	}
+	public function SS($res){
+		$t = filemtime("_static/$res");
+		return Config::$base_url."/_static/$res?$t";	
+	}
 
 	public function config(){
 	}
