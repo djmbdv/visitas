@@ -54,7 +54,26 @@ abstract class Model{
 			self::create_table();
 		}
 	}
-
+	public function get_modified_at(){
+		$pdo = DB::get();
+		$table = self::get_table_name();
+		$index = self::$index_name;
+		$my_index = $this->{$index};
+		$stmt  = $pdo->prepare("select modified_at from $table where $index = '$my_index'");
+		$stmt->execute();
+		$res = $stmt->fetchAll(PDO::FETCH_ASSOC);
+		return $res['modifiet_at'];
+	}
+	public function get_created_ad(){
+		$pdo = DB::get();
+		$table = self::get_table_name();
+		$index = self::$index_name;
+		$my_index = $this->{$index};
+		$stmt  = $pdo->prepare("select modified_at from $table where $index = '$my_index'");
+		$stmt->execute();
+		$res = $stmt->fetchAll(PDO::FETCH_ASSOC);
+		return $res['modifiet_at'];
+	}
 	public static function all($count = null, $page = null){
 		$pdo = DB::get();
 		$table = self::get_table_name();
@@ -78,6 +97,19 @@ abstract class Model{
 			$array[] = $m;
 		}
 		return $array;
+	}
+	public static function get_vars(){
+		$vars = [];
+		foreach ( get_class_vars(get_called_class()) as $k => $value) {
+			if ($k == 'table_name'||
+				$k == 'types_array'||
+				$k == 'index_name' ||
+				$k == 'isLoaded'  ||
+				$k == 'transform_in_array'
+				)continue;
+			$vars[] = $k;
+		}
+		return $vars;
 	}
 
 	public function get_key(){
@@ -172,15 +204,13 @@ abstract class Model{
 		return 'VARCHAR( 120 )  NULL';
 	}
 	public static function get_table_name(){
-	//	print_r(">>>>>>>>>>>>>>".substr(get_called_class() , 0,-strlen("Model")).'s');
-		if(isset(self::$table_name))
-			return self::$table_name;
-		else if(substr(get_called_class() , -strlen("Model")) == "Model"){
-			self::$table_name = strtolower(substr(get_called_class() , 0,-strlen("Model")).'s');
+		//self::create_table();
+		 if(substr(get_called_class() , -strlen("Model")) == "Model"){
+		//	self::$table_name = strtolower(substr(get_called_class() , 0,-strlen("Model")).'s');
 			return strtolower(substr(get_called_class() , 0,-strlen("Model")).'s');
 		}
 		else {
-			self::$table_name = strtolower(get_called_class().'s'); 
+			//self::$table_name = strtolower(get_called_class().'s'); 
 			return strtolower(get_called_class().'s');
 		}
 	}

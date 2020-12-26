@@ -14,14 +14,16 @@ class VisitasController extends ControllerRest
 
 	function get($argument = null){
 		Session::load();
+		VisitaModel::create_table();
 		$user = UserModel::user_logged();
 		if(is_null($user)){
 			header('location: /login');
 			return;
 		}
-		/*$rv = new RegistroView(array('user' => $user ));
-		return $rv->render();*/
-		var_dump(UserModel::all());
-		echo "VisitasController";
+		$headers  = VisitaModel::get_vars();
+		$headers[] = "fecha";
+		$user = UserModel::user_logged();
+		$vv = new VisitasView(array('visitas' => VisitaModel::all(), 'user'=> $user, "table_headers" => $headers ));
+		return $vv->render();
 	}
 }
