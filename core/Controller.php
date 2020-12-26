@@ -21,7 +21,6 @@ abstract class Controller
 
 abstract class ControllerRest extends Controller{
 	public function main_method($method = "index",$argument =  null){
-		var_dump($method);
 		if($method == "index")
 	 		switch($_SERVER['REQUEST_METHOD']){
 				case 'GET': 

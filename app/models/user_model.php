@@ -19,8 +19,10 @@ class UserModel extends Model{
  		);
 
 	public static function user_logged(){
+		Session::load();
 		if(isset(Session::$values["username"]))
 			return self::find_username(Session::$values["username"]);
+		else return null;
 	}
 	public static function find_username($username){
 	try{

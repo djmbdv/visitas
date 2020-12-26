@@ -12,6 +12,11 @@ class LoginController extends ControllerRest
 {
 
 	function get($argument  = null){
+		//var_dump(UserModel::user_logged());
+		if(UserModel::user_logged()){
+			header('location: /registro/');
+			return;
+		}
 		$lv = new LoginView(array(["var" => 1,]));
 		return $lv->render();
 	}
@@ -19,7 +24,7 @@ class LoginController extends ControllerRest
 		$user = $_POST['username'];
 		$password = $_POST['password'];
 		if(UserModel::login($user,$password)){
-			header('location: registro');
+			header('location: /registro/');
 			return;
 		}
 		else
@@ -28,7 +33,7 @@ class LoginController extends ControllerRest
 	}
 
 	function logout(){
-		echo "Logout";
-		//Session::destroy();
+		Session::destroy();
+		header('location: /login/');
 	}
 }

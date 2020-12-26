@@ -5,7 +5,7 @@ class Session{
 	public static $session_loaded = false;
 	public static function load($array = array( )){
 		if(self::$session_loaded){
-			throw new Exception("Session cargada", 1);
+			return;
 		}
 		session_start();
 		foreach ($array as $key => $value) {
