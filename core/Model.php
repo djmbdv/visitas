@@ -49,7 +49,7 @@ abstract class Model{
 		return self::$index_name;
 	}
 	public function __construct()
-	{	var_dump(self::table_exist());
+	{	//var_dump(self::table_exist());
 		if (!self::table_exist()) {
 			self::create_table();
 		}

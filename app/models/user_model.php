@@ -30,8 +30,9 @@ class UserModel extends Model{
 		$stmt = $pdo->prepare($sql);
 		$stmt->execute();
 		$res = $stmt->fetchAll(PDO::FETCH_ASSOC);
-		var_dump($res);
+		if(!isset($res[0]))return null;
 		$um = new UserModel();
+
 		$um->ID = $res[0]['ID'];
 		$um->load();
 		return $um;
@@ -42,8 +43,11 @@ class UserModel extends Model{
 
 	public static function login($username, $password){
 		$user = self::find_username($username);
-		if(!is_null($user) && $user->password == md5($password))echo "login existoso";
-		else var_dump($user);
+		if(!is_null($user) && $user->password == md5($password)){
+			Session::load( array('login' => true,'username' => $username,'logged_at' => time() ));
+			return true;
+		}
+		else return false;
 	}
 
 }

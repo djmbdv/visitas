@@ -13,7 +13,7 @@ class RegistroController extends Controller
 {
 
 	function index(){
-		$hola = new MainView();
-		return $hola->render();
+		$rv = new RegistroView();
+		return $rv->render();
 	}
 }
