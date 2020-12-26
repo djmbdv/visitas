@@ -11,11 +11,9 @@ class RegistroTemplate extends Template{
 <div class="container">
 <h1 class="text-center">
 Registro</h1>
-<a class="btn btn-primary" href="">Registro de visitas</a>
-<a class="btn btn-warning">Registro de habitante</a>
-<a  class="btn btn-danger">Lista de visitas</a>
-<a  class="btn btn-primary">Edificios</a>
-<a class="btn btn-primary"> </a>
+<a href="./habitantes/" class="btn btn-warning">Habitantes</a>
+<a href="./visitas/" class="btn btn-danger">Visitas</a>
+<a href="./edificios/" class="btn btn-primary">Edificios</a>
 </div>
 <?php 
 

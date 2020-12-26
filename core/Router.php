@@ -20,10 +20,9 @@ class Router {
 
 	function set_link($str){
 		$this->link = $str;
-		
 		$l = preg_split ('/\//',$this->link, 2);
 		$this->head = $l[0];
-	 	$this->teil = isset($l[1])?$l[1]:null;
+	 	$this->tail = isset($l[1])?$l[1]:null;
 	}
 
 	function get_head(){
@@ -33,6 +32,7 @@ class Router {
 	function link($head_value,$controller_or_subrouter,$method = "index"){
 		if (get_class($controller_or_subrouter)== 'Router') {
 			$controller_or_subrouter->set_link($this->tail);
+//			var_dump($this->tail);
 		}
 		$this->array["$head_value"] =  [$controller_or_subrouter,$method];
 	}
@@ -42,9 +42,10 @@ class Router {
 	}
 
 	function call(){
-		//var_dump($this->array);
 		if(isset($this->array[$this->head])){
-			$this->array[$this->head][0]->main_method(
+			if (get_class($this->array[$this->head][0])== 'Router') {
+				$this->array[$this->head][0]->call();
+			}else $this->array[$this->head][0]->main_method(
 				$this->array[$this->head][1],
 				$this->tail);
 		}else if (isset($this->noRoute)) {
