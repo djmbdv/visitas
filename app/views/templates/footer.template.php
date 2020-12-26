@@ -20,7 +20,7 @@ class FooterTemplate extends Template
           </div>
         </div>
       </footer>
-    <script src="_static/js/bootstrap.bundle.min.js"></script>
+    <script src="<?= $this->S("js/bootstrap.bundle.min.js") ?>"></script>
   </body>
 </html>
 

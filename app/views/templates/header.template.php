@@ -19,11 +19,11 @@ class HeaderTemplate extends Template
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="_static/favicon.png">
+    <link rel="icon" href="<?= $this->S("favicon.png")?>">
 
     <title>Administrador de Visitas</title>
 
-    <link href="_static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="<?= $this->S("css/bootstrap.min.css")?>" rel="stylesheet">
   </head>
 
 <?php	}

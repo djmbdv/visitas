@@ -54,6 +54,10 @@ class Template
 		}
 	}
 
+	public function S($res){
+		return Config::$base_url."/_static/$res";
+	}
+
 	public function config(){
 	}
 	public function draw(){
