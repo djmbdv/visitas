@@ -3,8 +3,7 @@ require_once 'config.php';
 class DB{
 	private static $conn = null;
 	public static function getDBName(){ 
-		global $dbname;
-		return $dbname;
+		return Config::$dbname;
 	}
 	public static function get(){
 		$username = Config::$username;

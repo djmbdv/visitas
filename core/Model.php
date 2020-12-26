@@ -5,7 +5,7 @@ abstract class Model{
 	private static  $table_name;
 	private static  $index_name = "ID";
 	private static  $types_array;
-
+	private static $transform_in_array = array('password' => 'md5');
 	private $isLoaded = false;
 	public function load() {
 		if(!is_null($this->get_key())){
@@ -35,7 +35,8 @@ abstract class Model{
 
 	public function __set($name,$value){
 	//	echo "Set de atributo oculto";
-		$this->{$name} = $value;
+		if(isset(self::$transform_in_array[$name]))$this->{$name} = self::$transform_in_array[$name]($value);
+		else $this->{$name} = $value;
 	}
 
 	public  function __get($name){
@@ -46,6 +47,12 @@ abstract class Model{
 
 	public static function get_index(){
 		return self::$index_name;
+	}
+	public function __construct()
+	{	var_dump(self::table_exist());
+		if (!self::table_exist()) {
+			self::create_table();
+		}
 	}
 
 	public function get_key(){
@@ -69,7 +76,8 @@ abstract class Model{
 				$k == 'types_array'||
 				$k == 'index_name' ||
 				$k == 'isLoaded'  ||
-				$k == self::$index_name
+				$k == self::$index_name ||
+				$k == 'transform_in_array'
 				)continue;
 				$value = $this->{$k};
 				if($count++ == 0)$sql.=" set $k = '$value' ";
@@ -86,6 +94,7 @@ abstract class Model{
 				$k == 'types_array'||
 				$k == 'index_name' ||
 				$k == 'isLoaded'  ||
+				$k == 'transform_in_array'||
 				$k == self::$index_name
 				)continue;
 				if($count++ == 0)$sql.="( `$k`";
@@ -98,6 +107,7 @@ abstract class Model{
 				$k == 'types_array'||
 				$k == 'index_name' ||
 				$k == 'isLoaded'  ||
+				$k == 'transform_in_array' ||
 				$k == self::$index_name
 				)continue;
 				$value = $this->{$k};
@@ -105,7 +115,6 @@ abstract class Model{
 				else $sql.=", '$value' ";
 			}
 			$sql.=")";
-			var_dump($sql);
 			$pdo = DB::get();
 			$nkey = self::next_key();
 			$pdo->query($sql);
@@ -127,8 +136,7 @@ abstract class Model{
 		$dbname = DB::getDBname();
 		$stmt = $pdo->prepare("SELECT count(TABLE_NAME) as conteo FROM information_schema.tables WHERE table_schema = '$dbname' and TABLE_NAME like '$tn'");
 		$stmt->execute();
-
-		return $stmt->fetchAll()[0]["conteo"] == 1;
+		return $stmt->fetchAll()[0]["conteo"] != 0;
 	}
 
 	private static function search_type($atribute){
@@ -139,7 +147,17 @@ abstract class Model{
 		return 'VARCHAR( 120 )  NULL';
 	}
 	public static function get_table_name(){
-		return isset(self::$table_name)?self::$table_name:get_called_class().'s';
+	//	print_r(">>>>>>>>>>>>>>".substr(get_called_class() , 0,-strlen("Model")).'s');
+		if(isset(self::$table_name))
+			return self::$table_name;
+		else if(substr(get_called_class() , -strlen("Model")) == "Model"){
+			self::$table_name = strtolower(substr(get_called_class() , 0,-strlen("Model")).'s');
+			return strtolower(substr(get_called_class() , 0,-strlen("Model")).'s');
+		}
+		else {
+			self::$table_name = strtolower(get_called_class().'s'); 
+			return strtolower(get_called_class().'s');
+		}
 	}
 
 	public static function create_table(){

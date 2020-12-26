@@ -5,15 +5,22 @@
 require_once "core/Controller.php";
 
 
-
 /**
  * 
  */
-class LoginController extends Controller
+class LoginController extends ControllerRest
 {
 
-	function index(){
-		$hola = new LoginView(array(["var" => 1,]));
-		return $hola->render();
+	function get(){
+		$lv = new LoginView(array(["var" => 1,]));
+		return $lv->render();
 	}
+	function post(){
+		$user = $_POST['username'];
+		$password = $_POST['password'];
+		UserModel::login($user,$password);
+		$lv = new LoginView(array(["var" => 1,]));
+		return $lv->render();
+	}
+
 }

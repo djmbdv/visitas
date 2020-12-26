@@ -51,12 +51,12 @@ body {
 
     <form class="form-signin" method="post">
    
-      <img class="mb-4" src="_static/images/casita.png" alt="" style="width: 50px;background-color: blue;">
+      <img class="mb-4" src="<?=$this->S("images/casita.png")?>" alt="" style="width: 50px;background-color: blue;">
       <h1 class="h3 mb-3 font-weight-normal">Acceso</h1>
       <label for="inputEmail" class="sr-only">Usuario</label>
-      <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+      <input type="text" name="username" id="inputEmail" class="form-control" placeholder="Username" required autofocus>
       <label for="inputPassword" class="sr-only">Password</label>
-      <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+      <input name="password" type="password" id="inputPassword" class="form-control" placeholder="Password" required>
       <div class="checkbox mb-3">
         <label>
           <input type="checkbox" value="remember-me"> Remember me

@@ -8,13 +8,14 @@ require_once "core/database.php";
  */
 class UserModel extends Model{
 	protected $username;
-	protected $nombre;
+	protected $name;
 	protected $password;
-	self::$types_array = array(
+	protected $email;
+	public static $types_array = array(
 		'username' => "VARCHAR( 80 ) NOT NULL UNIQUE",
 		'name' => "VARCHAR( 120 ) NOT NULL",
 		'password' => "VARCHAR( 80 ) NOT NULL",
-		'email' = 'varchar ( 100 ) NOT NULL'
+		'email' => 'varchar ( 100 ) NOT NULL'
  		);
 
 	public static function user_loged(){
@@ -22,15 +23,27 @@ class UserModel extends Model{
 			return self::find_username(Session::$values["username"]);
 	}
 	public static function find_username($username){
+	try{
 		$pdo = DB::get();
-		$sql = "select ID where username = 'username'";
+		$tabla = self::get_table_name();
+		$sql = "select ID from $tabla where username = '$username'";
 		$stmt = $pdo->prepare($sql);
 		$stmt->execute();
 		$res = $stmt->fetchAll(PDO::FETCH_ASSOC);
+		var_dump($res);
 		$um = new UserModel();
-		$um = $res[0]['ID'];
+		$um->ID = $res[0]['ID'];
 		$um->load();
 		return $um;
+		} catch (Exception $e) {
+			return null;	
+		}
+	}
+
+	public static function login($username, $password){
+		$user = self::find_username($username);
+		if(!is_null($user) && $user->password == md5($password))echo "login existoso";
+		else var_dump($user);
 	}
 
 }
