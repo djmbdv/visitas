@@ -2,9 +2,6 @@
 
 require_once "core/Model.php";
 
-/**
- * 
- */
 class ApartamentoModel extends Model
 {
 

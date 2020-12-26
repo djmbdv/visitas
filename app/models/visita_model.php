@@ -13,6 +13,7 @@ class VisitaModel extends Model
 		self::$types_array = array(
 		'nombre' => "VARCHAR( 150 ) NOT NULL",
 		'destino' => "INT( 11 ) NOT NULL",
-		'foto' = 'varchar ( 100 ) NOT NULL'
- 	);	
+		'foto' = 'VARCHAR ( 100 ) NOT NULL'
+ 		);	
+	}
 }

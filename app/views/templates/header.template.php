@@ -19,12 +19,10 @@ class HeaderTemplate extends Template
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="_static/favicon.ico">
+    <link rel="icon" href="_static/favicon.png">
 
     <title>Administrador de Visitas</title>
 
-
-    <!-- Bootstrap core CSS -->
     <link href="_static/css/bootstrap.min.css" rel="stylesheet">
   </head>
 

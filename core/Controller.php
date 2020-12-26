@@ -31,5 +31,12 @@ abstract class ControllerRest extends Controller
 	public function main_method($method = "index",$argument =  null){
  
 	}
+	public function post(){
+
+	}
+
+	public function put(){
+
+	}
 	
 }
