@@ -12,7 +12,7 @@ require_once "core/Session.php";
 class VisitasController extends ControllerRest
 {
 
-	function get(){
+	function get($argument){
 		Session::load();
 		$user = UserModel::user_logged();
 		if(is_null($user)){
@@ -21,6 +21,7 @@ class VisitasController extends ControllerRest
 		}
 		/*$rv = new RegistroView(array('user' => $user ));
 		return $rv->render();*/
+		echo "$argument";
 		echo "VisitasController";
 	}
 }

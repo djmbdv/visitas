@@ -42,17 +42,17 @@ abstract class ControllerRest extends Controller{
 			$this->error();
 		}
 	}
-	public function post(){
+	public function post($argument == null){
 		print_r("default post");
 	}
 
-	public function put(){
+	public function put($argument = null){
 		print_r("default put");
 	}
-	public function get(){
+	public function get($argument = null){
 		print_r("default get");
 	}
-	public function delete(){
+	public function delete($argument = null){
 		print_r("default delete");
 	}
 }

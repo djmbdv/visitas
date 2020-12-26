@@ -32,6 +32,7 @@ class Router {
 	function link($head_value,$controller_or_subrouter,$method = "index"){
 		if (get_class($controller_or_subrouter)== 'Router') {
 			$controller_or_subrouter->set_link($this->tail);
+			$controller_or_subrouter->noRoute = $this->noRoute;
 //			var_dump($this->tail);
 		}
 		$this->array["$head_value"] =  [$controller_or_subrouter,$method];
