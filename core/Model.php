@@ -48,8 +48,8 @@ abstract class Model{
 	public static function get_index(){
 		return self::$index_name;
 	}
-	public function __construct()
-	{	//var_dump(self::table_exist());
+	
+	public function __construct(){	
 		if (!self::table_exist()) {
 			self::create_table();
 		}

@@ -9,10 +9,10 @@ require_once "core/Session.php";
 /**
  * 
  */
-class RegistroController extends Controller
+class VisitasController extends ControllerRest
 {
 
-	function index(){
+	function get(){
 		Session::load();
 		$user = UserModel::user_logged();
 		if(is_null($user)){

@@ -18,7 +18,7 @@ class UserModel extends Model{
 		'email' => 'varchar ( 100 ) NOT NULL'
  		);
 
-	public static function user_loged(){
+	public static function user_logged(){
 		if(isset(Session::$values["username"]))
 			return self::find_username(Session::$values["username"]);
 	}

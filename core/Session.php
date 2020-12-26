@@ -3,7 +3,7 @@
 class Session{
 	public static $values;
 	public static $session_loaded = false;
-	public static function load($array){
+	public static function load($array = array( )){
 		if(self::$session_loaded){
 			throw new Exception("Session cargada", 1);
 		}

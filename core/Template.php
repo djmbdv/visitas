@@ -17,7 +17,7 @@ class Template
 		$this->config();
 	}
 	public function T($name){
-		return $this->model[$name];
+		return isset($this->model[$name])?$this->model[$name]:null ;
 	}
 	public function add_part($template, $name){
 		require_once("app/views/templates/".$template.".template.php");

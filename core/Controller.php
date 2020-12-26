@@ -19,30 +19,27 @@ abstract class Controller
 
 }
 
-/**
- * 
- */
-abstract class ControllerRest extends Controller
-{
+abstract class ControllerRest extends Controller{
 	public function main_method($method = "index",$argument =  null){
- 		switch($_SERVER['REQUEST_METHOD']){
-			case 'GET': 
-				$this->get($argument);
-			break;
-			case 'POST': 
-				$this->post($argument);
-			break;
-			case 'PUT':
-				$this->put($argument);
-			break;
-			case 'DELETE':
-				$this->delete($argument);
-			default:
-				if(method_exists($this,$method)){
-					return $this->{$method}($argument);
-				}else {
-					$this->error();
-				}
+		if($method == "index")
+	 		switch($_SERVER['REQUEST_METHOD']){
+				case 'GET': 
+					$this->get($argument);
+				break;
+				case 'POST': 
+					$this->post($argument);
+				break;
+				case 'PUT':
+					$this->put($argument);
+				break;
+				case 'DELETE':
+					$this->delete($argument);
+				default:
+					break;
+		}else if(method_exists($this,$method)){
+			return $this->{$method}($argument);
+		}else {
+			$this->error();
 		}
 	}
 	public function post(){
