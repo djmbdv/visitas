@@ -35,9 +35,9 @@ class TopbarTemplate extends Template
               <!-- Dropdown - Alerts -->
               <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
                 <h6 class="dropdown-header">
-                  Alerts Center
+                  Nuevas Visitas
                 </h6>
-                <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
+                <a class="dropdown-item text-center small text-gray-500" href="#">Mostrar Todo</a>
               </div>
             </li>       
 
@@ -48,15 +48,15 @@ class TopbarTemplate extends Template
                 <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?= $this->T('user')->username ?></span>
               </a>
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                <a class="dropdown-item" href="#">
+                <div class="dropdown-item" href="#">
                   <i class="fa fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Registro
-                </a>
+                  <a href="/registro/"> Registro </a>
+                </div>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="/logout">
+                <div class="dropdown-item" href="/logout">
                   <i class="fa fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                   Salir
-                </a>
+                </div>
               </div>
             </li>
           </ul>

@@ -20,14 +20,15 @@ class ModalTemplate extends Template{
 			    <small id="nombreHelp" class="form-text text-muted">Ej. Fabián Espejo.</small>
 			  </div>
 			  <div class="form-group">
-			    <label for="campoNombre">Nombre</label>
+			    <label for="campoNombre">Apartamento Destino</label>
 			    <input type="email" class="form-control" id="campoNombre" aria-describedby="nombreHelp" placeholder="Nombre Completo">
 			    <small id="nombreHelp" class="form-text text-muted">Ej. Fabián Espejo.</small>
 			  </div>
 			  <div class="form-group">
 			    <label for="campoNombre">Foto</label>
-			    <input type="email" class="form-control" id="campoNombre" aria-describedby="nombreHelp" placeholder="Nombre Completo">
-			    <small id="nombreHelp" class="form-text text-muted">Ej. Fabián Espejo.</small>
+			    <div class="m-2" style="border-radius: 10px;min-height: 250px; min-width: 250px;background-color: gray;" >
+			    </div>
+			    <button class="btn-sm m-2 btn-success text-center" style="margin-right: auto;margin-left: auto;">Tomar Captura</button>
 			  </div>
 			 </form>
 	      </div>
