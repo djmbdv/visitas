@@ -8,7 +8,7 @@ class RegistroTemplate extends Template{
 
 	function render(){?>
 <?php $this->render_part("topbar"); ?>
-<div class="container">
+<div class="container mb-4">
 <h1 class="text-center">
 Registro</h1>
 <a href="./habitantes/" class="btn btn-warning">Habitantes</a>

@@ -3,15 +3,17 @@ class VisitasTemplate extends Template{
 
 	function config(){
 		$this->set_parent("layout");
+		$this->add_part("modal","modal");
 		$this->add_part("topbar","topbar");	
 	}
 
 	function render(){?>
 <?php $this->render_part("topbar"); ?>
+<?php $this->render_part("modal"); ?>
 <div class="container">
 	<div class="row">
 	<h1 class="text-center">Visitas</h1>
-	<a href="./add" class="btn btn-warning m-3">Nueva visita</a>
+	<a type="button"  data-toggle="modal" data-target="#exampleModal" class="btn btn-warning m-3">Nueva visita</a>
 	<hr/>
 		<table class="table table-dark">
 			<thead>

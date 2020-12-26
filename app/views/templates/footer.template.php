@@ -24,6 +24,7 @@ class FooterTemplate extends Template
     <script src="<?= $this->S("js/jquery-3.2.1.min.js") ?>"></script>
     <script src="<?= $this->S("js/popper.min.js") ?>"></script>
     <script src="<?= $this->S("js/bootstrap.bundle.min.js") ?>"></script>
+    <script src="<?= $this->SS("js/custom.js") ?>"></script>
   </body>
 </html>
 
