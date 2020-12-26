@@ -18,19 +18,9 @@ class FooterTemplate extends Template
             <h5 class="mb-2" >REMOTE PC SOLUTIONS</h5>
             <small class="d-block mb-3 text-muted">&copy; 2020</small>
           </div>
-          
         </div>
       </footer>
-
-
     <script src="_static/js/bootstrap.bundle.min.js"></script>
-    <script>
-      Holder.addTheme('thumb', {
-        bg: '#55595c',
-        fg: '#eceeef',
-        text: 'Thumbnail'
-      });
-    </script>
   </body>
 </html>
 
