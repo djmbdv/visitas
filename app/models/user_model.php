@@ -11,12 +11,33 @@ class UserModel extends Model{
 	protected $name;
 	protected $password;
 	protected $email;
-	public static $types_array = array(
+	protected $tipo;
+	public static function types_array(){ 
+		return 	array(
 		'username' => "VARCHAR( 80 ) NOT NULL UNIQUE",
 		'name' => "VARCHAR( 120 ) NOT NULL",
 		'password' => "VARCHAR( 80 ) NOT NULL",
-		'email' => 'varchar ( 100 ) NOT NULL'
+		'email' => 'varchar ( 100 ) NOT NULL',
+		'tipo' => 'INT( 9)  NOT NULL'
  		);
+	}
+	public function __construct($foo = null){
+		if (!self::table_exist()) { // Create seeds 
+			self::create_table();
+			$client  = new UserModel();
+			$client->username = 'cliente';
+			$client->name = 'Cliente de Prueba';
+			$client->password =md5( '1234');
+			$client->tipo = 1;
+			$client->save();
+			$client  = new UserModel();
+			$client->username = 'admin';
+			$client->name = 'Admin de Prueba';
+			$client->password =md5( '1234');
+			$client->tipo = 2;
+			$client->save();
+		}
+	}
 
 	public static function user_logged(){
 		Session::load();

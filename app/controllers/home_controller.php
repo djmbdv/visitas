@@ -11,6 +11,7 @@ class HomeController extends Controller
 	
 	function index(){
 		$main_view = new MainView(array());
+		$create = new UserModel();
 		return $main_view->render();
 	}
 	function error(){
