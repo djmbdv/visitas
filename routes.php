@@ -11,7 +11,7 @@ $main_router->setNoRoute($hc, "error");
 $main_router->link("login",$lc );
 $main_router->link("logout",$lc,"logout");
 $main_router->link("foto", $fc);
-
+$main_router->link("visita",$fc,"visita");
 
 // ruta /registro
 	$rc = new RegistroController();

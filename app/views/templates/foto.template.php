@@ -22,17 +22,22 @@ class FotoTemplate extends Template
 
 	<div class="col-md-6">
 		<h5 class="text-center p-3 mt-3">TOMAR FOTO</h5> 
-		<form action="/foto" method="post">
+		<form class="form-foto" action="/visita/" method="post" >
 			<div class="form-group">
+				<input type="hidden" name="nombre" value="<?= $this->T('nombre') ?>"/>
+				<input type="hidden" name="apartamento" value="<?= $this->T('apartamento') ?>" />
+				<input type="hidden" name="visitado" value="<?= $this->T('visitado') ?>" />
+				<input type="hidden" name="identificacion" value="<?= $this->T('id') ?>">
+				<input id="inputFoto" type="hidden" name="foto" value=""/>
 			    <div id="captura"  class="m-2 p-2" style="border-radius: 10px;min-height: 150px; min-width: 250px;background-color: gray;" >
 			    	<p class="info-foto" style="color: white;">Click para tomar foto</p>
 			    	<video id="video" style="width:100%;border-radius: 10px;min-width: 250px;background-color: gray;"></video>
 			    	<canvas id="canvas" style="display: none;"></canvas>
 			    </div>
-			    <a class="button-photo btn-sm m-2 btn-success text-center" style="margin-right: auto;margin-left: auto;">Tomar Captura</a>
+			    <a class="button-photo btn-sm m-2 btn-success text-center " style="margin-right: auto;margin-left: auto;" disabled>Tomar Captura</a>
 			</div>
 			<div class="form-group">
-				<input class="form-control btn-primary" type="submit" name="" value="Tomar Foto" />
+				<input class="btn-form-foto form-control btn-primary " type="submit" name="" value="Tomar Foto" disabled/>
 			</div>
 		</form>
 	</div>

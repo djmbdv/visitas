@@ -19,16 +19,16 @@ class HomeTemplate extends Template{
 		<h5 class="text-center p-3 mt-3">DATOS</h5> 
 		<form action="/foto" method="post">
 			<div class="form-group">
-				<input class="form-control" type="text" name="" placeholder="Apartemento a Visitar" required="" />
+				<input class="form-control" type="text" name="apartamento" placeholder="Apartemento a Visitar" required="" />
 			</div>
 			<div class="form-group">
-				<input class="form-control" type="text" name="" placeholder="Nombre de la persona a visitar" required="" />
+				<input class="form-control" type="text" name="visitado" placeholder="Nombre de la persona a visitar" required="" />
 			</div>
 			<div class="form-group">
-				<input class="form-control" type="text" name="" placeholder="Su Nombre y Apellido" required="" />
+				<input class="form-control" type="text" name="nombre" placeholder="Su Nombre y Apellido" required="" />
 			</div>
 			<div class="form-group">
-				<input class="form-control" type="text" name="" placeholder="Numero de Identificacion" required="" />
+				<input class="form-control" type="text" name="identificacion" placeholder="Numero de Identificacion" required="" />
 			</div>
 			<div class="form-group">
 				<input class="form-control btn-primary" type="submit" name="" value="Tomar Foto" />

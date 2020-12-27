@@ -12,7 +12,12 @@ class FotoController extends ControllerRest
 {
 
 	public function post($argument= null){
-		$vista = new FotoView(array( )); 
+		
+		$id = $_POST['identificacion'];
+		$apartamento  = $_POST['apartamento'];
+		$visitado = $_POST['visitado'];
+		$nombre = $_POST['nombre'];
+		$vista = new FotoView(array('id'=>$id,'apartamento'=>$apartamento,'visitado'=>$visitado,'nombre'=>$nombre ));
 		return $vista->render();
 	}
 
@@ -20,4 +25,8 @@ class FotoController extends ControllerRest
 		header('location: /');
 	}
 
+	public function visita($argument = null){
+
+		print_r($_POST);
+	}
 }

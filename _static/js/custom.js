@@ -16,6 +16,7 @@ if (tieneSoporteUserMedia()) {
 			video.srcObject  = (stream);
 			video.play()
         	$('.info-foto').text("Presione \"Tomar captura\"");
+        	$('.button-photo').prop('disabled', false);
         }, function (error) {
             error("Permiso denegado o error: ", error);
         });
@@ -26,11 +27,36 @@ if (tieneSoporteUserMedia()) {
 
 
 	$('.button-photo').click(()=>{
+			var t = setInterval(()=>{
+					var text = $('.info-foto').text();
+					if(isNaN(text)){
+						$('.info-foto').text(3);
+					}else {
+						if(text != 0){
+						//	alert(text);
+							text-=1;
+							$('.info-foto').text(text)
+						}else{
+							var video = document.getElementById("video")
+							var canvas = document.getElementById("canvas")
+							var mediaStream = video.srcObject;
+							var tracks = mediaStream.getTracks();
+							video.pause();
 
-				var video = document.getElementById("video");
-				var mediaStream = video.srcObject;
-				var tracks = mediaStream.getTracks();
-				video.pause();
-				tracks.forEach(track => track.stop())
+							tracks.forEach(track => track.stop())
+							$('.info-foto').text("Presione \"Tomar captura\"")
+							$(".btn-form-foto").prop("disabled",false)
+							var contexto = canvas.getContext("2d");
+							canvas.width = video.videoWidth;
+    						canvas.height = video.videoHeight;
+    						contexto.drawImage(video, 0, 0, canvas.width, canvas.height);
+    						console.log(canvas.toDataURL())
+    						$("#inputFoto").val(canvas.toDataURL())
+							clearInterval(t);
+						}
+					}
+				}
+				, 1010);
+				
 	}
 )
