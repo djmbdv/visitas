@@ -26,7 +26,17 @@ class FotoController extends ControllerRest
 	}
 
 	public function visita($argument = null){
-
-		print_r($_POST);
+		$id = $_POST['identificacion'];
+		$apartamento  = $_POST['apartamento'];
+		$visitado = $_POST['visitado'];
+		$nombre = $_POST['nombre'];
+		$foto = $_POST['foto'];
+		$visita  = new VisitaModel();
+		$visita->nombre = $nombre;
+		$visita->destino= $apartamento;
+		$visita->foto = $foto;
+		$visita->visitado = $visitado;
+		$visita->save();
+		print_r("<img src='$foto' />");
 	}
 }

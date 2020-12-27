@@ -13,7 +13,7 @@ class VisitaModel extends Model
 	public static $types_array = array(
 		'nombre' => "VARCHAR( 150 ) NOT NULL",
 		'destino' => "INT( 11 ) NOT NULL",
-		'foto' => 'VARCHAR ( 100 ) NOT NULL',
+		'foto' => ' MEDIUMBLOB NOT NULL',
 		'visitado'=>'VARCHAR (100) NOT NULL'
  		);	
 }

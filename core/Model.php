@@ -143,6 +143,7 @@ abstract class Model{
 			$sql.=" where $index = '$key'";
 			$pdo = DB::get();
 			$pdo->query($sql);
+			return true;
 		}else if(is_null($this->get_key())){
 			$sql = "INSERT INTO `$table`";
 			$count = 0;
@@ -177,7 +178,9 @@ abstract class Model{
 			$pdo->query($sql);
 			$this->isLoaded = true;
 			$this->{$index} = $nkey;
+			return true;
 		}
+		return false;
 	}
 	public static function next_key(){
 		$pdo = DB::get();
@@ -228,6 +231,7 @@ abstract class Model{
 			if ($att == 'table_name'||
 				$att == 'types_array'||
 				$att == 'index_name' ||
+				$att == 'transform_in_array' ||
 				$att == 'isLoaded'  ||
 				$att == self::$index_name
 			)
