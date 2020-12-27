@@ -4,9 +4,12 @@ require "database.php";
 abstract class Model{
 	private static  $table_name;
 	private static  $index_name = "ID";
-	private static  $types_array;
 	private static $transform_in_array = array('password' => 'md5');
 	private $isLoaded = false;
+
+	public static function types_array(){
+		return null;
+	}
 	public function load() {
 		if(!is_null($this->get_key())){
 			$pdo = DB::get();
@@ -24,6 +27,7 @@ abstract class Model{
 				$k == 'types_array'||
 				$k == 'index_name' ||
 				$k == 'isLoaded'  ||
+				$k == 'transform_in_array' ||
 				$k == self::$index_name
 				)continue;
 				$this->{$k} = $res[0][$k];
@@ -59,20 +63,20 @@ abstract class Model{
 		$table = self::get_table_name();
 		$index = self::$index_name;
 		$my_index = $this->{$index};
-		$stmt  = $pdo->prepare("select modified_at from $table where $index = '$my_index'");
+		$stmt  = $pdo->prepare("select modified_ad from $table where $index = '$my_index'");
 		$stmt->execute();
 		$res = $stmt->fetchAll(PDO::FETCH_ASSOC);
-		return $res['modifiet_at'];
+		return $res['modified_at'];
 	}
-	public function get_created_ad(){
+	public function get_create_at(){
 		$pdo = DB::get();
 		$table = self::get_table_name();
 		$index = self::$index_name;
 		$my_index = $this->{$index};
-		$stmt  = $pdo->prepare("select modified_at from $table where $index = '$my_index'");
+		$stmt  = $pdo->prepare("select create_at from $table where $index = '$my_index'");
 		$stmt->execute();
 		$res = $stmt->fetchAll(PDO::FETCH_ASSOC);
-		return $res['modifiet_at'];
+		return $res[0]['create_at'];
 	}
 	public static function all($count = null, $page = null){
 		$pdo = DB::get();
@@ -93,7 +97,8 @@ abstract class Model{
 		$c = get_called_class();
 		foreach ($res as $key => $value) {
 			$m = new $c();
-			$m->{$index} = $value;
+			$m->{$index} = $value[$index];
+			//$m->load();
 			$array[] = $m;
 		}
 		return $array;
@@ -200,8 +205,9 @@ abstract class Model{
 	}
 
 	private static function search_type($atribute){
-		if(isset(self::$types_array))
-		foreach (self::$types_array as $atributo => $tipo) {
+		$types_array = get_called_class()::types_array();
+		if(!is_null($types_array))
+		foreach ($types_array as $atributo => $tipo) {
 			if($atribute == $atributo)return $tipo;
 		}
 		return 'VARCHAR( 120 )  NULL';

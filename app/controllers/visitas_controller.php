@@ -23,6 +23,7 @@ class VisitasController extends ControllerRest
 		$headers  = VisitaModel::get_vars();
 		$headers[] = "fecha";
 		$user = UserModel::user_logged();
+		//print_r(VisitaModel::all());
 		$vv = new VisitasView(array('visitas' => VisitaModel::all(), 'user'=> $user, "table_headers" => $headers ));
 		return $vv->render();
 	}

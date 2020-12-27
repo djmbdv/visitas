@@ -19,13 +19,21 @@ class VisitasTemplate extends Template{
 			<thead>
     <tr>
 <?php foreach ($this->T('table_headers') as  $value): ?>
-      <th scope="col"><?= $value ?></th>
+      <th scope="col"><?= ucfirst( $value) ?></th>
 <?php endforeach; ?>
     </tr>
   </thead>
   <tbody>
-<?php foreach($this->T('visitas') as $visita): ?>
-<th></th>
+<?php foreach($this->T('visitas') as $visita):
+	$visita->load();
+ ?>
+<tr>
+	<td><?= $visita->nombre ?></td>
+	<td><?= $visita->destino ?></td>
+	<td><img src="<?= $visita->foto ?>" class="image-table"></img></td>
+	<td><?= $visita->visitado ?></td>
+	<td><?= $visita->get_create_at() ?></td>
+</tr>
 <?php endforeach; ?>
 </tbody>
 		</table>
