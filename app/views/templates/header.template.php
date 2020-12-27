@@ -21,7 +21,7 @@ class HeaderTemplate extends Template
     <meta name="author" content=""/>
     <link rel="icon" href="<?= $this->S("favicon.png")?>"/>
 
-    <title>Administrador de Visitas</title>
+    <title>Sistema de Control de Visitas</title>
 
     <link href="<?= $this->S("css/bootstrap.min.css")?>" rel="stylesheet"/>
     <link rel="stylesheet" type="text/css" href="<?= $this->SS("css/custom.css")?>">

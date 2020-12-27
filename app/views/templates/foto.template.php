@@ -1,10 +1,15 @@
 <?php
-class HomeTemplate extends Template{
 
-	function config(){
-		$this->set_parent("layout");	
+/**
+ * 
+ */
+class FotoTemplate extends Template
+{
+	
+	function config()
+	{
+		$this->set_parent("layout");
 	}
-
 	function render(){?>
 <a class="btn text-left" href="/login" style="box-shadow: 1px 3px;">Login</a>
 <div class="container">
@@ -16,19 +21,15 @@ class HomeTemplate extends Template{
 	</div>
 
 	<div class="col-md-6">
-		<h5 class="text-center p-3 mt-3">DATOS</h5> 
+		<h5 class="text-center p-3 mt-3">TOMAR FOTO</h5> 
 		<form action="/foto" method="post">
 			<div class="form-group">
-				<input class="form-control" type="text" name="" placeholder="Apartemento a Visitar" required="" />
-			</div>
-			<div class="form-group">
-				<input class="form-control" type="text" name="" placeholder="Nombre de la persona a visitar" required="" />
-			</div>
-			<div class="form-group">
-				<input class="form-control" type="text" name="" placeholder="Su Nombre y Apellido" required="" />
-			</div>
-			<div class="form-group">
-				<input class="form-control" type="text" name="" placeholder="Numero de Identificacion" required="" />
+			    <div id="captura"  class="m-2 p-2" style="border-radius: 10px;min-height: 150px; min-width: 250px;background-color: gray;" >
+			    	<p class="info-foto" style="color: white;">Click para tomar foto</p>
+			    	<video id="video" style="width:100%;border-radius: 10px;min-width: 250px;background-color: gray;"></video>
+			    	<canvas id="canvas" style="display: none;"></canvas>
+			    </div>
+			    <a class="button-photo btn-sm m-2 btn-success text-center" style="margin-right: auto;margin-left: auto;">Tomar Captura</a>
 			</div>
 			<div class="form-group">
 				<input class="form-control btn-primary" type="submit" name="" value="Tomar Foto" />
@@ -46,7 +47,9 @@ class HomeTemplate extends Template{
 	<p>password: 1234</p>
 </div>
 </div>
-<?php 
 
+
+
+<?php
 	}
 }

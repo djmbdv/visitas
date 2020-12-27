@@ -21,14 +21,14 @@ class ModalTemplate extends Template{
 			  </div>
 			  <div class="form-group">
 			    <label for="campoNombre">Apartamento Destino</label>
-			    <input type="email" class="form-control" id="campoNombre" aria-describedby="nombreHelp" placeholder="Nombre Completo">
-			    <small id="nombreHelp" class="form-text text-muted">Ej. Fabián Espejo.</small>
+			    <input type="email" class="form-control" id="campoNombre" aria-describedby="nombreHelp" placeholder="Apartamento">
 			  </div>
 			  <div class="form-group">
 			    <label for="campoNombre">Foto</label>
-			    <div class="m-2" style="border-radius: 10px;min-height: 250px; min-width: 250px;background-color: gray;" >
+			    <div id="captura"  class="m-2" style="border-radius: 10px;min-height: 250px; min-width: 250px;background-color: gray;" >
+			    	<video id="video" style="width: 100%;"></video>
 			    </div>
-			    <button class="btn-sm m-2 btn-success text-center" style="margin-right: auto;margin-left: auto;">Tomar Captura</button>
+			    <a class="button-photo btn-sm m-2 btn-success text-center" style="margin-right: auto;margin-left: auto;">Tomar Captura</a>
 			  </div>
 			 </form>
 	      </div>

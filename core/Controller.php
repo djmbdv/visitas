@@ -13,8 +13,7 @@ abstract class Controller
 	}
 
 	public function error(){
-		print_r("Controller error: Método no encontrado");
-		exit(1);
+		print_r("no implemented");
 	}
 
 }
@@ -43,16 +42,21 @@ abstract class ControllerRest extends Controller{
 		}
 	}
 	public function post($argument = null){
-		print_r("default post");
+		$this->any($argument);
 	}
 
 	public function put($argument = null){
-		print_r("default put");
+		$this->any($argument);
 	}
 	public function get($argument = null){
-		print_r("default get");
+		$this->any($argument);
 	}
 	public function delete($argument = null){
-		print_r("default delete");
+		$this->any($argument);
 	}
+
+	public function any(){
+		print_r("no implemented");
+	}
+
 }
