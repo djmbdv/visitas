@@ -5,7 +5,7 @@ require_once 'core/Router.php';
 $hc  = new HomeController();
 $lc = new LoginController();
 $fc = new FotoController();
-$main_router = new Router($_GET['g']);
+$main_router = new Router();
 $main_router->link("", $hc);
 $main_router->setNoRoute($hc, "error");
 $main_router->link("login",$lc );
@@ -23,16 +23,11 @@ $main_router->link("visita",$fc,"visita");
 
 		//ruta /registro/visitas
 		$vc = new VisitasController();
-		$visitas_router = new Router();
-		$visitas_router->link("add", $vc, "add");
-		$visitas_router->link("view",$vc, "view");
-		$visitas_router->link("", $vc);
-	
-// var_dump($registro_router);
 
-	$registro_router->link("visitas",$visitas_router);
+	$registro_router->link("visitas",$vc);
 
 $main_router->link("registro",$registro_router);
 //var_dump($main_router);
+$main_router->set_link($_GET['g']);
 
 $main_router->call();

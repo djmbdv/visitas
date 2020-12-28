@@ -86,7 +86,7 @@ abstract class Model{
 		if(!is_null($count)){
 			$sql .=" limit $count";
 			if (!is_null($page)) {
-				$offset = intval($page)*intval($count) - 1;
+				$offset = (intval($page ) -1)*intval($count) ;
 				$sql.=" offset $offset";;
 			}
 		}
@@ -98,7 +98,6 @@ abstract class Model{
 		foreach ($res as $key => $value) {
 			$m = new $c();
 			$m->{$index} = $value[$index];
-			//$m->load();
 			$array[] = $m;
 		}
 		return $array;
@@ -222,6 +221,16 @@ abstract class Model{
 			//self::$table_name = strtolower(get_called_class().'s'); 
 			return strtolower(get_called_class().'s');
 		}
+	}
+
+	public static function count(){
+		$pdo = DB::get();
+		$table = self::get_table_name();
+		$index = self::$index_name;
+		$stmt  = $pdo->prepare("select count($index) as cc from $table");
+		$stmt->execute();
+		$res = $stmt->fetchAll(PDO::FETCH_ASSOC);
+		return intval($res[0]['cc']);
 	}
 
 	public static function create_table(){

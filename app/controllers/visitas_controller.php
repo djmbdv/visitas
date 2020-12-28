@@ -11,8 +11,7 @@ require_once "core/Session.php";
  */
 class VisitasController extends ControllerRest
 {
-
-	function get($argument = null){
+	function get(){
 		Session::load();
 		VisitaModel::create_table();
 		$user = UserModel::user_logged();
@@ -23,8 +22,16 @@ class VisitasController extends ControllerRest
 		$headers  = VisitaModel::get_vars();
 		$headers[] = "fecha";
 		$user = UserModel::user_logged();
-		//print_r(VisitaModel::all());
-		$vv = new VisitasView(array('visitas' => VisitaModel::all(), 'user'=> $user, "table_headers" => $headers ));
+		$page = 1;
+		$vv = new VisitasView(array(
+			'visitas' => VisitaModel::all(20,$page),
+			'user'=> $user,
+			"table_headers" => $headers,
+			'page'=> $page,
+			'count'=>VisitaModel::count()
+		));
+		$page  =$this->get_param("page");
+		var_dump($page);
 		return $vv->render();
 	}
 }
