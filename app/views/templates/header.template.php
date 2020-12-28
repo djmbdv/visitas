@@ -24,6 +24,7 @@ class HeaderTemplate extends Template
     <title>Sistema de Control de Visitas</title>
 
     <link href="<?= $this->S("css/bootstrap.min.css")?>" rel="stylesheet"/>
+    <link href="<?= $this->S("css/font-awesome.min.css")?>" rel="stylesheet"/>
     <link rel="stylesheet" type="text/css" href="<?= $this->SS("css/custom.css")?>">
   </head>
   <body>

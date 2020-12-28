@@ -29,9 +29,9 @@ class VisitasController extends ControllerRest
 		$destino = $this->get_param("destino");
 		$page = $page?$page:1;
 		$vv = new VisitasView(array(
-			'visitas' => VisitaModel::all(20,$page),
+			'items' => VisitaModel::all(20,$page),
 			'user'=> $user,
-			"table_headers" => $headers,
+			"table_vars" => VisitaModel::get_vars(),
 			'page'=> $page,
 			'count'=>VisitaModel::count()
 		));

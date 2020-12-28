@@ -13,7 +13,8 @@ class TableTemplate extends Template{
 <?php foreach ($this->T('table_vars') as  $value): ?>
       <th scope="col"><?= ucfirst( $value) ?></th>
 <?php endforeach; ?>
-		<th scope="col">Fecha</th>
+		<th scope="col">Fecha Creación</th>
+		<th scope="col">Fecha Modificación</th>
     </tr>
   </thead>
   <tbody>
@@ -31,6 +32,7 @@ class TableTemplate extends Template{
 endif; 
 endforeach; ?>
 	<td><?= $it->get_create_at() ?></td>
+	<td><?= $it->get_modified_at() ?></td>
 </tr>
 <?php endforeach; ?>
 </tbody>

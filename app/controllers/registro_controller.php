@@ -19,7 +19,7 @@ class RegistroController extends Controller
 			header('location: /login/');
 			return;
 		}
-		$user->get_type("foto");
+		
 		$rv = new RegistroView(array('user' => $user ));
 		return $rv->render();
 	}

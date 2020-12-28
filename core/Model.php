@@ -10,6 +10,9 @@ abstract class Model{
 	public static function types_array(){
 		return null;
 	}
+	public static function descriptions_array(){
+		return null;
+	}
 	public function load() {
 		if(!is_null($this->get_key())){
 			$pdo = DB::get();
@@ -73,10 +76,10 @@ abstract class Model{
 		$table = self::get_table_name();
 		$index = self::$index_name;
 		$my_index = $this->{$index};
-		$stmt  = $pdo->prepare("select modified_ad from $table where $index = '$my_index'");
+		$stmt  = $pdo->prepare("select modified_at from $table where $index = '$my_index'");
 		$stmt->execute();
 		$res = $stmt->fetchAll(PDO::FETCH_ASSOC);
-		return $res['modified_at'];
+		return $res[0]['modified_at'];
 	}
 	public function get_create_at(){
 		$pdo = DB::get();
@@ -91,6 +94,9 @@ abstract class Model{
 
 	public function to_str(){
 		return $this->{get_class()::get_index()};
+	}
+	public function get_atribute_description($att){
+		return get_called_class()::search_description($att);
 	}
 
 	public static function all($count = null, $page = null){
@@ -234,6 +240,16 @@ abstract class Model{
 			if($atribute == $atributo)return $tipo;
 		}
 		return 'VARCHAR ( 120 )  NULL';
+	}
+
+	public static function search_description($atribute){
+		$descriptions = get_called_class()::descriptions_array();
+		if(!is_null($descriptions))
+		foreach ($descriptions as $atributo => $des) {
+			if($atribute == $atributo)return $des;
+		}
+		return null;
+
 	}
 	public function get_attribute_type($att){
 		preg_match("/([A-Za-z]+)/", get_called_class()::search_type($att), $matches);

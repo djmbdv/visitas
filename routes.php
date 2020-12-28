@@ -24,9 +24,11 @@ $main_router->link("visita",$fc,"visita");
 		//ruta /registro/visitas
 		$vc = new VisitasController();
 		$hc = new HabitantesController();
+		$uc = new UsersController();
 
 	$registro_router->link("visitas",$vc);
 	$registro_router->link("habitantes", $hc);
+	$registro_router->link("usuarios", $uc);
 
 $main_router->link("registro",$registro_router);
 //var_dump($main_router);

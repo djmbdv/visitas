@@ -14,15 +14,13 @@ class ModalTemplate extends Template{
 	      </div>
 	      <div class="modal-body">
 	        <form>
+			  <?php foreach ($this->T("modal_vars") as $v):?>
 			  <div class="form-group">
-			    <label for="campoNombre">Nombre</label>
-			    <input type="email" class="form-control" id="campoNombre" aria-describedby="nombreHelp" placeholder="Nombre Completo">
-			    <small id="nombreHelp" class="form-text text-muted">Ej. Fabián Espejo.</small>
+			    <label for="campo<?= ucfirst($v) ?>"><?= ucfirst($v) ?></label>
+			    <input type="email" class="form-control" id="campo<?= ucfirst($v) ?>" aria-describedby="<?= $v ?>Help" placeholder="<?= $this->T("modal_class")::search_description($v) ?>">
+			    <small id="<?= $v ?>Help" class="form-text text-muted">Ej. Fabián Espejo.</small>
 			  </div>
-			  <div class="form-group">
-			    <label for="campoNombre">Apartamento Destino</label>
-			    <input type="email" class="form-control" id="campoNombre" aria-describedby="nombreHelp" placeholder="Apartamento">
-			  </div>
+			  <?php endforeach; ?>
 			  <div class="form-group">
 			    <label for="campoNombre">Foto</label>
 			    <div id="captura"  class="m-2" style="border-radius: 10px;min-height: 250px; min-width: 250px;background-color: gray;" >

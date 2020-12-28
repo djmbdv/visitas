@@ -25,11 +25,13 @@ class HabitantesController extends ControllerRest
 		$h->telefono = random_int(1000, 2000);
 		$h->email = $array[random_int(0,6)].random_int(1000, 2000).'@gmail.com';
 		$h->nombre = $array[random_int(0,6)]." ".$array[random_int(0,6)];
-		$h->save();
+		/*$h->save();*/
 		$hv = new HabitantesView( array(
 			'items' => HabitanteModel::all(20,$page),
 			'user'=> $user,
 			"table_vars" => HabitanteModel::get_vars(),
+			"modal_vars" => HabitanteModel::get_vars(),
+			"modal_class" => 'HabitanteModel',
 			'page'=> $page,
 			'count'=>HabitanteModel::count(),
 			'title'=>'Habitantes'

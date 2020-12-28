@@ -48,15 +48,15 @@ class TopbarTemplate extends Template
                 <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?= $this->T('user')->username ?></span>
               </a>
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                <div class="dropdown-item" href="#">
+                <a class="dropdown-item" href="/registro/">
                   <i class="fa fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                  <a href="/registro/"> Registro </a>
-                </div>
+                   Registro 
+                </a>
                 <div class="dropdown-divider"></div>
-                <div class="dropdown-item" href="/logout">
-                  <i class="fa fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                <a class="dropdown-item" href="/logout">
+                  <i class="fa fa-sign-out fa-sm fa-fw mr-2 text-gray-400"></i>
                   Salir
-                </div>
+                </a>
               </div>
             </li>
           </ul>

@@ -20,4 +20,10 @@ class HabitanteModel extends Model
 		'foto' => 'varchar( 100 )  NULL',	
  		);
 	}
+	public static function descriptions_array(){
+		return array(
+		'nombre' => "Nombre Completo",
+		'apartamento' => "X"	
+ 		);
+	}
 }
