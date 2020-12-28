@@ -3,11 +3,15 @@ class VisitasTemplate extends Template{
 
 	function config(){
 		$this->set_parent("layout");
-	//	$this->add_part("modal","modal");
+		$this->add_part("paginator","paginator");
 		$this->add_part("topbar","topbar");	
 	}
 
-	function render(){?>
+	function render(){
+		$c = $this->T("count");
+		$p = $this->T("page");
+
+		?>
 <?php $this->render_part("topbar"); ?>
 <div class="container">
 	<div class="row">
@@ -38,19 +42,7 @@ class VisitasTemplate extends Template{
 
 </table>
 </div>
-<ul class="pagination justify-content-center " >
-  <li class="page-item"><a class="page-link" href="#"><<</a></li>
-  <?php
-  $c = $this->T("count");
-  $p = $this->T("page");
-   for ($i = 0; $i*20 <  $c; $i++): ?>
-  <li class="page-item <?=$p==($i+1)?"active":""?>">
-  	<a class="page-link" href="#" ><?= $i+1 ?></a>
-  </li>
-<?php endfor; ?>
- <li class="page-item"><a class="page-link" href="#">>></a></li>
- 
-</ul>
+<?php $this->render_part("paginator");?>
 </div>
 <?php 
 

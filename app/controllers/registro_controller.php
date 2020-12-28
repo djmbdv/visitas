@@ -16,9 +16,10 @@ class RegistroController extends Controller
 		Session::load();
 		$user = UserModel::user_logged();
 		if(is_null($user)){
-			header('location: login');
+			header('location: /login/');
 			return;
 		}
+		$user->get_type("foto");
 		$rv = new RegistroView(array('user' => $user ));
 		return $rv->render();
 	}

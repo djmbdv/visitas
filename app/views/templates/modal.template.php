@@ -7,7 +7,7 @@ class ModalTemplate extends Template{
 	  <div class="modal-dialog" role="document">
 	    <div class="modal-content">
 	      <div class="modal-header">
-	        <h5 class="modal-title" id="exampleModalLabel">Ingrese los datos de la visita</h5>
+	        <h5 class="modal-title" id="exampleModalLabel">Datos de <?= $this->T("title") ?></h5>
 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 	          <span aria-hidden="true">&times;</span>
 	        </button>

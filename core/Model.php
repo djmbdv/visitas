@@ -30,10 +30,20 @@ abstract class Model{
 				$k == 'transform_in_array' ||
 				$k == self::$index_name
 				)continue;
-				$this->{$k} = $res[0][$k];
+				try{
+					$rp = new ReflectionProperty(get_called_class(), $k);
+					$tipo =  $rp->getType()->getName();
+					if(is_subclass_of($tipo, get_class())){
+						$o = new $tipo();
+						$o->{$tipo::get_index()} = $res[0][$k];
+					}else throw new Exception("Error Processing Request", 1);
+				}catch (Throwable $t){
+					$this->{$k} = $res[0][$k];
+				}
 			}
 			$this->isLoaded = true;
 		}
+		return $this;
 	}
 
 
@@ -78,7 +88,13 @@ abstract class Model{
 		$res = $stmt->fetchAll(PDO::FETCH_ASSOC);
 		return $res[0]['create_at'];
 	}
+
+	public function to_str(){
+		return $this->{get_class()::get_index()};
+	}
+
 	public static function all($count = null, $page = null){
+		if(!get_called_class()::table_exist())self::create_table();
 		$pdo = DB::get();
 		$table = self::get_table_name();
 		$index = self::$index_name; 
@@ -123,6 +139,12 @@ abstract class Model{
 		return isset($this->{$index}) && $this->{$index} != null?$this->{$index}:null; 
 	}
 
+	public function G($atributo){
+		return is_subclass_of($this->{$atributo},get_class())?
+					($this->{$atributo})->to_srt():
+					$this->{$atributo};
+	}
+
 	public function save(){
 		$vars = get_class_vars(get_called_class());
 		$table = self::get_table_name();
@@ -140,7 +162,9 @@ abstract class Model{
 				$k == self::$index_name ||
 				$k == 'transform_in_array'
 				)continue;
-				$value = $this->{$k};
+				$value = is_subclass_of($this->{$k},get_class())?
+					($this->{$k})->get_key():
+					$this->{$k};
 				if($count++ == 0)$sql.=" set $k = '$value' ";
 				else $sql.=",  $k = '$value' ";
 			}
@@ -209,8 +233,13 @@ abstract class Model{
 		foreach ($types_array as $atributo => $tipo) {
 			if($atribute == $atributo)return $tipo;
 		}
-		return 'VARCHAR( 120 )  NULL';
+		return 'VARCHAR ( 120 )  NULL';
 	}
+	public function get_attribute_type($att){
+		preg_match("/([A-Za-z]+)/", get_called_class()::search_type($att), $matches);
+		return strtolower($matches[0]);  
+	}
+
 	public static function get_table_name(){
 		//self::create_table();
 		 if(substr(get_called_class() , -strlen("Model")) == "Model"){
@@ -251,18 +280,16 @@ abstract class Model{
 				$att == self::$index_name
 			)
 					continue;
-			$sql.=",$att ".self::search_type($att);
+			
 
 			try{
 				$rp = new ReflectionProperty(get_called_class(), $att);
 				$tipo =  $rp->getType()->getName();
 				if(is_subclass_of($tipo, get_class())){
-					if($tipo::table_exist()){
-						echo "tabla creada";
-					}
-				}
+					$sql.=",$att  INT( 11 )";
+				}else throw new Exception("Error Processing Request", 1);
 			}catch (Throwable $t){
-				// Executed only in PHP 7, will not match in PHP 5
+				$sql.=",$att ".self::search_type($att);
 			}
 		}
 		$sql.=",`create_at` timestamp NOT NULL DEFAULT current_timestamp(),`modified_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp() );";
