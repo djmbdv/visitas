@@ -1,3 +1,10 @@
 .image-table{
 	max-height: 80px;
 }
+.row {
+    margin-right: 0px; 
+    margin-left: 0px;
+}
+.form-control-home{
+	min-height: 40px;
+}

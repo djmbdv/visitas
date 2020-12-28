@@ -11,7 +11,6 @@ class FooterTemplate extends Template
 		# code...
 	}
 	function render(){?>
-
       <footer class="pt-4 my-md-10 pt-md-10  border-top text-center">
         <div class="row">
           <div class="col-12 col-md">

@@ -13,6 +13,30 @@ abstract class Model{
 	public static function descriptions_array(){
 		return null;
 	}
+
+	public static function seeds(){
+
+	}
+
+	public static function all_where_like($att, $value,$count = null, $page = null,$loaded = false){
+		$sql=" where $att LIKE '%$value%'";
+		return self::all($count, $page,$loaded,$sql);
+	}
+
+	public function get_json(){
+		$o = $this->no_class_values();
+		return json_encode($o);
+	}
+	public function no_class_values(){
+		$this->load();
+		$o = new stdClass();
+		foreach (self::get_vars() as $key ) {
+			$o->{$key} = $this->{$key};
+		}
+		$o->create_at = $this->get_create_at();
+		$o->modified_at = $this->get_modified_at();
+		return $o;
+	}
 	public function load() {
 		if(!is_null($this->get_key())){
 			$pdo = DB::get();
@@ -99,12 +123,14 @@ abstract class Model{
 		return get_called_class()::search_description($att);
 	}
 
-	public static function all($count = null, $page = null){
+	public static function all($count = null, $page = null,$loaded = false,$sql_aditiional = ""){
 		if(!get_called_class()::table_exist())self::create_table();
 		$pdo = DB::get();
 		$table = self::get_table_name();
 		$index = self::$index_name; 
-		$sql = "select $index from $table";
+		$sql = "select $index from $table ";
+		$sql.=$sql_aditiional;
+		$sql.= "  ORDER BY `create_at` DESC";
 		if(!is_null($count)){
 			$sql .=" limit $count";
 			if (!is_null($page)) {
@@ -120,9 +146,13 @@ abstract class Model{
 		foreach ($res as $key => $value) {
 			$m = new $c();
 			$m->{$index} = $value[$index];
+			if($loaded)$m->load();
 			$array[] = $m;
 		}
 		return $array;
+	}
+	public static function all_json($count = null, $page = null,$loaded = false){
+		return json_encode(array_map(function($a){return $a->no_class_values();},  self::all($count, $page,$loaded)));
 	}
 	public static function get_vars(){
 		$vars = [];
@@ -141,7 +171,6 @@ abstract class Model{
 	public function get_key(){
 		$c = get_called_class();
 		$index = $c::get_index();
-
 		return isset($this->{$index}) && $this->{$index} != null?$this->{$index}:null; 
 	}
 
@@ -311,6 +340,8 @@ abstract class Model{
 		$sql.=",`create_at` timestamp NOT NULL DEFAULT current_timestamp(),`modified_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp() );";
 		//var_dump($sql);
 		$pdo->query($sql);
+     	
+		get_called_class()::seeds();
      	return true;
 	}
 

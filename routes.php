@@ -30,6 +30,7 @@ $main_router->link("visita",$fc,"visita");
 	$registro_router->link("habitantes", $hc);
 	$registro_router->link("usuarios", $uc);
 
+$main_router->link("habitantes",$hc,"search");
 $main_router->link("registro",$registro_router);
 //var_dump($main_router);
 $main_router->set_link($_GET['g']);

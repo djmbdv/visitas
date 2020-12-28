@@ -18,7 +18,7 @@ class ModalTemplate extends Template{
 			  <div class="form-group">
 			    <label for="campo<?= ucfirst($v) ?>"><?= ucfirst($v) ?></label>
 			    <input type="email" class="form-control" id="campo<?= ucfirst($v) ?>" aria-describedby="<?= $v ?>Help" placeholder="<?= $this->T("modal_class")::search_description($v) ?>">
-			    <small id="<?= $v ?>Help" class="form-text text-muted">Ej. Fabián Espejo.</small>
+			    <small id="<?= $v ?>Help" class="form-text text-muted"></small>
 			  </div>
 			  <?php endforeach; ?>
 			  <div class="form-group">

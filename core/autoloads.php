@@ -1,5 +1,6 @@
 <?php
 
+require_once "core/Utils.php";
 
 function autoload_controller($nombreClase) {
 	if(preg_match("/([\S]*)Controller/", $nombreClase, $matches)){

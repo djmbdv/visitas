@@ -21,10 +21,9 @@ class UserModel extends Model{
 		'tipo' => 'INT( 9)  NOT NULL'
  		);
 	}
-	public function __construct($foo = null){
-		if (!self::table_exist()) { // Create seeds 
-			self::create_table();
-			$client  = new UserModel();
+
+	public static function seeds(){
+		$client  = new UserModel();
 			$client->username = 'cliente';
 			$client->name = 'Cliente de Prueba';
 			$client->password =md5( '1234');
@@ -36,9 +35,8 @@ class UserModel extends Model{
 			$client->password =md5( '1234');
 			$client->tipo = 2;
 			$client->save();
-		}
-	}
 
+	}
 	public static function user_logged(){
 		Session::load();
 		if(isset(Session::$values["username"]))

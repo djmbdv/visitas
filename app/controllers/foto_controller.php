@@ -37,6 +37,6 @@ class FotoController extends ControllerRest
 		$visita->foto = $foto;
 		$visita->visitado = $visitado;
 		$visita->save();
-		print_r("<img src='$foto' />");
+		header('location: /');
 	}
 }

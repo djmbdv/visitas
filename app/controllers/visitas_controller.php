@@ -25,11 +25,12 @@ class VisitasController extends ControllerRest
 		$page = $this->get_param("page");
 		$fecha = $this->get_param("fecha");
 		$hora = $this->get_param("hora");
-		$visitado = $this->get_param("visitado");
+		$nombre =  $this->get_param("nombre");
 		$destino = $this->get_param("destino");
 		$page = $page?$page:1;
 		$vv = new VisitasView(array(
 			'items' => VisitaModel::all(20,$page),
+			'filtros'=> ['fecha' => $fecha ,'hora' => $fecha ,'nombre' => $nombre],
 			'user'=> $user,
 			"table_vars" => VisitaModel::get_vars(),
 			'page'=> $page,

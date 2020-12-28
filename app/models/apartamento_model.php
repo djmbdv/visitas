@@ -7,8 +7,8 @@ class ApartamentoModel extends Model
 
 
 	public $nombre;
-	public $edificio;
-	public $propietario;
+	public EdificioModel $edificio;
+	public UserModel $propietario;
 	
 	self::$types_array = array(
 		'nombre' => "VARCHAR( 150 ) NOT NULL",
