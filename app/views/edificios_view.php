@@ -1,15 +1,13 @@
 <?php
-
 require_once "core/View.php";
 /**
  * 
  */
-class MainView extends View
+class EdificiosView extends View
 {
 	
 	function config()
 	{
-		
-		$this->set_template("home");
+		$this->set_template("edificios");
 	}
 }

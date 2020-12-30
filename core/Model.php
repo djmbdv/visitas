@@ -4,7 +4,7 @@ require "database.php";
 abstract class Model{
 	private static  $table_name;
 	private static  $index_name = "ID";
-	private static $transform_in_array = array('password' => 'md5');
+	private static $transform_in_array = array('password' => 'md5','email'=>'strtolower');
 	private $isLoaded = false;
 
 	public static function types_array(){
@@ -19,6 +19,7 @@ abstract class Model{
 	}
 
 	public static function all_where_like($att, $value,$count = null, $page = null,$loaded = false){
+		if(!self::table_exist())self::create_table();
 		$sql=" where $att LIKE '%$value%'";
 		return self::all($count, $page,$loaded,$sql);
 	}
@@ -35,7 +36,25 @@ abstract class Model{
 		}
 		$o->create_at = $this->get_create_at();
 		$o->modified_at = $this->get_modified_at();
+		$o->presentation = $this->to_str();
+		$o->id = $this->get_key();
 		return $o;
+	}
+
+	public function exist(){
+		if(!is_null($this->get_key())){
+			$pdo = DB::get();
+			$key = $this->get_key();
+			$table = self::get_table_name();
+			$index = self::$index_name;
+			$sql = "SELECT count($index) as c from $table WHERE $index = :key";
+			$stmt = $pdo->prepare($sql);
+			$stmt->bindParam(":key", $key);
+			$stmt->execute();
+			$res = $stmt->fetchAll(PDO::FETCH_ASSOC);
+			return $res[0]['c'] != 0; 
+		}
+		return false;	
 	}
 	public function load() {
 		if(!is_null($this->get_key())){
@@ -63,9 +82,11 @@ abstract class Model{
 					if(is_subclass_of($tipo, get_class())){
 						$o = new $tipo();
 						$o->{$tipo::get_index()} = $res[0][$k];
+						
+						$this->{$k} = $o;
 					}else throw new Exception("Error Processing Request", 1);
 				}catch (Throwable $t){
-					$this->{$k} = $res[0][$k];
+					$this->{$k} = isset($res[0][$k])?$res[0][$k]:null;
 				}
 			}
 			$this->isLoaded = true;
@@ -94,7 +115,15 @@ abstract class Model{
 		if (!self::table_exist()) {
 			self::create_table();
 		}
+		/*foreach (self::get_vars() as $value) {
+			$cc = get_called_class();
+			if(is_subclass_of( $cc::get_attribute_class($value),get_class() )){
+				$clase = $cc::get_attribute_class($value);
+				$this->{$value} = new $clase();
+			}
+		}*/
 	}
+
 	public function get_modified_at(){
 		$pdo = DB::get();
 		$table = self::get_table_name();
@@ -116,11 +145,26 @@ abstract class Model{
 		return $res[0]['create_at'];
 	}
 
+	public static function presentation($o){
+		return "".$o->ID;
+	} 
 	public function to_str(){
-		return $this->{get_class()::get_index()};
+		$this->load();
+		return get_called_class()::presentation($this);
 	}
-	public function get_atribute_description($att){
+	public function get_attribute_description($att){
 		return get_called_class()::search_description($att);
+	}
+	public static function search_attribute_form_type($atribute){
+		$descriptions = get_called_class()::form_types_array();
+		if(!is_null($descriptions))
+		foreach ($descriptions as $atributo => $des) {
+			if($atribute == $atributo)return $des;
+		}
+		return 'text';
+	}
+	public static function form_types_array(){
+		return array();
 	}
 
 	public static function all($count = null, $page = null,$loaded = false,$sql_aditiional = ""){
@@ -218,8 +262,10 @@ abstract class Model{
 				$k == 'transform_in_array'||
 				$k == self::$index_name
 				)continue;
-				if($count++ == 0)$sql.="( `$k`";
-				else $sql.=", `$k` ";
+				if(isset($this->{$k})&&!is_null($this->{$k})){	
+					if($count++ == 0)$sql.="( `$k`";
+					else $sql.=", `$k` ";
+				}
 			}
 			$sql.= ") VALUES ";
 			$count = 0;
@@ -231,9 +277,16 @@ abstract class Model{
 				$k == 'transform_in_array' ||
 				$k == self::$index_name
 				)continue;
+				if( isset($this->{$k}) && !is_null($this->{$k})){
 				$value = $this->{$k};
-				if($count++ == 0)$sql.="( '$value'";
-				else $sql.=", '$value' ";
+				if(is_subclass_of($value, 'Model')){
+					$vv = $value->get_key();
+					if($count++ == 0)$sql.="( '$vv'";
+					else $sql.=", '$vv' ";
+				}else{
+					if($count++ == 0)$sql.="( '$value'";
+					else $sql.=", '$value' ";
+				}}
 			}
 			$sql.=")";
 			$pdo = DB::get();
@@ -338,13 +391,21 @@ abstract class Model{
 			}
 		}
 		$sql.=",`create_at` timestamp NOT NULL DEFAULT current_timestamp(),`modified_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp() );";
-		//var_dump($sql);
 		$pdo->query($sql);
-     	
 		get_called_class()::seeds();
      	return true;
 	}
 
+	public static function get_attribute_class($a){
+		try{
+		$rp = new ReflectionProperty(get_called_class(), $a);
+	//	var_dump(get_called_class());
+		$type =  $rp->getType()->getName();
+		}catch(Throwable $t){
+			return "";
+		}
+		return $type;
+	}
 	public static function find(){}
 
 	public static function get_all(){

@@ -11,7 +11,7 @@ class FotoTemplate extends Template
 		$this->set_parent("layout");
 	}
 	function render(){?>
-<a class="btn text-left" href="/login" style="box-shadow: 1px 3px;">Login</a>
+<a class="btn btn-sm" href="/logout/" style="box-shadow: 1px 3px;"><i class="fa fa-sign-out fa-sm fa-fw mr-2 text-gray-400"></i></a>
 <div class="container">
 <h1 class="text-center  mt-3 mb-2">Control de Visitas</h1>
 <div class="row" style="border-top: solid 1px  #007bff; border-radius: 3px;">
@@ -30,11 +30,11 @@ class FotoTemplate extends Template
 				<input type="hidden" name="identificacion" value="<?= $this->T('id') ?>">
 				<input id="inputFoto" type="hidden" name="foto" value=""/>
 			    <div id="captura"  class="m-2 p-2" style="border-radius: 10px;min-height: 150px; min-width: 250px;background-color: gray;" >
-			    	<p class="info-foto" style="color: white;">Click para tomar foto</p>
+			    	<p class="info-foto" style="color: white;"></p>
 			    	<video id="video" style="width:100%;border-radius: 10px;min-width: 250px;background-color: gray;"></video>
 			    	<canvas id="canvas" style="display: none;"></canvas>
 			    </div>
-			    <a class="button-photo btn-sm m-2 btn-success text-center " style="margin-right: auto;margin-left: auto;" disabled>Tomar Captura</a>
+			    <div class="button-photo btn-sm m-2 btn-success text-center " style="margin-right: auto;margin-left: auto;" disabled>Tomar Captura</div>
 			</div>
 			<div class="form-group">
 				<input class="btn-form-foto form-control btn-primary " type="submit" name="" value="Tomar Foto" disabled/>

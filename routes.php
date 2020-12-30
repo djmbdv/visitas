@@ -15,23 +15,39 @@ $main_router->link("visita",$fc,"visita");
 
 // ruta /registro
 	$rc = new RegistroController();
-
+	$apic = new ApiController();
 		
-	$registro_router = new Router();
-	$registro_router->link("",$rc);
+	$dashboard_router = new Router();
+	$dashboard_router->link("",$rc);
 
 
 		//ruta /registro/visitas
 		$vc = new VisitasController();
 		$hc = new HabitantesController();
 		$uc = new UsersController();
+		$ac = new ApartamentosController();
+		$ec = new EdificiosController();
 
-	$registro_router->link("visitas",$vc);
-	$registro_router->link("habitantes", $hc);
-	$registro_router->link("usuarios", $uc);
+	$dashboard_router->link("visitas",$vc);
+	$dashboard_router->link("habitantes", $hc);
+	$dashboard_router->link("usuarios", $uc);
+	$dashboard_router->link("apartamentos", $ac);
+	$dashboard_router->link("edificios", $ec);
 
-$main_router->link("habitantes",$hc,"search");
-$main_router->link("registro",$registro_router);
+	$api_router = new Router();
+	$api_router->link("habitante",$apic,"search_habitantes");
+	$api_router->link("user",$apic,"search_users");
+	$api_router->link("tipo",$apic,"search_tipos");
+	$api_router->link("visita",$apic,"search_visitas");
+	$api_router->link("apartamento",$apic,"search_apartamentos");
+
+	$api_router->link("edificio",$apic,"search_edificios");
+	
+
+$main_router->link("api",$api_router);
+$main_router->link("dashboard",$dashboard_router);
+$main_router->link("menu", $rc , "menu");
+$main_router->link("activec",$rc,"active_control_visitas");
 //var_dump($main_router);
 $main_router->set_link($_GET['g']);
 

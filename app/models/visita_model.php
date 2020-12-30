@@ -7,9 +7,9 @@ require_once "core/Model.php";
 class VisitaModel extends Model
 {
 	public $nombre;
-	public $destino;
+	public ApartamentoModel $destino;
 	public $foto;
-	public $visitado;
+	public HabitanteModel $visitado;
 
 
 	public static function types_array(){

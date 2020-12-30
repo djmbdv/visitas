@@ -8,7 +8,7 @@ require_once "core/Model.php";
 class HabitanteModel extends Model
 {
 	
-	protected $apartamento;
+	protected ApartamentoModel $apartamento;
 	protected $email;
 	protected $telefono;
 	protected $nombre;
@@ -17,31 +17,46 @@ class HabitanteModel extends Model
 	public static function types_array(){
 		return array(
 		'nombre' => "VARCHAR( 150 ) NOT NULL",
-		'apartamento' => "INT( 11 ) NOT NULL",
-		'foto' => 'varchar( 100 )  NULL',	
+		'apartamento' => "INT( 11 ) ",
+		'foto' => ' MEDIUMBLOB NOT NULL',	
  		);
 	}
 	public static function descriptions_array(){
 		return array(
 		'nombre' => "Nombre Completo",
-		'apartamento' => "X"	
+		'apartamento' => "apartamento o casa donde habita"	
  		);
 	}
-	public static function search_nombre($nombre){
-		$a = self::all_where_like("nombre",$nombre,20,null,true);
+
+	public static function form_types_array(){
+		return array(
+		'email' => "email",
+		'telefono' => "tel",
+		'foto' => 'foto'
+ 		);
+	}
+	public static function search_nombre($nombre, $cantidad = 20){
+		$a = self::all_where_like("nombre",$nombre,$cantidad,null,true);
 		$k = array_map(function($a){return $a->no_class_values(); }, $a);
 		return json_encode($k);
 	}
-
+	public static function presentation($h){
+		return $h->identificacion.' | '.$h->nombre; 
+	}
 	public static function seeds(){
+	  //return;
+		$foto = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHoAAAB6CAMAAABHh7fWAAAAaVBMVEX///8AAADo6Oja2tojIyPd3d0mJiYNDQ26uroQEBDIyMjh4eHl5eXW1tbr6+sHBwdOTk6Hh4eTk5NBQUGcnJzx8fEWFhZbW1srKyszMzNvb28eHh53d3dWVlZ/f39HR0epqallZWU6Ojo1/jOrAAACqklEQVRoge2a6XaqMBRGCRZk1IrggBWp7/+Q90ZKV1uL5Hz5hP7IfgD2WhkOZ4jnWZI0KrH9BkJenJQ6VJN7/faiNM3E3iqpT6qjmFS8Krfqk/cJxUmtvtFO5K3KpfrJeYozntd33o63KHuqODkPiDXxtkmedc0eijuOTf4Ecfo+Kr5R0xc+MhNrIq65NDeTY0whMVPdrcxMXPPsPoiMELPO2lAYecAbx7yQm5VKKWrhGesoKertuOieC8O8ekHUISOcBzGi3jE2e7FG1OvFbOqlUzu1U/9ltfhvfVMHs6ljp3Zqp/7DaixBoqhzxKwUo9DeYOqNvRnKwjXWmbigpP+JbbmZ4GrbjlaFq63rDyhR0Oxszd4eVe+t1aIGzlfsy1z4iNv3UwJUTYik4Dlb25u9V0z9SlDPF8PRc8bo2gVYqkDpXkGbzdhqcMU5XVIf6F6FK4oaCeP2AbwDuF6Mq6UBNpvVEE/lak5j+D8XqZlztTTitjRv+CFeceKsSziCII0fbmQytU9Uy3abM3z4RPAP4R3vjsy41I2py605mqqPbLN3MFUf2ObqNC7tOLFH96lxmrSkxe8PBG0N9psBwY+T/VJkvgcDkul5S1YLkiRWctQzXyAVFfjM30dlHEU7rjx1IzMTt9s8iPbQnhsCbTtWWAEeh9Qcc3WVq6+cFYca4pR/SAb1C/f2qfhKfLF6GrsSe1XsULNSuwKXV2WIizVhCZ621jgTHObQAuKIINYcpZlDAtzlQbkktCXiWv4xF1N5Pv5UVczZJMQEQMQ2oR7rj/twBBmneVQHVmAD2pTN4DWHJyzm/J62TSD+Xd6KkyCUl/abOBKmnHZ8CXABOFnBOfc37QkhZNT9cZehh6J2hL5TO7VTO7VTM9TyMZY9fYMrhZ+9oNxK4H/iGzEkYE2a3gAAAABJRU5ErkJggg==';
 		for ($i=0; $i < 25; $i++) { 
 			$h = new HabitanteModel();
-			$array =array("juan" ,"peres", "maria", "espejo","fabian", "rosa", "david" );
-			$h->apartamento = random_int(1000, 2000);
+			$array =array("juan" ,"peres",
+				"alfredo","jaime","tarek","chavez", "maria", "espejo","fabian", "rosa", "david","uzumaki", "sasuke","松本市","McGregor" );
+			$h->apartamento = new ApartamentoModel();
 			$h->telefono = random_int(1000, 2000);
-			$h->email = $array[random_int(0,6)].random_int(1000, 2000).'@gmail.com';
-			$h->nombre = $array[random_int(0,6)]." ".$array[random_int(0,6)];
+			$h->email = strtolower($array[random_int(0,13)].random_int(1000, 2000).'@gmail.com');
+			$h->nombre =ucfirst( $array[random_int(0,13)])." ".ucfirst($array[random_int(0,13)]);
 			$h->identificacion =  random_int(1000000, 90000000);
+			$h->foto = $foto;
+		//var_dump($h);
 			$h->save();
 		}
 	}

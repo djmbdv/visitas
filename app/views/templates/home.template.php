@@ -5,8 +5,30 @@ class HomeTemplate extends Template{
 		$this->set_parent("layout");	
 	}
 
-	function render(){?>
-<a class="btn text-left" href="/login" style="box-shadow: 1px 3px;">Login</a>
+	function render(){
+		/*
+*/	$this->add_part("campoVisitado","campo",
+		 array('name' => "visitado" ,
+		 		'autocomplete' => true,
+		 		'required' => true,
+		 		'placeholder'=> "Nombre de la persona a visitar",
+		 		'end_point'=> '/api/habitante/',
+		 		'autocomplete_att'=>'s'
+		  )
+		);
+$this->add_part("campoApartamento","campo",
+		 array('name' => "apartamento" ,
+		 		'autocomplete' => true,
+		 		'required' => true,
+		 		'placeholder'=> "Apartamento a donde se dirige",
+		 		'end_point'=> '/api/apartamento/',
+		 		'autocomplete_att'=>'s'
+		  )
+		);
+
+		?>
+
+<a class="btn btn-sm" href="/logout/" style="box-shadow: 1px 3px;"><i class="fa fa-sign-out fa-sm fa-fw mr-2 text-gray-400"></i></a>
 <div class="container">
 <h1 class="text-center  mt-3 mb-2">Control de Visitas</h1>
 <div class="row" style="border-top: solid 1px  #007bff; border-radius: 3px;">
@@ -18,12 +40,12 @@ class HomeTemplate extends Template{
 	<div class="col-md-6">
 		<h5 class="text-center p-3 mt-3">DATOS</h5> 
 		<form action="/foto" method="post">
-			<div class="form-group">
-				<input class="form-control form-control-home" type="text" name="apartamento" placeholder="Apartemento a Visitar" required="" />
-			</div>
-			<div class="form-group autocomplete">
+			<?php $this->render_part("campoApartamento");?>
+			<?php $this->render_part("campoVisitado");?>
+			<!--div class="form-group autocomplete">
 				<input id="inputVisitado" class="form-control form-control-home" type="text" name="visitado" placeholder="Nombre de la persona a visitar" required="" autocomplete="off" />
-			</div>
+			</div-->
+
 			<div class="form-group">
 				<input class="form-control  form-control-home" type="text" name="nombre" placeholder="Su Nombre y Apellido" required="" />
 			</div>

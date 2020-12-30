@@ -15,6 +15,11 @@ class Session{
 		session_commit();
 		self::$session_loaded = true;
 	}
+
+
+	public static function g($v){
+		return isset(self::$values[$v])? self::$values[$v]:null;
+	}
 	public static function destroy(){
 		if(self::$session_loaded){
 			throw new Exception("Session cargada", 1);

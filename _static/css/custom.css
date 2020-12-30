@@ -8,3 +8,35 @@
 .form-control-home{
 	min-height: 40px;
 }
+
+.autocomplete-items{
+	position: absolute;
+	z-index: 10;
+	background:white;
+	width: 80%;
+}
+.item-autocomplete{
+	padding: 2px;
+	font-size: 12px;
+	width: 100%;
+	margin:2px;
+	border-radius: 5%;
+	border: 1px solid #007bff;
+	cursor: pointer;
+}
+.item-autocomplete:hover{
+	font-weight: bold;
+}
+.input-invalid{
+	border: 1px solid red;
+	font-weight: normal;
+}
+.input-success{
+	font-weight: bold;
+	border: 1px solid green;
+}
+.marco-foto{
+	background: #007bff !important;
+}
+
+

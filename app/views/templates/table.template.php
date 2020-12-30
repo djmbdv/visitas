@@ -21,11 +21,15 @@ class TableTemplate extends Template{
 <?php
  foreach($this->T('items') as $it):
 	$it->load();
+
  ?>
 <tr>
 <?php foreach ($this->T('table_vars') as $value):
 		 if ($it->get_attribute_type($value) == "mediumblob"):?>
 		 	<td><img src="<?= $it->{$value} ?>" class="image-table"></img></td>
+		 <?php elseif(is_subclass_of($it->{$value}, "Model")): 
+		 	?>
+		 	<td><?=!is_null( $it->{$value}) && $it->{$value}->exist() ? $it->{$value}->to_str():'' ?></td>
 		 <?php else:?>
 	<td><?= $it->{$value} ?></td>
 <?php

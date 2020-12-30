@@ -29,13 +29,17 @@ class FotoController extends ControllerRest
 		$id = $_POST['identificacion'];
 		$apartamento  = $_POST['apartamento'];
 		$visitado = $_POST['visitado'];
+		$vis = new HabitanteModel();
+		$vis->ID = $visitado; 
 		$nombre = $_POST['nombre'];
 		$foto = $_POST['foto'];
 		$visita  = new VisitaModel();
 		$visita->nombre = $nombre;
-		$visita->destino= $apartamento;
+		$a = new ApartamentoModel();
+		$a->ID = $apartamento;
+		$visita->destino= $a;
 		$visita->foto = $foto;
-		$visita->visitado = $visitado;
+		$visita->visitado = $vis;
 		$visita->save();
 		header('location: /');
 	}

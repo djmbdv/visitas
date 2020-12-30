@@ -20,7 +20,39 @@ class RegistroController extends Controller
 			return;
 		}
 		
+		if(Session::g('control_visitas')){
+			header('location: /');
+			return;
+		}
+		
 		$rv = new RegistroView(array('user' => $user ));
 		return $rv->render();
+	}
+
+	function menu(){
+		Session::load();
+		$user = UserModel::user_logged();
+		if(is_null($user)){
+			header('location: /login/');
+			return;
+		}
+		if(Session::g('control_visitas')){
+			header('location: /');
+			return;
+		}
+		
+		
+		$mv = new MenuView(array('user' => $user ));
+		return $mv->render();
+	}
+
+	function active_control_visitas(){
+		Session::load( array('control_visitas' => true ));
+		$user = UserModel::user_logged();
+		if(is_null($user)){
+			header('location: /logout/');
+			return;
+		}
+		header('location: /');
 	}
 }

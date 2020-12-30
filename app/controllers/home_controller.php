@@ -11,8 +11,13 @@ class HomeController extends Controller
 	
 	
 	function index(){
+		Session::load();
+		$user = UserModel::user_logged();
+		if(is_null($user)){
+			header('location: /login/');
+			return;
+		}
 		$main_view = new MainView(array());
-		$create = new UserModel();
 		return $main_view->render();
 	}
 	function error(){

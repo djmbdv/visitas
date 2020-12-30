@@ -19,6 +19,10 @@ class VisitasController extends ControllerRest
 			header('location: /login/');
 			return;
 		}
+		if(Session::g('control_visitas')){
+			header('location: /');
+			return;
+		}
 		$headers  = VisitaModel::get_vars();
 		$headers[] = "fecha";
 		$user = UserModel::user_logged();

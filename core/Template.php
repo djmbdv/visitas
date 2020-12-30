@@ -19,7 +19,7 @@ class Template
 	public function T($name){
 		return isset($this->model[$name])?$this->model[$name]:null ;
 	}
-	public function add_part($template, $name, $private_model = null){
+	public function add_part( $name,$template, $private_model = null){
 		require_once("app/views/templates/".$template.".template.php");
 		$t = ucfirst($template).'Template';
 		$this->parts[$name] = new $t($private_model?$private_model:$this->model);
@@ -34,7 +34,7 @@ class Template
 	}
 
 
-	public function set_parent(string $template ){
+	public function set_parent($template){
 		require_once("app/views/templates/".$template.".template.php");
 		$t = ucfirst($template).'Template';
 

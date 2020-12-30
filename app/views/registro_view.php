@@ -9,6 +9,6 @@ class RegistroView extends View
 	
 	function config()
 	{
-		$this->set_template("registro");
+		$this->set_template("dashboard");
 	}
 }

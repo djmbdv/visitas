@@ -14,7 +14,7 @@ class TopbarTemplate extends Template
 
  <nav class="navbar navbar-expand navbar-dark bg-dark   topbar mb-4 static-top shadow" >
           <!-- Sidebar Toggle (Topbar) -->
-          <a class="navbar-brand mr-0 mr-md-2" href="/" aria-label="Visitas">
+          <a class="navbar-brand mr-0 mr-md-2" href="/menu/" aria-label="Visitas">
             <img src="<?= $this->S('images/casita.png')?>" style="max-height: 50px;border-radius: 10px;" />
 </a>
           <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
@@ -48,9 +48,13 @@ class TopbarTemplate extends Template
                 <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?= $this->T('user')->username ?></span>
               </a>
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                <a class="dropdown-item" href="/registro/">
+                <a class="dropdown-item" href="/menu/">
                   <i class="fa fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                   Registro 
+                   Menú 
+                </a>
+                <a class="dropdown-item" href="/dashboard/">
+                  <i class="fa fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
+                   Dashboard 
                 </a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="/logout">

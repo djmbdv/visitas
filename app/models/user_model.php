@@ -11,7 +11,7 @@ class UserModel extends Model{
 	protected $name;
 	protected $password;
 	protected $email;
-	protected $tipo;
+	protected TipoModel $tipo;
 	public static function types_array(){ 
 		return 	array(
 		'username' => "VARCHAR( 80 ) NOT NULL UNIQUE",
@@ -21,20 +21,30 @@ class UserModel extends Model{
 		'tipo' => 'INT( 9)  NOT NULL'
  		);
 	}
-
+	public static function form_types_array(){
+		return array(
+		'email' => "email",
+		'password' => "password"	
+ 		);
+	}
 	public static function seeds(){
+
+		$tipos = TipoModel::all();
 		$client  = new UserModel();
-			$client->username = 'cliente';
-			$client->name = 'Cliente de Prueba';
-			$client->password =md5( '1234');
-			$client->tipo = 1;
-			$client->save();
-			$client  = new UserModel();
-			$client->username = 'admin';
-			$client->name = 'Admin de Prueba';
-			$client->password =md5( '1234');
-			$client->tipo = 2;
-			$client->save();
+
+		$client->username = 'cliente';
+		$client->name = 'Cliente de Prueba';
+		$client->password =md5( '1234');
+		$client->email = "client@ejemplo.com";
+		$client->tipo = $tipos[1];
+		$client->save();
+		$client  = new UserModel();
+		$client->username = 'admin';
+		$client->name = 'Admin de Prueba';
+		$client->password =md5( '1234');
+		$client->email = "admin@ejemplo.com";
+		$client->tipo = $tipos[0];
+		$client->save();
 
 	}
 	public static function user_logged(){

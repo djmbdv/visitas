@@ -1,9 +1,31 @@
 <?php
 class ModalTemplate extends Template{
+	public $camara;
 
-
-	function render(){?>
-	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+function config(){
+	$this->camara = false;
+	foreach ($this->T("modal_vars") as $v){
+		preg_match("/([\S]*)Model/", $this->T("modal_class")::get_attribute_class($v), $matches);
+		//var_dump($this->T("modal_class")::get_attribute_class('tipo'));
+		$campo = array('name' => "$v" ,
+				'label' => ucfirst($v),
+		 		'autocomplete' => is_subclass_of($this->T("modal_class")::get_attribute_class($v), 'Model'),
+		 		'required' => true,
+		 		'placeholder'=> $this->T("modal_class")::search_description($v),
+		 		'end_point'=> isset($matches[1])? '/api/'.strtolower($matches[1]).'/':null,
+		 		'autocomplete_att'=>'s',
+		 		'form_type' => $this->T("modal_class")::search_attribute_form_type($v)
+		  ); 
+		if($campo['form_type'] == 'foto')$this->camara = true; 
+		$this->add_part("campo".ucfirst($v),"campo",
+		 $campo
+		);
+		//var_dump($campo);
+	}
+}
+	
+function render(){?>
+	<div class="modal <?= $this->camara ? "modal-camara":"" ?> fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	  <div class="modal-dialog" role="document">
 	    <div class="modal-content">
 	      <div class="modal-header">
@@ -13,26 +35,16 @@ class ModalTemplate extends Template{
 	        </button>
 	      </div>
 	      <div class="modal-body">
-	        <form>
-			  <?php foreach ($this->T("modal_vars") as $v):?>
-			  <div class="form-group">
-			    <label for="campo<?= ucfirst($v) ?>"><?= ucfirst($v) ?></label>
-			    <input type="email" class="form-control" id="campo<?= ucfirst($v) ?>" aria-describedby="<?= $v ?>Help" placeholder="<?= $this->T("modal_class")::search_description($v) ?>">
-			    <small id="<?= $v ?>Help" class="form-text text-muted"></small>
-			  </div>
+	        <form id="form-modal" method="post">
+			  <?php foreach ($this->T("modal_vars") as $v):
+			  	$this->render_part("campo".ucfirst($v));
+			  	?>
 			  <?php endforeach; ?>
-			  <div class="form-group">
-			    <label for="campoNombre">Foto</label>
-			    <div id="captura"  class="m-2" style="border-radius: 10px;min-height: 250px; min-width: 250px;background-color: gray;" >
-			    	<video id="video" style="width: 100%;"></video>
-			    </div>
-			    <a class="button-photo btn-sm m-2 btn-success text-center" style="margin-right: auto;margin-left: auto;">Tomar Captura</a>
-			  </div>
 			 </form>
 	      </div>
 	      <div class="modal-footer">
 	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-	        <button type="button" class="btn btn-primary">Guardar</button>
+	        <button type="button" class="btn btn-primary save-modal">Guardar</button>
 	      </div>
 	    </div>
 	  </div>

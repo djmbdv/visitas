@@ -8,6 +8,7 @@ function autoload_controller($nombreClase) {
 		if(file_exists($archivo)) {
         	require_once($archivo);
     	} else {
+
        		 die("El archivo $archivo no se ha podido encontrar.");
     	}
 	}
@@ -34,6 +35,8 @@ function autoload_model($nombreClase) {
 		if(file_exists($archivo)) {
         	require_once($archivo);
     	} else {
+    		throw new Exception("Error Processing Request", 1);
+    		
        		 die("El archivo $archivo no se ha podido encontrar.");
     	}
 	}

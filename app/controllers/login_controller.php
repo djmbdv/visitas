@@ -12,9 +12,13 @@ class LoginController extends ControllerRest
 {
 
 	function get(){
-		//var_dump(UserModel::user_logged());
+		$create = new UserModel();
+		if(Session::g('control_visitas')){
+			header('location: /');
+			return;
+		}
 		if(UserModel::user_logged()){
-			header('location: /registro/');
+			header('location: /menu/');
 			return;
 		}
 		$lv = new LoginView(array(["var" => 1,]));
@@ -24,7 +28,7 @@ class LoginController extends ControllerRest
 		$user = $_POST['username'];
 		$password = $_POST['password'];
 		if(UserModel::login($user,$password)){
-			header('location: /registro/');
+			header('location: /menu/');
 			return;
 		}
 		else

@@ -11,7 +11,6 @@ class HeaderTemplate extends Template
 		# code...
 	}
 	function render(){?>
-
 <!DOCTYPE html>
 <html lang="es">
   <head>
