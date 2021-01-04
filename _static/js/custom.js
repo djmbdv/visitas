@@ -79,11 +79,23 @@ if( document.getElementsByClassName('modal').length == 0 &&  document.getElement
 				
 	}
 )
+
+
 $(".save-modal").click(
 	() =>{
-		$("#form-modal").submit();
-	}
-);
+		f = $("#form-modal").serialize();
+		$.ajax({
+	  url: $("#form-modal").attr("action"),
+	  type: $("#form-modal").attr("method"),
+	  data: f,
+	  success: function(data) {
+	  	console.log(data)
+	   	if(data.ok) location.reload();
+	   	else alert(data.errorMsj)
+	  }
+	})
+});
+
 function desactive_camera(){
 	var video = document.getElementById("video")
 	var canvas = document.getElementById("canvas")
@@ -93,10 +105,104 @@ function desactive_camera(){
 
 	tracks.forEach(track => track.stop())
 }
+$(".btn-add").click(e=>{
+	$("#form-modal").attr("method","post");
+	$(".key-input").remove();
+})
 
+$(".btn-delete").click(e=>{
+	$(".btn-aceptar").data({method: "delete",key: $(e.currentTarget).data("key"),model: $(e.currentTarget).data("model")})
+	$("#askModal").modal("show");
+})
+
+$(".btn-aceptar").click(e=>{
+	var a = $(e.currentTarget).data() ;
+		$.ajax({
+	  url: "./key=" +a.key,
+	  type: a.method,
+	  success: function(data) {
+	  	console.log(data)
+	   	if(data.ok) location.reload();
+	   	else alert(data.errorMsj)
+	  }
+	})
+  
+})
+
+$(".btn-view").click(e=>{
+	var a = $(e.currentTarget).data();
+	console.log(a.model);
+	$.post("/api/" + a.model, a).done(
+		data=>{
+			Object.keys(data).forEach(a =>{
+				if(typeof(data[a]) == 'object'){
+					console.log(data[a]);
+					var element = "#inputv"+a.charAt(0).toUpperCase()+a.slice(1);
+					$(element+'1').val(data[a].ID);
+					$.post("/api/" + $(element).data('clase'),
+					{ 'key' : $("#"+$(element).attr("entrada")).val() },
+					kk => {
+						$(element).val(kk.presentation);
+						$(element).addClass('input-success');
+					});
+
+				}
+				else $("#inputv"+a.charAt(0).toUpperCase()+a.slice(1)).val(data[a]);
+			});
+			$(".image-buffer").each((i,u)=>{
+				$(u).attr('src',$('#'+$(u).attr('fuente')).val());
+			});
+			$('#viewModal').modal('show');
+		})
+})
+
+$(".btn-edit").click(e=>{
+	var a = $(e.currentTarget).data();
+	console.log(a);
+	$.post("/api/"+a.model, a).done(
+		data=>{
+			Object.keys(data).forEach(a =>{
+				
+				if(typeof(data[a]) == 'object'){
+					console.log(data[a]);
+					var element = "#input"+a.charAt(0).toUpperCase()+a.slice(1);
+					$(element+'1').val(data[a].ID);
+					$.post("/api/" + $(element).data('clase'),
+					{ 'key' : $("#"+$(element).attr("entrada")).val() },
+					kk => {
+						$(element).val(kk.presentation);
+						$(element).addClass('input-success');
+					});
+
+				}
+				else $("#input"+a.charAt(0).toUpperCase()+a.slice(1)).val(data[a]);
+
+			});
+			
+			$("#form-modal").attr("method","put")
+			$(".key-input").remove()
+			var input = document.createElement('input')
+			input.type = "hidden"
+			input.name = "key"
+			input.class = "key-input"
+			input.value = a.key;
+			$("#form-modal").append(input)
+			$('#formModal').modal('show');
+
+			//console.log(data);
+		}
+	);
+});
 $(".modal-camara").on('shown.bs.modal', function(){
     active_camera();
   });
 $(".modal-camara").on('hide.bs.modal', function(){
     desactive_camera();
+  });
+
+$("#formModal").on('reset', function(){
+    $("input").removeClass("input-success");
+  });
+$("#formModal").on('hide.bs.modal', function(){
+    document.getElementById("form-modal").reset();
   });

@@ -21,6 +21,7 @@ class HomeController extends Controller
 		return $main_view->render();
 	}
 	function error(){
+		http_response_code(404);
 		$error_view = new ErrorView();
 		return $error_view->render();
 	}

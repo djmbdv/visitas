@@ -15,6 +15,10 @@
 	background:white;
 	width: 80%;
 }
+
+.table{
+	font-size: 0.876rem;
+}
 .item-autocomplete{
 	padding: 2px;
 	font-size: 12px;
@@ -38,5 +42,6 @@
 .marco-foto{
 	background: #007bff !important;
 }
-
-
+.page-item.active {
+	font-weight: bold;
+}

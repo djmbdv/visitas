@@ -45,9 +45,11 @@ abstract class ControllerRest extends Controller{
 					$this->get();
 				break;
 				case 'POST': 
+					$this->_POST= $_POST;
 					$this->post();
 				break;
 				case 'PUT':
+					parse_str(file_get_contents('php://input', false , null, 0 , $_SERVER['CONTENT_LENGTH'] ), $this->_PUT);
 					$this->put();
 				break;
 				case 'DELETE':

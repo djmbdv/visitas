@@ -7,6 +7,8 @@ class HabitantesTemplate extends Template{
 		$this->add_part("topbar","topbar");
 		$this->add_part("table","table");
 		$this->add_part("modal","modal");
+		$this->add_part("viewmodal","viewmodal");
+		$this->add_part("askmodal","askmodal");
 	}
 
 	function render(){
@@ -14,12 +16,14 @@ class HabitantesTemplate extends Template{
 		$p = $this->T("page");
 		$this->render_part("topbar"); 
 		$this->render_part("modal");
+		$this->render_part("viewmodal");
+		$this->render_part("askmodal");
 		?>
 
 <div class="container">
 	<div class="row">
 	<h1 class="text-center"><?= $this->T('title') ?></h1>
-	<a type="button"  data-toggle="modal" data-target="#exampleModal" class="btn btn-warning m-3">Nuevo Habitante</a>
+	<a type="button"  data-toggle="modal" data-target="#formModal" class="btn btn-add btn-warning m-3"><i class="fa fa-user"></i>Nuevo Habitante</a>
 	<hr/>
 <?php 
 if($c > 0): 

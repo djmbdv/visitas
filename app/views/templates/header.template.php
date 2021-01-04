@@ -19,13 +19,13 @@ class HeaderTemplate extends Template
     <meta name="description" content=""/>
     <meta name="author" content=""/>
     <link rel="icon" href="<?= $this->S("favicon.png")?>"/>
-
     <title>Sistema de Control de Visitas</title>
 
     <link href="<?= $this->S("css/bootstrap.min.css")?>" rel="stylesheet"/>
     <link href="<?= $this->S("css/font-awesome.min.css")?>" rel="stylesheet"/>
-    <link rel="stylesheet" type="text/css" href="<?= $this->SS("css/custom.css")?>">
+    <link href="<?= $this->SS("css/custom.css")?>" rel="stylesheet"/>
   </head>
   <body>
-<?php	}
+<?php	
+  }
 }

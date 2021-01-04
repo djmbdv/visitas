@@ -14,31 +14,34 @@ class CampoTemplate extends Template{
 		$label = $this->T("label");
 		$autocomplete_att = $this->T("autocomplete_att");
 		$form_type = $this->T("form_type");
+    $readonly = $this->T("readonly");
+    $r = $readonly? 'v':'';
 		?>
 		<div class="form-group <?=$autocomplete?'autocomplete':''?>">
 			<?php if($label):?>
-			<label for="input<?= ucfirst($name) ?>"><?= $label ?></label>
+			<label for="input<?= $r ?><?= ucfirst($name) ?>"><?= $label ?></label>
 			<?php endif; ?>
 			<?php if($form_type == "foto"):?>
-								<input id="input<?= ucfirst($name) ?>" type="hidden" name="<?= $name ?>" value=""/>
+        				<input id="input<?= $r ?><?= ucfirst($name) ?>" type="hidden" name="<?= $name ?>" value=""/>
+        <?php if(!$readonly): ?>
 			    <div id="captura"  class="m-2 p-2" style="border-radius: 10px;min-height: 150px; min-width: 250px;background-color: gray;" >
 			    	<p class="info-foto" style="color: white;">Click para tomar foto</p>
 			    	<video id="video" style="width:100%;border-radius: 10px;min-width: 250px;background-color: gray;"></video>
 			    	<canvas id="canvas" style="display: none;"></canvas>
 			    </div>
 			    <div class="button-photo btn-sm m-2 btn-primary text-center " style="margin-right: auto;margin-left: auto;" disabled>Tomar Captura</div>
-
-			<?php else: ?>
-
-			
-				<input id="input<?= ucfirst($name) ?>" entrada="input<?= ucfirst($name) ?>1" class="form-control <?= $add_class ?>" type="<?= $form_type ? $form_type : 'text'?>" name="<?= ($autocomplete?'_':'').$name ?>" placeholder="<?= $placeholder ?>" required="<?= $required?'true':'false'?>" autocomplete="off" />
+			 <?php else:?> 
+          <img class="img-reponsive image-buffer" style="max-width: 100%;" fuente="input<?= $r ?><?= ucfirst($name) ?>"  src="">
+       <?php endif;?>
+      <?php else: ?>
+				<input id="input<?= $r ?><?= ucfirst($name) ?>" entrada="input<?= $r ?><?= ucfirst($name) ?>1" class="form-control <?= $add_class ?>" <?= $autocomplete?" data-clase=\"".$this->T('clase').'"':'' ?> type="<?= $form_type ? $form_type : 'text'?>" name="<?= ($autocomplete?'_':'').$name ?>" placeholder="<?= $placeholder ?>" required="<?= $required?'true':'false'?>" autocomplete="off" <?= $readonly? "readonly":"" ?> />
 				<?php if($autocomplete): ?>
-					<input id="input<?= ucfirst($name) ?>1" type="hidden" name="<?= $name ?>">
+					<input id="input<?= $r ?><?= ucfirst($name) ?>1" class="hidden-input-form" data-show="input<?= $r ?><?= ucfirst($name) ?>" type="hidden" name="<?= $name ?>"/>
 				<?php endif; ?>
 			<?php endif; ?>
 		</div>
 		<?php if($autocomplete): ?>
-
+<?php if($readonly): ?>
 <script type="text/javascript">
 	function autocomplete<?=  $name ?>(inp) {
 		if(inp === null)return;
@@ -121,6 +124,7 @@ function closeAllLists(elmnt) {
 }
 
 autocomplete<?= $name ?>(document.getElementById("input<?= ucfirst($name) ?>"));
+<?php endif; ?>
 </script>
 <?php
 	endif;

@@ -36,20 +36,54 @@ class UsersController extends ControllerRest
 		));
 		return $hv->render();
 	}
-	public function post(){
+
+	public function delete(){
+		$key = $this->get_param('key');
+		
+		$respose = new stdClass;
+		if(UserModel::remove($key))
+		$respose->ok = true;
+		else $respose->errorMsj = "Error al eliminar";
+		header("Content-type:application/json");
+		print_r(json_encode($respose));
+	}
+
+	public function put(){
 		$u = new UserModel();
-		if(isset($_POST["id"]))$u->ID = $_POST["id"]; 
-		if(isset($_POST["name"]))$u->name = $_POST["name"]; 
-		if(isset($_POST["username"]))$u->username = $_POST["username"]; 
-		if(isset($_POST["password"]))$u->password = $_POST["password"]; 
-		if(isset($_POST["email"]))$u->email = $_POST["email"]; 
-		if(isset($_POST["tipo"])){
+		if(isset($this->_PUT["key"]))$u->ID = $this->_PUT["key"]; 
+		if(isset($this->_PUT["name"]))$u->name = $this->_PUT["name"]; 
+		if(isset($this->_PUT["username"]))$u->username = $this->_PUT["username"]; 
+		if(isset($this->_PUT["password"]))$u->password = $this->_PUT["password"]; 
+		if(isset($this->_PUT["email"]))$u->email = $this->_PUT["email"]; 
+		if(isset($this->_PUT["tipo"])){
 			$t  = new TipoModel();
-			$t->ID = $_POST["tipo"];
+			$t->ID = $this->_PUT["tipo"];
 			$u->tipo = $t;
 		}
-		$u->save();
-		return $this->get();
-
+		$respose = new stdClass;
+		if($u->save())
+		$respose->ok = true;
+		else $respose->errorMsj = "Error al crear";
+		header("Content-type:application/json");
+		print_r(json_encode($respose));
+	}
+	public function post(){
+		$u = new UserModel();
+		if(isset($this->_POST["name"]))$u->name = $this->_POST["name"]; 
+		if(isset($this->_POST["username"]))$u->username = $this->_POST["username"]; 
+		if(isset($this->_POST["password"]))$u->password = $this->_POST["password"]; 
+		if(isset($this->_POST["email"]))$u->email = $this->_POST["email"]; 
+		if(isset($this->_POST["tipo"])){
+			$t  = new TipoModel();
+			$t->ID = $this->_POST["tipo"];
+			$u->tipo = $t;
+		}
+		$respose = new stdClass;
+		if($u->save())
+		
+		$respose->ok = true;
+		else $respose->errorMsj = "Error al crear";
+		header("Content-type:application/json");
+		print_r(json_encode($respose));
 	}
 }

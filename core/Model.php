@@ -17,6 +17,22 @@ abstract class Model{
 	public static function seeds(){
 
 	}
+	public static function classname(){
+		preg_match("/([\S]*)Model/", get_called_class(), $matches);
+		return strtolower($matches[1]);
+	}
+
+
+	public static function remove($key){
+			$pdo = DB::get();
+			$table = self::get_table_name();
+			$index = self::$index_name;
+			$sql = "DELETE from $table where $index = :key";
+			$stmt = $pdo->prepare($sql);
+			$stmt->bindParam(":key", $key);
+			$stmt->execute();
+		return true;
+	}
 
 	public static function all_where_like($att, $value,$count = null, $page = null,$loaded = false){
 		if(!self::table_exist())self::create_table();
@@ -115,13 +131,6 @@ abstract class Model{
 		if (!self::table_exist()) {
 			self::create_table();
 		}
-		/*foreach (self::get_vars() as $value) {
-			$cc = get_called_class();
-			if(is_subclass_of( $cc::get_attribute_class($value),get_class() )){
-				$clase = $cc::get_attribute_class($value);
-				$this->{$value} = new $clase();
-			}
-		}*/
 	}
 
 	public function get_modified_at(){
@@ -229,7 +238,7 @@ abstract class Model{
 		$table = self::get_table_name();
 		$index = self::$index_name;
 		
-		if(!is_null($this->get_key()) && $this->isLoaded){
+		if(!is_null($this->get_key()) ){
 			$key = $this->get_key();	
 			$sql = "UPDATE $table ";
 			$count = 0;
@@ -296,6 +305,7 @@ abstract class Model{
 			$this->{$index} = $nkey;
 			return true;
 		}
+
 		return false;
 	}
 	public static function next_key(){
@@ -378,7 +388,6 @@ abstract class Model{
 				$att == self::$index_name
 			)
 					continue;
-			
 
 			try{
 				$rp = new ReflectionProperty(get_called_class(), $att);
@@ -399,17 +408,11 @@ abstract class Model{
 	public static function get_attribute_class($a){
 		try{
 		$rp = new ReflectionProperty(get_called_class(), $a);
-	//	var_dump(get_called_class());
 		$type =  $rp->getType()->getName();
 		}catch(Throwable $t){
 			return "";
 		}
 		return $type;
-	}
-	public static function find(){}
-
-	public static function get_all(){
-
 	}
 
 }
