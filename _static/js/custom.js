@@ -11,8 +11,6 @@ if (tieneSoporteUserMedia()) {
     _getUserMedia(
         {video: true},
         function (stream) {
-
-         //   console.log("Permiso concedido");
         	var video = document.getElementById("video");
 			video.srcObject  = (stream);
 			video.play()
@@ -131,12 +129,13 @@ $(".btn-aceptar").click(e=>{
 
 $(".btn-view").click(e=>{
 	var a = $(e.currentTarget).data();
-	console.log(a.model);
+//	console.log(a.model);
 	$.post("/api/" + a.model, a).done(
 		data=>{
 			Object.keys(data).forEach(a =>{
-				if(typeof(data[a]) == 'object'){
-					console.log(data[a]);
+	//			console.log(a)
+				if(typeof(data[a]) == 'object' && data[a] != null ){
+			//		console.log(data[a]);
 					var element = "#inputv"+a.charAt(0).toUpperCase()+a.slice(1);
 					$(element+'1').val(data[a].ID);
 					$.post("/api/" + $(element).data('clase'),
@@ -147,7 +146,12 @@ $(".btn-view").click(e=>{
 					});
 
 				}
-				else $("#inputv"+a.charAt(0).toUpperCase()+a.slice(1)).val(data[a]);
+				else {
+					$("#inputv"+a.charAt(0).toUpperCase()+a.slice(1)).attr("type") == "file"?
+					$("#inputv"+a.charAt(0).toUpperCase()+a.slice(1)+'1').val(data[a]) :
+					$("#inputv"+a.charAt(0).toUpperCase()+a.slice(1)).val(data[a]);
+
+				}
 			});
 			$(".image-buffer").each((i,u)=>{
 				$(u).attr('src',$('#'+$(u).attr('fuente')).val());
@@ -158,13 +162,13 @@ $(".btn-view").click(e=>{
 
 $(".btn-edit").click(e=>{
 	var a = $(e.currentTarget).data();
-	console.log(a);
+//	console.log(a);
 	$.post("/api/"+a.model, a).done(
 		data=>{
 			Object.keys(data).forEach(a =>{
-				
-				if(typeof(data[a]) == 'object'){
-					console.log(data[a]);
+				if(a == "password")return;
+				if(typeof(data[a]) == 'object' &&  data[a] != null){
+	//				console.log(data[a]);
 					var element = "#input"+a.charAt(0).toUpperCase()+a.slice(1);
 					$(element+'1').val(data[a].ID);
 					$.post("/api/" + $(element).data('clase'),
@@ -175,7 +179,12 @@ $(".btn-edit").click(e=>{
 					});
 
 				}
-				else $("#input"+a.charAt(0).toUpperCase()+a.slice(1)).val(data[a]);
+				else {
+					$("#input"+a.charAt(0).toUpperCase()+a.slice(1)).attr("type") == "file"?
+					$("#input"+a.charAt(0).toUpperCase()+a.slice(1)+'1').val(data[a]) :
+					$("#input"+a.charAt(0).toUpperCase()+a.slice(1)).val(data[a]);
+
+				}
 
 			});
 			
@@ -206,3 +215,22 @@ $("#formModal").on('reset', function(){
 $("#formModal").on('hide.bs.modal', function(){
     document.getElementById("form-modal").reset();
   });
+
+
+
+const toBase64 = file => new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = error => reject(error);
+});
+
+$(".form-control-file").change(async function(e){
+	f = e.currentTarget.files[0]
+
+	if(f.type.split('/')[0] === "image"){
+	//	console.log(await  toBase64(f))
+		$("#"+$(e.currentTarget).attr("entrada")).val(await  toBase64(f))
+	}
+
+})

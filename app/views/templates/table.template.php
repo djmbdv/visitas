@@ -7,8 +7,9 @@ class TableTemplate extends Template{
 		$c = $this->T("count");
 		$p = $this->T("page");
 		?>
-<table class="table table-responsive">
-	<thead>
+<div class="table-responsive">
+<table class="table table-hover">
+	<thead class="table-light">
 	    <tr>
 <?php
 foreach($this->T('table_vars') as  $value): ?>
@@ -27,7 +28,7 @@ foreach($this->T('items') as $it):
 	<tr>
 <?php
 	foreach($this->T('table_vars') as $value):
-	if($it->get_attribute_type($value) == "mediumblob"):?>
+	if($it->get_attribute_type($value) == "mediumblob" ):?>
 		<td><img src="<?= $it->{$value} ?>" class="image-table"></img></td>
 <?php
 	elseif(is_subclass_of($it->{$value}, "Model")): 
@@ -42,15 +43,18 @@ endforeach; ?>
 		<td><?= $it->get_create_at() ?></td>
 		<td><?= $it->get_modified_at() ?></td>
 		<td>
+			<div class="btn-group" role="group" aria-label="Basic example">
 			<button class="btn btn-view btn-info btn-sm" data-model="<?=  get_class($it)::classname() ?>" data-key="<?= $it->get_key() ?>"><i class="fa fa-eye"></i></button>
 			<button class="btn btn-edit btn-warning btn-sm" data-model="<?=  get_class($it)::classname()?>" data-key="<?= $it->get_key() ?>"><i class="fa fa-pencil"></i></button>
 			<button class="btn btn-delete btn-danger btn-sm" data-model="<?=  get_class($it)::classname()?>" data-key="<?= $it->get_key() ?>">
 				<i class="fa fa-trash"></i></button>
+			</div>
 		</td>
 	</tr>
 <?php endforeach; ?>
 	</tbody>
 </table>
+</div>
 <?php
 	}
 }

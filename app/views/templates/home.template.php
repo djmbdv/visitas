@@ -12,8 +12,9 @@ class HomeTemplate extends Template{
 		 		'autocomplete' => true,
 		 		'required' => true,
 		 		'placeholder'=> "Nombre de la persona a visitar",
-		 		'end_point'=> '/api/habitante/',
-		 		'autocomplete_att'=>'s'
+		 		'end_point'=> '/api/habitantes/',
+		 		'autocomplete_att'=>'s',
+		 		'add_class' => 'form-control-home'
 		  )
 		);
 $this->add_part("campoApartamento","campo",
@@ -21,44 +22,43 @@ $this->add_part("campoApartamento","campo",
 		 		'autocomplete' => true,
 		 		'required' => true,
 		 		'placeholder'=> "Apartamento a donde se dirige",
-		 		'end_point'=> '/api/apartamento/',
-		 		'autocomplete_att'=>'s'
+		 		'end_point'=> '/api/apartamentos/',
+		 		'autocomplete_att'=>'s',
+		 		'clase'=> 'apartamento',
+		 		'add_class' => 'form-control-home'
 		  )
 		);
 
 		?>
 
-<a class="btn btn-sm" href="/logout/" style="box-shadow: 1px 3px;"><i class="fa fa-sign-out fa-sm fa-fw mr-2 text-gray-400"></i></a>
+<a class="btn btn-sm" href="/logout/"><i class="fa fa-sign-out fa-sm fa-fw mr-2 text-gray-400"></i></a>
 <div class="container">
 <h1 class="text-center  mt-3 mb-2">Control de Visitas</h1>
-<div class="row" style="border-top: solid 1px  #007bff; border-radius: 3px;">
+<div class="row" style="border-top: solid 1px  #007bff;">
 	<div class="col-md-6 text-center">
-		<h5 class="text-center p-3 mt-3">Complejo Habitacional RPS</h5>
-		<img class="img-responsive p-2" src="<?= $this->S("images/casita.png") ?>" style="box-shadow: 1px 3px;  border-radius: 10%; max-width: 100%; margin: 80px;background-color: white;">
+		<h4 class="text-center p-3 mt-3">Complejo Habitacional RPS</h4>
+		<img class="img-fluid shadow-2-strong"  src="<?=  $this->T("user")->image  ?? $this->S("images/casita.png") ?>" style="box-shadow: 1px 3px; max-width: 80%; margin: 40px;background-color: white;">
 	</div>
 
 	<div class="col-md-6">
-		<h5 class="text-center p-3 mt-3">DATOS</h5> 
+		<h4 class="text-center p-3 mt-3">DATOS</h4> 
 		<form action="/foto" method="post">
 			<?php $this->render_part("campoApartamento");?>
 			<?php $this->render_part("campoVisitado");?>
-			<!--div class="form-group autocomplete">
-				<input id="inputVisitado" class="form-control form-control-home" type="text" name="visitado" placeholder="Nombre de la persona a visitar" required="" autocomplete="off" />
-			</div-->
-
-			<div class="form-group">
-				<input class="form-control  form-control-home" type="text" name="nombre" placeholder="Su Nombre y Apellido" required="" />
+			<div class="form-group form-control-home">
+				<input class="form-control " type="text" name="nombre" placeholder="Su Nombre y Apellido" required="" />
 			</div>
-			<div class="form-group">
-				<input class="form-control form-control-home" type="text" name="identificacion" placeholder="Numero de Identificacion" required="" />
+			<div class="form-group form-control-home">
+				<input class="form-control " type="text" name="identificacion" placeholder="Numero de Identificacion" required="" />
 			</div>
-			<div class="form-group">
+			<div class="form-group form-control-home">
 				<input class="form-control btn-primary" type="submit" name="" value="Tomar Foto" />
 			</div>
 		</form>
 	</div>
 </div>
-<div class="lead text-center text-muted card p-2 m-2">
+<hr>
+<div class="small text-center text-muted card p-2 m-2">
 	<h2>Para prueba</h2>
 	<h5>Dashboard Cliente</h5>
 	<p>usuario: <b>cliente</b></p>

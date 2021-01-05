@@ -39,15 +39,24 @@ abstract class Model{
 		$sql=" where $att LIKE '%$value%'";
 		return self::all($count, $page,$loaded,$sql);
 	}
-
-	public function get_json(){
-		$o = $this->no_class_values();
+	public static function all_where_and($a = array(),$count = null, $page = null,$loaded = false){
+		if(!self::table_exist())self::create_table();
+		$sql = "";
+		foreach ($a as $key => $value) {
+			if($key == 0)$sql=" where $value[0] $value[1] '$value[2]'";
+			else $sql.=" and $value[0] $value[1] $value[2]";
+		}
+		//print_r($sql);
+		return self::all($count, $page,$loaded,$sql);
+	}
+	public function get_json($hide = array()){
+		$o = $this->no_class_values($hide);
 		return json_encode($o);
 	}
-	public function no_class_values(){
+	public function no_class_values($hide = array()){
 		$this->load();
 		$o = new stdClass();
-		foreach (self::get_vars() as $key ) {
+		foreach (array_diff(self::get_vars(),$hide) as $key ) {
 			$o->{$key} = $this->{$key};
 		}
 		$o->create_at = $this->get_create_at();
@@ -258,8 +267,13 @@ abstract class Model{
 			}
 			$sql.=" where $index = '$key'";
 			$pdo = DB::get();
+			try{
 			$pdo->query($sql);
 			return true;
+			}catch(Throwable $t){
+				return false;
+			}
+
 		}else if(is_null($this->get_key())){
 			$sql = "INSERT INTO `$table`";
 			$count = 0;
@@ -300,10 +314,14 @@ abstract class Model{
 			$sql.=")";
 			$pdo = DB::get();
 			$nkey = self::next_key();
+			try{
 			$pdo->query($sql);
 			$this->isLoaded = true;
 			$this->{$index} = $nkey;
 			return true;
+			}catch(Throwable $t){
+				return false;
+			}
 		}
 
 		return false;
@@ -360,11 +378,18 @@ abstract class Model{
 		}
 	}
 
-	public static function count(){
+	public static function count($where = null ){
+		if(!self::table_exist())self::create_table();
 		$pdo = DB::get();
 		$table = self::get_table_name();
 		$index = self::$index_name;
-		$stmt  = $pdo->prepare("select count($index) as cc from $table");
+		$sql = "select count($index) as cc from $table";
+		if($where)
+			foreach ($where as $key => $value) {
+				if($key == 0)$sql.=" where $value[0] $value[1] '$value[2]'";
+				else $sql.=" and $value[0] $value[1] '$value[2]'";
+			}
+		$stmt  = $pdo->prepare($sql);
 		$stmt->execute();
 		$res = $stmt->fetchAll(PDO::FETCH_ASSOC);
 		return intval($res[0]['cc']);

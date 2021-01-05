@@ -10,6 +10,7 @@ class VisitaModel extends Model
 	public ApartamentoModel $destino;
 	public $foto;
 	public HabitanteModel $visitado;
+	public UserModel $cliente;
 
 
 	public static function types_array(){
@@ -17,7 +18,8 @@ class VisitaModel extends Model
 		'nombre' => "VARCHAR( 150 ) NOT NULL",
 		'destino' => "INT( 11 ) NOT NULL",
 		'foto' => ' MEDIUMBLOB NOT NULL',
-		'visitado'=>'VARCHAR (100) NOT NULL'
+		'visitado'=>'int (11) NOT NULL',
+		'cliente' => 'int (11) NOT NULL'
  		);
 	}
 }

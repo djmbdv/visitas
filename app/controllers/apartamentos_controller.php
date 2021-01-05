@@ -29,14 +29,24 @@ class ApartamentosController extends ControllerRest
 		$page = $this->get_param("page");
 		$page = $page?$page:1;	
 //		var_dump(EdificioModel::all());
+		if(!$user->is_admin()){
+			$condicion = [['cliente','=',$user->get_key()]];	
+			$vars = array_filter(ApartamentoModel::get_vars(),function($a){ return $a != 'cliente';});
+			$count = ApartamentoModel::count($condicion);
+			$items = ApartamentoModel::all_where_and($condicion,20,$page);	
+		}else{
+			$vars = ApartamentoModel::get_vars();
+			$count = ApartamentoModel::count();
+			$items = ApartamentoModel::all(20,$page);
+		}
 		$hv = new ApartamentosView( array(
-			'items' => ApartamentoModel::all(20,$page),
+			'items' => $items,
 			'user'=> $user,
-			"table_vars" => ApartamentoModel::get_vars(),
-			"modal_vars" => ApartamentoModel::get_vars(),
+			"table_vars" => $vars,
+			"modal_vars" => $vars,
 			"modal_class" => 'ApartamentoModel',
 			'page'=> $page,
-			'count'=> ApartamentoModel::count(),
+			'count'=> $count,
 			'title'=>'Apartamentos'
 		));
 		return $hv->render();
@@ -55,6 +65,11 @@ class ApartamentosController extends ControllerRest
 	}
 
 	public function put(){
+		$user = UserModel::user_logged();
+		if(is_null($user)){
+			header('location: /login/');
+			return;
+		}
 		$u = new ApartamentoModel();
 		if(isset($this->_PUT["key"]))$u->ID = $this->_PUT["key"]; 
 		if(isset($this->_PUT["nombre"]))$u->nombre = $this->_PUT["nombre"]; 
@@ -69,6 +84,13 @@ class ApartamentosController extends ControllerRest
 			$a->ID = $this->_PUT["propietario"];
 			$u->propietario = $a;
 		}
+		if(isset($this->_PUT["cliente"]) && $user->is_admin()){
+			$a  = new UserModel();
+			$a->ID = $this->_PUT["cliente"];
+			$u->cliente = $a;
+		}else {
+			$u->cliente = $user;
+		}
 		$respose = new stdClass;
 		if($u->save())
 		
@@ -78,6 +100,11 @@ class ApartamentosController extends ControllerRest
 		print_r(json_encode($respose));
 	}
 	public function post(){
+		$user = UserModel::user_logged();
+		if(is_null($user)){
+			header('location: /login/');
+			return;
+		}
 		$u = new ApartamentoModel();
 		if(isset($this->_POST["nombre"]))$u->nombre = $this->_POST["nombre"]; 
 		
@@ -90,6 +117,13 @@ class ApartamentosController extends ControllerRest
 			$a  = new HabitanteModel();
 			$a->ID = $this->_POST["propietario"];
 			$u->propietario = $a;
+		}
+		if(isset($this->_POST["cliente"]) && $user->is_admin()){
+			$a  = new UserModel();
+			$a->ID = $this->_POST["cliente"];
+			$u->cliente = $a;
+		}else {
+			$u->cliente = $user;
 		}
 		$respose = new stdClass;
 		if($u->save())

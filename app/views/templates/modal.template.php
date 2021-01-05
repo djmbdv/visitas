@@ -24,13 +24,12 @@ function config(){
 }
 	
 function render(){?>
-	<div class="modal <?= $this->camara ? "modal-camara":"" ?> fade" id="formModal" tabindex="-1" role="dialog" aria-labelledby="formModalLabel" aria-hidden="true">
-	  <div class="modal-dialog" role="document">
+	<div class="modal <?= $this->camara ? "modal-camara":"" ?>  fade" id="formModal" tabindex="-1" role="dialog" aria-labelledby="formModalLabel" aria-hidden="true">
+	  <div class="modal-dialog modal-lg" role="document">
 	    <div class="modal-content">
-	      <div class="modal-header">
+	      <div class="modal-header  bg-warning text-white d-flex ">
 	        <h5 class="modal-title" id="formModalLabel">Datos de <?= $this->T("title") ?></h5>
-	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-	          <span aria-hidden="true">&times;</span>
+	        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
 	        </button>
 	      </div>
 	      <div class="modal-body">
@@ -41,9 +40,9 @@ function render(){?>
 			  <?php endforeach; ?>
 			 </form>
 	      </div>
-	      <div class="modal-footer">
-	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-	        <button type="button" class="btn btn-primary save-modal">Guardar</button>
+	      <div class="modal-footer d-flex justify-content-center">
+	        <button type="button" class="btn btn-outline-warning" data-dismiss="modal">Cerrar</button>
+	        <button type="button" class="btn btn-warning save-modal">Guardar</button>
 	      </div>
 	    </div>
 	  </div>

@@ -14,10 +14,11 @@ class CampoTemplate extends Template{
 		$label = $this->T("label");
 		$autocomplete_att = $this->T("autocomplete_att");
 		$form_type = $this->T("form_type");
+    $file = ($form_type == 'file');
     $readonly = $this->T("readonly");
     $r = $readonly? 'v':'';
 		?>
-		<div class="form-group <?=$autocomplete?'autocomplete':''?>">
+		<div class="form-group <?=$autocomplete?'autocomplete':''?> <?= $add_class ?>">
 			<?php if($label):?>
 			<label for="input<?= $r ?><?= ucfirst($name) ?>"><?= $label ?></label>
 			<?php endif; ?>
@@ -34,14 +35,20 @@ class CampoTemplate extends Template{
           <img class="img-reponsive image-buffer" style="max-width: 100%;" fuente="input<?= $r ?><?= ucfirst($name) ?>"  src="">
        <?php endif;?>
       <?php else: ?>
-				<input id="input<?= $r ?><?= ucfirst($name) ?>" entrada="input<?= $r ?><?= ucfirst($name) ?>1" class="form-control <?= $add_class ?>" <?= $autocomplete?" data-clase=\"".$this->T('clase').'"':'' ?> type="<?= $form_type ? $form_type : 'text'?>" name="<?= ($autocomplete?'_':'').$name ?>" placeholder="<?= $placeholder ?>" required="<?= $required?'true':'false'?>" autocomplete="off" <?= $readonly? "readonly":"" ?> />
-				<?php if($autocomplete): ?>
-					<input id="input<?= $r ?><?= ucfirst($name) ?>1" class="hidden-input-form" data-show="input<?= $r ?><?= ucfirst($name) ?>" type="hidden" name="<?= $name ?>"/>
-				<?php endif; ?>
+				<?php if(!($readonly && $file)):?> 
+        <input id="input<?= $r ?><?= ucfirst($name) ?>" entrada="input<?= $r ?><?= ucfirst($name) ?>1" class="form-control<?=$file?'-file':''?> " <?= $autocomplete?" data-clase=\"".$this->T('clase').'"':'' ?> type="<?= $form_type ? $form_type : 'text'?>" name="<?= (($autocomplete || $file)?'_':'').$name ?>" placeholder="<?= $placeholder ?>" required="<?= $required?'true':'false'?>" autocomplete="off" <?= $readonly? "readonly":"" ?> />
+      <?php endif; ?>
+				<?php if($autocomplete || $file ): ?>
+					<input id="input<?= $r ?><?= ucfirst($name) ?><?= !($file && $readonly)?'1':''?>" class="hidden-input-form<?=$file?'-file':"" ?>" data-show="input<?= $r ?><?= ucfirst($name) ?>" type="hidden" name="<?= $name ?>"/>
+        <?php if($readonly && $file): ?>
+          <img class="img-reponsive image-buffer" style="max-width: 100%;" fuente="input<?= $r ?><?= ucfirst($name) ?>"  src="">
+
+				<?php endif;
+         endif; ?>
 			<?php endif; ?>
 		</div>
 		<?php if($autocomplete): ?>
-<?php if($readonly): ?>
+<?php if(!$readonly): ?>
 <script type="text/javascript">
 	function autocomplete<?=  $name ?>(inp) {
 		if(inp === null)return;

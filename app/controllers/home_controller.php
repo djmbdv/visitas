@@ -17,7 +17,10 @@ class HomeController extends Controller
 			header('location: /login/');
 			return;
 		}
-		$main_view = new MainView(array());
+		$user->load();
+		//print_r($user);
+		$main_view = new MainView(['user'=>$user]);
+
 		return $main_view->render();
 	}
 	function error(){

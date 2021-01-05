@@ -1,19 +1,28 @@
 .image-table{
 	max-height: 80px;
 }
+.dropdown-menu-right {
+    right: 0;
+    left: auto;
+}
 .row {
     margin-right: 0px; 
     margin-left: 0px;
 }
 .form-control-home{
 	min-height: 40px;
+	margin: 25px;
+	font-size: 1.5rem;
 }
 
+.form-group{
+	padding-top: 1rem;
+}
 .autocomplete-items{
 	position: absolute;
 	z-index: 10;
 	background:white;
-	width: 80%;
+	min-width: 20%;
 }
 
 .table{
@@ -44,4 +53,8 @@
 }
 .page-item.active {
 	font-weight: bold;
+}
+th{
+	font-weight: bold;
+	padding: 10px; 
 }

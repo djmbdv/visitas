@@ -26,6 +26,11 @@ class FotoController extends ControllerRest
 	}
 
 	public function visita($argument = null){
+		$user = UserModel::user_logged();
+		if(is_null($user)){
+			header('location: /login/');
+			return;
+		}
 		$id = $_POST['identificacion'];
 		$apartamento  = $_POST['apartamento'];
 		$visitado = $_POST['visitado'];
@@ -40,6 +45,7 @@ class FotoController extends ControllerRest
 		$visita->destino= $a;
 		$visita->foto = $foto;
 		$visita->visitado = $vis;
+		$visita->cliente = $user;
 		$visita->save();
 		header('location: /');
 	}

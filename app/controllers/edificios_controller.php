@@ -28,23 +28,44 @@ class EdificiosController extends ControllerRest
 		}
 		$page = $this->get_param("page");
 		$page = $page?$page:1;	
-
+		if(!$user->is_admin()){
+			$condicion = [['cliente','=',$user->get_key()]];	
+			$vars = array_filter(EdificioModel::get_vars(),function($a){ return $a != 'cliente';});
+			$count = EdificioModel::count($condicion);
+			$items = EdificioModel::all_where_and($condicion,20,$page);	
+		}else{
+			$vars = EdificioModel::get_vars();
+			$count =EdificioModel::count();
+			$items = EdificioModel::all(20,$page);
+		}
 		$hv = new EdificiosView( array(
-			'items' => EdificioModel::all(20,$page),
+			'items' => $items,
 			'user'=> $user,
-			"table_vars" => EdificioModel::get_vars(),
-			"modal_vars" => EdificioModel::get_vars(),
+			"table_vars" => $vars,
+			"modal_vars" => $vars,
 			"modal_class" => 'EdificioModel',
 			'page'=> $page,
-			'count'=> EdificioModel::count(),
+			'count'=> $count,
 			'title'=>'Edificios'
 		));
 		return $hv->render();
 	}
 	public function post(){
+		$user = UserModel::user_logged();
+		if(is_null($user)){
+			header('location: /login/');
+			return;
+		}
 		$u = new EdificioModel();
 		if(isset($this->_POST["nombre"]))$u->nombre = $this->_POST["nombre"]; 
 		if(isset($this->_POST["direccion"]))$u->direccion = $this->_POST["direccion"];
+		if(isset($this->_POST["cliente"]) && $user->is_admin()){
+			$a  = new UserModel();
+			$a->ID = $this->_POST["cliente"];
+			$u->cliente = $a;
+		}else {
+			$u->cliente = $user;
+		}
 		$respose = new stdClass;
 		if($u->save())
 		
@@ -55,10 +76,22 @@ class EdificiosController extends ControllerRest
 	}
 
 	public function put(){
+		$user = UserModel::user_logged();
+		if(is_null($user)){
+			header('location: /login/');
+			return;
+		}
 		$u = new EdificioModel();
 		if(isset($this->_PUT["key"]))$u->ID = $this->_PUT["key"]; 
 		if(isset($this->_PUT["nombre"]))$u->nombre = $this->_PUT["nombre"]; 
 		if(isset($this->_PUT["direccion"]))$u->direccion = $this->_PUT["direccion"];
+		if(isset($this->_PUT["cliente"]) && $user->is_admin()){
+			$a  = new UserModel();
+			$a->ID = $this->_PUT["cliente"];
+			$u->cliente = $a;
+		}else {
+			$u->cliente = $user;
+		}
 		$respose = new stdClass;
 		if($u->save())
 		

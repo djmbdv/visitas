@@ -6,6 +6,7 @@ function config(){
 	$this->camara = false;
 	foreach ($this->T("modal_vars") as $v){
 		preg_match("/([\S]*)Model/", $this->T("modal_class")::get_attribute_class($v), $matches);
+		
 		$campo = array('name' => "$v" ,
 				'label' => ucfirst($v),
 		 		'autocomplete' => is_subclass_of($this->T("modal_class")::get_attribute_class($v), 'Model'),
@@ -26,12 +27,11 @@ function config(){
 	
 function render(){?>
 	<div class="modal fade" id="viewModal" tabindex="-1" role="dialog" aria-labelledby="formModalLabel" aria-hidden="true">
-	  <div class="modal-dialog" role="document">
+	  <div class="modal-dialog modal-lg" role="document">
 	    <div class="modal-content">
-	      <div class="modal-header">
+	      <div class="modal-header bg-info text-white d-flex ">
 	        <h5 class="modal-title" id="formModalLabel">Datos de <?= $this->T("title") ?></h5>
-	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-	          <span aria-hidden="true">&times;</span>
+	        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
 	        </button>
 	      </div>
 	      <div class="modal-body">
@@ -42,8 +42,8 @@ function render(){?>
 			  <?php endforeach; ?>
 			 </form>
 	      </div>
-	      <div class="modal-footer">
-	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+	      <div class="modal-footer d-flex justify-content-center">
+	        <button type="button" class="btn btn-outline-info" data-dismiss="modal">Cerrar</button>
 	      </div>
 	    </div>
 	  </div>

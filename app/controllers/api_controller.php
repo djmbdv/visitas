@@ -44,7 +44,8 @@ class ApiController extends Controller{
 		$h = new EdificioModel();
 		$h->ID = $id;
 		$h->load();
-		echo  $h->get_json();
+		$user = UserModel::user_logged();
+		echo  ($user->is_admin())?$h->get_json():$h->get_json(['cliente']);
 	}
 	public function get_user(){
 		header("Content-type:application/json");
@@ -61,7 +62,8 @@ class ApiController extends Controller{
 		$h = new HabitanteModel();
 		$h->ID = $id;
 		$h->load();
-		echo  $h->get_json();
+		$user = UserModel::user_logged();
+		echo  ($user->is_admin())?$h->get_json():$h->get_json(['cliente']);
 	}
 	public function get_apartamento(){
 		header("Content-type:application/json");
@@ -70,7 +72,8 @@ class ApiController extends Controller{
 		$a->ID = $id;
 		$a->load();
 	//	var_dump($a);
-		echo  $a->get_json();
-	}
+
+		$user = UserModel::user_logged();
+		echo  ($user->is_admin())?$a->get_json():$a->get_json(['cliente']);	}
 
 }

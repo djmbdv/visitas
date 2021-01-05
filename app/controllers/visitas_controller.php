@@ -23,24 +23,33 @@ class VisitasController extends ControllerRest
 			header('location: /');
 			return;
 		}
+		
 		$headers  = VisitaModel::get_vars();
 		$headers[] = "fecha";
-		$user = UserModel::user_logged();
 		$page = $this->get_param("page");
 		$fecha = $this->get_param("fecha");
 		$hora = $this->get_param("hora");
 		$nombre =  $this->get_param("nombre");
 		$destino = $this->get_param("destino");
 		$page = $page?$page:1;
+		if(!$user->is_admin()){
+			$condicion = [['cliente','=',$user->get_key()]];	
+			$vars = array_filter(VisitaModel::get_vars(),function($a){ return $a != 'cliente';});
+			$count = VisitaModel::count($condicion);
+			$items = VisitaModel::all_where_and($condicion,20,$page);	
+		}else{
+			$vars = VisitaModel::get_vars();
+			$count = VisitaModel::count();
+			$items = VisitaModel::all(20,$page);
+		}
 		$vv = new VisitasView(array(
-			'items' => VisitaModel::all(20,$page),
+			'items' => $items,
 			'filtros'=> ['fecha' => $fecha ,'hora' => $fecha ,'nombre' => $nombre],
 			'user'=> $user,
-			"table_vars" => VisitaModel::get_vars(),
+			"table_vars" => $vars,
 			'page'=> $page,
-			'count'=>VisitaModel::count()
+			'count'=>$count
 		));
-	//	var_dump($page);
 		return $vv->render();
 	}
 }

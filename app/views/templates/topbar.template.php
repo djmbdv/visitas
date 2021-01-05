@@ -5,7 +5,8 @@
  */
 class TopbarTemplate extends Template{
   function render(){
-?><nav class="navbar navbar-expand navbar-dark bg-dark   topbar mb-4 static-top shadow" >
+?><nav class="navbar navbar-expand navbar-dark  bg-dark topbar mb-4 static-top shadow" >
+  <div class="container-fluid">
   <a class="navbar-brand mr-0 mr-md-2" href="/menu/" aria-label="Visitas">
     <img src="<?= $this->S('images/casita.png')?>" style="max-height: 50px;border-radius: 10px;" />
   </a>
@@ -50,5 +51,6 @@ class TopbarTemplate extends Template{
       </div>
     </li>
   </ul>
+</div>
 </nav>
 <?php }}

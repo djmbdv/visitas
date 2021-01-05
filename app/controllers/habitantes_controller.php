@@ -26,16 +26,25 @@ class HabitantesController extends ControllerRest
 			return;
 		}
 		$page = $this->get_param("page");
-		$page = $page?$page:1;	
-
+		$page = $page?$page:1;
+		if(!$user->is_admin()){
+			$condicion = [['cliente','=',$user->get_key()]];	
+			$vars = array_filter(HabitanteModel::get_vars(),function($a){ return $a != 'cliente';});
+			$count = HabitanteModel::count($condicion);
+			$items = HabitanteModel::all_where_and($condicion,20,$page);	
+		}else{
+			$vars = HabitanteModel::get_vars();
+			$count = HabitanteModel::count();
+			$items = HabitanteModel::all(20,$page);
+		}
 		$hv = new HabitantesView( array(
-			'items' => HabitanteModel::all(20,$page),
+			'items' => $items,
 			'user'=> $user,
-			"table_vars" => HabitanteModel::get_vars(),
-			"modal_vars" => HabitanteModel::get_vars(),
+			"table_vars" => $vars,
+			"modal_vars" => $vars,
 			"modal_class" => 'HabitanteModel',
 			'page'=> $page,
-			'count'=>HabitanteModel::count(),
+			'count'=>$count,
 			'title'=>'Habitantes'
 		));
 		return $hv->render();
@@ -53,6 +62,11 @@ class HabitantesController extends ControllerRest
 	}
 
 	public function put(){
+		$user = UserModel::user_logged();
+		if(is_null($user)){
+			header('location: /login/');
+			return;
+		}
 		$u = new HabitanteModel();
 		if(isset($this->_PUT["key"]))$u->ID = $this->_PUT["key"]; 
 		if(isset($this->_PUT["nombre"]))$u->nombre = $this->_PUT["nombre"]; 
@@ -66,8 +80,14 @@ class HabitantesController extends ControllerRest
 			$a->ID = $this->_PUT["apartamento"];
 			$u->apartamento = $a;
 		}
-	//	print_r($u);
-	//	print_r($this->_PUT["key"]);
+		if(isset($this->_PUT["cliente"]) && $user->is_admin()){
+			$a  = new UserModel();
+			$a->ID = $this->_PUT["cliente"];
+			$u->cliente = $a;
+		}else {
+			$u->cliente = $user;
+		}
+
 		$respose = new stdClass;
 		if($u->save())
 		
@@ -75,10 +95,14 @@ class HabitantesController extends ControllerRest
 		else $respose->errorMsj = "Error al actualizar";
 		header("Content-type:application/json");
 		print_r(json_encode($respose));
-		//return $this->get();
 	}
 
 	public function post(){
+		$user = UserModel::user_logged();
+		if(is_null($user)){
+			header('location: /login/');
+			return;
+		}
 		$u = new HabitanteModel();
 		if(isset($this->_POST["nombre"]))$u->nombre = $this->_POST["nombre"]; 
 		if(isset($this->_POST["identificacion"]))$u->identificacion = $this->_POST["identificacion"]; 
@@ -90,6 +114,13 @@ class HabitantesController extends ControllerRest
 			$a  = new ApartamentoModel();
 			$a->ID = $this->_POST["apartamento"];
 			$u->apartamento = $a;
+		}
+		if(isset($this->_POST["cliente"]) && $user->is_admin()){
+			$a  = new UserModel();
+			$a->ID = $this->_POST["cliente"];
+			$u->cliente = $a;
+		}else {
+			$u->cliente = $user;
 		}
 		$respose = new stdClass;
 		if($u->save())

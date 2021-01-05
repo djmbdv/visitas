@@ -21,7 +21,9 @@ class HeaderTemplate extends Template
     <link rel="icon" href="<?= $this->S("favicon.png")?>"/>
     <title>Sistema de Control de Visitas</title>
 
-    <link href="<?= $this->S("css/bootstrap.min.css")?>" rel="stylesheet"/>
+    <!--link href="<?= $this->S("css/bootstrap.min.css")?>" rel="stylesheet"/-->
+    <link  href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.0.0/mdb.min.css"
+  rel="stylesheet"/>
     <link href="<?= $this->S("css/font-awesome.min.css")?>" rel="stylesheet"/>
     <link href="<?= $this->SS("css/custom.css")?>" rel="stylesheet"/>
   </head>
