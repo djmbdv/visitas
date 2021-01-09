@@ -17,7 +17,7 @@ class FotoTemplate extends Template
 <div class="row" style="border-top: solid 1px  #007bff; border-radius: 3px;">
 	<div class="col-md-6 text-center">
 		<h5 class="text-center p-3 mt-3">Complejo Habitacional RPS</h5>
-		<img class="img-responsive p-2" src="<?= $this->S("images/casita.png") ?>" style="box-shadow: 1px 3px;  border-radius: 10%; max-width: 100%; margin: 80px;background-color: white;">
+		<img class="img-fluid shadow-2-strong"  src="<?=  $this->T("user")->image  ?? $this->S("images/casita.png") ?>" style="box-shadow: 1px 3px; max-width: 80%; margin: 40px;background-color: white;">
 	</div>
 
 	<div class="col-md-6">

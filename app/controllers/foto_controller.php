@@ -12,12 +12,16 @@ class FotoController extends ControllerRest
 {
 
 	public function post($argument= null){
-		
+		$user = UserModel::user_logged();
+		if(is_null($user)){
+			header('location: /login/');
+			return;
+		}
 		$id = $_POST['identificacion'];
 		$apartamento  = $_POST['apartamento'];
 		$visitado = $_POST['visitado'];
 		$nombre = $_POST['nombre'];
-		$vista = new FotoView(array('id'=>$id,'apartamento'=>$apartamento,'visitado'=>$visitado,'nombre'=>$nombre ));
+		$vista = new FotoView(array('id'=>$id,'user'=>$user,'apartamento'=>$apartamento,'visitado'=>$visitado,'nombre'=>$nombre ));
 		return $vista->render();
 	}
 

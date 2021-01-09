@@ -54,6 +54,9 @@
 .page-item.active {
 	font-weight: bold;
 }
+.image-table{
+	cursor: zoom-in;
+}
 th{
 	font-weight: bold;
 	padding: 10px; 

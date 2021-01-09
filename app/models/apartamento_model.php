@@ -29,10 +29,11 @@ class ApartamentoModel extends Model
 		    $a->save();
 		 }
 	}
-	public static function search_nombre($nombre, $cantidad = 20){
+	public static function search_nombre($nombre, $cantidad = 20,$edificio = null){
 		$usuario = UserModel::user_logged();
 		if(!$usuario)return;
 		$condicion = [['nombre','like',"%$nombre%"]];
+		if($edificio)$condicion[] = ['edificio','=',$edificio];
 		if(!$usuario->is_admin())$condicion[] = ["cliente","=",$usuario->get_key()];
 		$a = self::all_where_and($condicion, $cantidad,null, true);
 		$k = array_map(function($a){return $a->no_class_values(); }, $a);

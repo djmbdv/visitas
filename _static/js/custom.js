@@ -217,7 +217,89 @@ $("#formModal").on('hide.bs.modal', function(){
   });
 
 
+function loadSelect(b){
+	$.post(b.getAttribute("end_point"),$(b).data(),data=>{
+		$(b).children().each((a,k)=>{if(a>0)k.remove();else k.selected = true})
 
+		for(i = 1; i < b.children.length; i++)b.removeChild(b.children[1])
+		data.forEach(a =>{
+		op = document.createElement("option")
+		b.appendChild(op)
+		op.value =  a.id
+		op.innerText = a.presentation
+		})
+		b.disabled=false;
+	}
+	)
+}
+
+$("select").each((a,b)=>{
+	if(b.getAttribute("autoload") == "true") 
+	loadSelect(b)
+})
+
+function get_params(){
+	k = document.location.href.split('/').slice(-1)[0]
+	o =  new Object
+	if(k.length > 0){
+		valores = k.split('$')
+		valores.forEach(e =>{
+			ll = e.split('=')
+			o[ll[0]] = ll[1]
+		})
+	}
+	return o;
+}
+
+$(".form-filter").submit(e=>{
+	e.preventDefault()
+	console.log(e.currentTarget)
+	url = "";
+	o = get_params();
+	e.currentTarget.querySelectorAll( "input, select, textarea" ).forEach(
+		e=>{ 
+			if(e.name==null || e.value == null)return
+			o[e.name] = e.value
+		})
+	Object.entries(o).forEach(e=>{
+		url+='$' + e[0]+'='+e[1]
+	})
+	limit = document.location.href.search(k)
+	base = document.location.href.substr(0,limit)
+
+	document.location =base + url
+
+})
+
+$(".image-table").click(e=>{
+	$("#imageTable").attr("src",e.currentTarget.src)
+	$("#imageModal").modal("show")
+})
+$(document).ready(e=>{
+	o = get_params()
+	Object.entries(o).forEach(e=>{
+		if(e[0] != '')
+		$("input[name="+e[0]+"]").val(e[1])
+			console.log(e)
+	})
+
+})
+$("select").change(e=> {
+	sel = e.currentTarget
+	a = sel.getAttribute("children");
+	if(!a.forEach)a = [a];
+	//for(i = 1; i < sel.children.length; i++)sel.removeChild(sel.children[1]);
+//	sel.disabled = true;
+	a.forEach(b => {
+		if(b=="")return;
+		$('#'+b).data(e.currentTarget.getAttribute("name"), e.currentTarget.value)
+		console.log($('#'+b).data())
+		loadSelect(document.getElementById(b))
+	})
+})
+/*
+$(document).click(async ()=>{var h = $(".fullscreen").get()[0]; await h.requestFullscreen();
+});*/
 const toBase64 = file => new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);

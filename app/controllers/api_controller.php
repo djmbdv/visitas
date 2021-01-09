@@ -8,7 +8,8 @@ class ApiController extends Controller{
 	public function search_habitantes(){
 		header("Content-type:application/json");
 		$nombre = $_POST["s"];
-		print_r(HabitanteModel::search_nombre($nombre,12));
+		$apartamento = $_POST["apartamento"]??null;
+		print_r(HabitanteModel::search_nombre($nombre,12,$apartamento));
 	}
 	public function search_users(){
 		header("Content-type:application/json");
@@ -23,7 +24,8 @@ class ApiController extends Controller{
 	public function search_apartamentos(){
 		header("Content-type:application/json");
 		$nombre = $_POST["s"];
-		print_r(ApartamentoModel::search_nombre($nombre,12));
+		$edificio = $_POST["edificio"]??null;
+		print_r(ApartamentoModel::search_nombre($nombre,12,$edificio));
 	}
 	public function search_edificios(){
 		header("Content-type:application/json");

@@ -1,8 +1,5 @@
 <?php
 
-/**
- * 
- */
 class TopbarTemplate extends Template{
   function render(){
 ?><nav class="navbar navbar-expand navbar-dark  bg-dark topbar mb-4 static-top shadow" >

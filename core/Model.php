@@ -44,9 +44,9 @@ abstract class Model{
 		$sql = "";
 		foreach ($a as $key => $value) {
 			if($key == 0)$sql=" where $value[0] $value[1] '$value[2]'";
-			else $sql.=" and $value[0] $value[1] $value[2]";
+			else $sql.=" and $value[0] $value[1] '$value[2]'";
 		}
-		//print_r($sql);
+	//	print_r($sql);
 		return self::all($count, $page,$loaded,$sql);
 	}
 	public function get_json($hide = array()){

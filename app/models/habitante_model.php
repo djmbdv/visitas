@@ -36,10 +36,11 @@ class HabitanteModel extends Model
 		'foto' => 'foto'
  		);
 	}
-	public static function search_nombre($nombre, $cantidad = 20){
+	public static function search_nombre($nombre, $cantidad = 20, $apartamento = null){
 		$usuario = UserModel::user_logged();
 		if(!$usuario)return;
 		$condicion = [['nombre','like',"%$nombre%"]];
+		if($apartamento)$condicion[] = ['apartamento','=',$apartamento];
 		if(!$usuario->is_admin())$condicion[] = ["cliente","=",$usuario->get_key()];
 		$a = self::all_where_and($condicion, $cantidad,null, true);
 		$k = array_map(function($a){return $a->no_class_values(); }, $a);

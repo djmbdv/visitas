@@ -9,28 +9,52 @@ class HomeTemplate extends Template{
 		/*
 */	$this->add_part("campoVisitado","campo",
 		 array('name' => "visitado" ,
-		 		'autocomplete' => true,
+		 		'autocomplete' => false,
 		 		'required' => true,
 		 		'placeholder'=> "Nombre de la persona a visitar",
 		 		'end_point'=> '/api/habitantes/',
 		 		'autocomplete_att'=>'s',
-		 		'add_class' => 'form-control-home'
+		 		'add_class' => 'col-md-12',
+		 		'form_type' => 'select',
+		 		'attributes'=>  array('s' => "" ),
+		 		'size'=> 'lg'
 		  )
 		);
 $this->add_part("campoApartamento","campo",
 		 array('name' => "apartamento" ,
-		 		'autocomplete' => true,
+		 		'autocomplete' => false,
 		 		'required' => true,
 		 		'placeholder'=> "Apartamento a donde se dirige",
 		 		'end_point'=> '/api/apartamentos/',
 		 		'autocomplete_att'=>'s',
 		 		'clase'=> 'apartamento',
-		 		'add_class' => 'form-control-home'
+		 		'add_class' => 'col-md-6',
+		 		'form_type' => 'select',
+		 		'attributes'=>  array('s' => "" ),
+		 		'size'=> 'lg',
+		 		'children' => ['inputVisitado']
+		  )
+		);
+$this->add_part("campoEdificio","campo",
+		 array('name' => "edificio" ,
+		 		'autocomplete' => false,
+		 		'required' => true,
+		 		'placeholder'=> "Torre a donde se dirige",
+		 		'end_point'=> '/api/edificios/',
+		 		'autocomplete_att'=>'s',
+		 		'clase'=> 'edificio',
+		 		'add_class' => 'col-md-6',
+		 		'form_type' => 'select',
+		 		'size'=> 'lg',
+		 		'autoload'=>true,
+		 		'attributes'=>  array('s' => "" ),
+		 		'children' => ['inputApartamento']
 		  )
 		);
 
-		?>
 
+		?>
+<div class="fullscreen bg-white">
 <a class="btn btn-sm" href="/logout/"><i class="fa fa-sign-out fa-sm fa-fw mr-2 text-gray-400"></i></a>
 <div class="container">
 <h1 class="text-center  mt-3 mb-2">Control de Visitas</h1>
@@ -42,30 +66,24 @@ $this->add_part("campoApartamento","campo",
 
 	<div class="col-md-6">
 		<h4 class="text-center p-3 mt-3">DATOS</h4> 
-		<form action="/foto" method="post">
+		<form  class="form-row" action="/foto" method="post">
+
+			<?php $this->render_part("campoEdificio");?>
 			<?php $this->render_part("campoApartamento");?>
 			<?php $this->render_part("campoVisitado");?>
-			<div class="form-group form-control-home">
-				<input class="form-control " type="text" name="nombre" placeholder="Su Nombre y Apellido" required="" />
+			<div class="form-group  col-md-12">
+				<input class="form-control form-control-lg " type="text" name="nombre" placeholder="Su Nombre y Apellido" required="" />
 			</div>
-			<div class="form-group form-control-home">
-				<input class="form-control " type="text" name="identificacion" placeholder="Numero de Identificacion" required="" />
+			<div class="form-group  col-md-12">
+				<input class="form-control form-control-lg " type="text" name="identificacion" placeholder="Numero de Identificacion" required="" />
 			</div>
-			<div class="form-group form-control-home">
+			<div class="form-group  col-md-12">
 				<input class="form-control btn-primary" type="submit" name="" value="Tomar Foto" />
 			</div>
 		</form>
 	</div>
 </div>
-<hr>
-<div class="small text-center text-muted card p-2 m-2">
-	<h2>Para prueba</h2>
-	<h5>Dashboard Cliente</h5>
-	<p>usuario: <b>cliente</b></p>
-	<p>password: <b>1234</b></p>
-	<h5>Dashboard Admin</h5>
-	<p>usuario: <b>admin</b></p>
-	<p>password: 1234</p>
+
 </div>
 </div>
 <?php 
