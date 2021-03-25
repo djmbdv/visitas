@@ -3,8 +3,7 @@
 
 
 require_once "core/Controller.php";
-
-
+require_once "config.php";
 /**
  * 
  */
@@ -47,9 +46,27 @@ class FotoController extends ControllerRest
 		$a = new ApartamentoModel();
 		$a->ID = $apartamento;
 		$visita->destino= $a;
+
 		$visita->foto = $foto;
+		$foto = explode(',',$foto)[1];
+		$foto = base64_decode($foto);
+		imagecopyresized($thumb, $origen, 0, 0, 0, 0, $nuevo_ancho, $nuevo_alto, $ancho, $alto);
+        $link = "/_static/fotos/".uniqid().".png";
+		$filename = Config::$base_folder. $link;
+		$ifp = fopen(  $filename, 'wb' ); 
+		
+		fwrite($ifp,$foto);
+		fclose($ifp);
+		
+		list($ancho, $alto) = getimagesize($filename);
+		$origen = imagecreatefromjpeg($filename);
+		$thumb = imagecreatetruecolor(400,(400/ancho)*alto);
+		$origen = imagecreatefrompng($filename);
+
+
 		$visita->visitado = $vis;
 		$visita->cliente = $user;
+		$visita->foto = Config::$base_url.$link;
 		$visita->save();
 		header('location: /');
 	}

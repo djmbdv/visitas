@@ -87,7 +87,7 @@ class HabitantesController extends ControllerRest
 		}else {
 			$u->cliente = $user;
 		}
-
+     
 		$respose = new stdClass;
 		if($u->save())
 		

@@ -13,7 +13,7 @@ class ApiController extends Controller{
 	}
 	public function search_users(){
 		header("Content-type:application/json");
-		$nombre = $_POST["s"];
+		$nombre = $_POST["s"]?? "";
 		print_r(UserModel::search_nombre($nombre,12));
 	}
 	public function search_tipos(){
@@ -28,6 +28,7 @@ class ApiController extends Controller{
 		print_r(ApartamentoModel::search_nombre($nombre,12,$edificio));
 	}
 	public function search_edificios(){
+
 		header("Content-type:application/json");
 		$nombre = $_POST["s"];
 		print_r(EdificioModel::search_nombre($nombre,12));

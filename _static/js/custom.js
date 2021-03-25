@@ -1,4 +1,3 @@
-
 function _getUserMedia(){
 	return (navigator.getUserMedia || (navigator.mozGetUserMedia ||  navigator.mediaDevices.getUserMedia) || navigator.webkitGetUserMedia || navigator.msGetUserMedia).apply(navigator, arguments);
 }
@@ -7,25 +6,24 @@ function tieneSoporteUserMedia(){
 }
 
 function active_camera(){
-if (tieneSoporteUserMedia()) {
-    _getUserMedia(
-        {video: true},
-        function (stream) {
-        	var video = document.getElementById("video");
-			video.srcObject  = (stream);
-			video.play()
-        	$('.info-foto').text("Presione \"Tomar captura\"");
-        	$('.button-photo').prop('disabled', false);
-        }, function (error) {
-            alert("Permiso denegado o error: ", error);
-        });
-} else {
-    alert("El navegador no soporta esta característica");
-}
+	if (tieneSoporteUserMedia()) {
+	    _getUserMedia(
+	        {video: true},
+	        function (stream) {
+	        	var video = document.getElementById("video");
+				video.srcObject  = (stream);
+				video.play()
+	        	$('.info-foto').text("Presione \"Tomar captura\"");
+	        	$('.button-photo').prop('disabled', false);
+	        }, function (error) {
+	            alert("Permiso denegado o error: ", error);
+	        });
+	} else {
+	    alert("El navegador no soporta esta característica");
+	}
 }
 
 if( document.getElementsByClassName('modal').length == 0 &&  document.getElementsByTagName('video').length > 0 ) $('video').ready(active_camera);
-
 	$('.button-photo').click(()=>{
 			var text = $('.info-foto').text();
 			if(text == "listo"){
@@ -74,7 +72,6 @@ if( document.getElementsByClassName('modal').length == 0 &&  document.getElement
 					}
 				}
 				, 1010);
-				
 	}
 )
 
@@ -100,9 +97,9 @@ function desactive_camera(){
 	var mediaStream = video.srcObject;
 	var tracks = mediaStream.getTracks();
 	video.pause();
-
 	tracks.forEach(track => track.stop())
 }
+
 $(".btn-add").click(e=>{
 	$("#form-modal").attr("method","post");
 	$(".key-input").remove();
@@ -123,19 +120,15 @@ $(".btn-aceptar").click(e=>{
 	   	if(data.ok) location.reload();
 	   	else alert(data.errorMsj)
 	  }
-	})
-  
+	})  
 })
 
 $(".btn-view").click(e=>{
 	var a = $(e.currentTarget).data();
-//	console.log(a.model);
 	$.post("/api/" + a.model, a).done(
 		data=>{
 			Object.keys(data).forEach(a =>{
-	//			console.log(a)
 				if(typeof(data[a]) == 'object' && data[a] != null ){
-			//		console.log(data[a]);
 					var element = "#inputv"+a.charAt(0).toUpperCase()+a.slice(1);
 					$(element+'1').val(data[a].ID);
 					$.post("/api/" + $(element).data('clase'),
@@ -297,9 +290,8 @@ $("select").change(e=> {
 		loadSelect(document.getElementById(b))
 	})
 })
-/*
-$(document).click(async ()=>{var h = $(".fullscreen").get()[0]; await h.requestFullscreen();
-});*/
+
+
 const toBase64 = file => new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
