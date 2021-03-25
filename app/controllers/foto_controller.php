@@ -50,7 +50,6 @@ class FotoController extends ControllerRest
 		$visita->foto = $foto;
 		$foto = explode(',',$foto)[1];
 		$foto = base64_decode($foto);
-		imagecopyresized($thumb, $origen, 0, 0, 0, 0, $nuevo_ancho, $nuevo_alto, $ancho, $alto);
         $link = "/_static/fotos/".uniqid().".png";
 		$filename = Config::$base_folder. $link;
 		$ifp = fopen(  $filename, 'wb' ); 
@@ -59,11 +58,13 @@ class FotoController extends ControllerRest
 		fclose($ifp);
 		
 		list($ancho, $alto) = getimagesize($filename);
-		$origen = imagecreatefromjpeg($filename);
-		$thumb = imagecreatetruecolor(400,(400/ancho)*alto);
 		$origen = imagecreatefrompng($filename);
+		$thumb = imagecreatetruecolor(400,(400/$ancho)*$alto);
 
+		imagecopyresized($thumb, $origen, 0, 0, 0, 0, 400, (400/$ancho)*$alto, $ancho, $alto);
+		//print_r($origen);
 
+		imagepng($thumb,$filename);
 		$visita->visitado = $vis;
 		$visita->cliente = $user;
 		$visita->foto = Config::$base_url.$link;
