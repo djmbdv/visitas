@@ -8,8 +8,9 @@ function config(){
 		preg_match("/([\S]*)Model/", $this->T("modal_class")::get_attribute_class($v), $matches);
 		$campo = array('name' => "$v" ,
 				'label' => ucfirst($v),
-		 		'autocomplete' => is_subclass_of($this->T("modal_class")::get_attribute_class($v), 'Model'),
+		 		'autocomplete' => is_subclass_of($this->T("modal_class")::get_attribute_class($v), 'Model') && !isset( $this->T("modal_class")::form_types_array()[$v] ),
 		 		'required' => true,
+		 		'autoload'=>true,
 		 		'placeholder'=> $this->T("modal_class")::search_description($v),
 		 		'end_point'=> isset($matches[1])? '/api/'.strtolower($matches[1]).'s/':null,
 		 		'autocomplete_att'=>'s',

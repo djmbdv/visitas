@@ -8,18 +8,20 @@ class DashboardTemplate extends Template{
 
 	function render(){?>
 <?php $this->render_part("topbar"); ?>
-<div class="container mb-4" style="padding-bottom: 6rem;">
+<div class="container mb-4 text-center" style="padding-bottom: 6rem;">
 	<h1 class="text-center m-2 p-4">Dashboard</h1>
-	<a href="./visitas/" class="btn btn-info m-2"><i class="fa fa-users"></i> Visitas</a>
+	<a href="./edificios/" class="btn btn-primary m-2 p-3 px-4" style="height: 3rem;"><i class="fa fa-building fa-lg"></i> Crear Edificio</a>
+	<a href="./apartamentos/" class="btn btn-primary m-2 p-3 px-4" style="height: 3rem;"><i class="fa fa-home fa-lg"></i> Crear Apartamento</a>
+	<a href="./visitas/" class="btn btn-info m-2 p-3 px-4" style="height: 3rem;"><i class="fa fa-users fa-lg"></i> Visitas</a>
 
-	<a href="./habitantes/" class="btn btn-warning m-2"><i class="fa fa-users"></i> Habitantes</a>
-	<a href="./apartamentos/" class="btn btn-primary m-2"><i class="fa fa-home"></i> Apartamentos</a>
-	<a href="./edificios/" class="btn btn-primary m-2"><i class="fa fa-building"></i> Edificios</a>
+	<a href="./residentes/" class="btn btn-warning m-2 p-3 px-4" style="height: 3rem;"><i class="fa fa-users fa-lg "></i> Residentes</a>
+	
+	
 <?php
 	$t = $this->T("user")->tipo;
 	$t->load();
  if( $t->descripcion == "admin"):?>
-	<a href="./usuarios/" class="btn btn-dark m-2"><i class="fa fa-user"></i> Usuarios</a>
+	<a href="./usuarios/" class="btn btn-dark m-2 p-3" style="height: 3rem;"><i class="fa fa-user fa-lg"></i> Usuarios</a>
 <?php endif;?>
 </div>
 <?php 

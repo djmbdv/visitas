@@ -39,7 +39,7 @@ class HabitantesController extends ControllerRest
 			"modal_class" => 'HabitanteModel',
 			'page'=> $page,
 			'count'=>$count,
-			'title'=>'Habitantes'
+			'title'=>'Residentes'
 		));
 		return $hv->render();
 	}

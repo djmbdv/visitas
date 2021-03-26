@@ -130,6 +130,10 @@ $(".btn-view").click(e=>{
 			Object.keys(data).forEach(a =>{
 				if(typeof(data[a]) == 'object' && data[a] != null ){
 					var element = "#inputv"+a.charAt(0).toUpperCase()+a.slice(1);
+					if($(element).is("select")){
+					  $(element).val(data[a].ID)
+					  return
+					}
 					$(element+'1').val(data[a].ID);
 					$.post("/api/" + $(element).data('clase'),
 					{ 'key' : $("#"+$(element).attr("entrada")).val() },
@@ -161,8 +165,12 @@ $(".btn-edit").click(e=>{
 			Object.keys(data).forEach(a =>{
 				if(a == "password")return;
 				if(typeof(data[a]) == 'object' &&  data[a] != null){
-	//				console.log(data[a]);
+					console.log(data[a]);
 					var element = "#input"+a.charAt(0).toUpperCase()+a.slice(1);
+					if($(element).is("select")){
+					  $(element).val(data[a].ID)
+					  return
+					}
 					$(element+'1').val(data[a].ID);
 					$.post("/api/" + $(element).data('clase'),
 					{ 'key' : $("#"+$(element).attr("entrada")).val() },

@@ -29,7 +29,7 @@ $main_router->link("visita",$fc,"visita");
 		$ec = new EdificiosController();
 
 	$dashboard_router->link("visitas",$vc);
-	$dashboard_router->link("habitantes", $hc);
+	$dashboard_router->link("residentes", $hc);
 	$dashboard_router->link("usuarios", $uc);
 	$dashboard_router->link("apartamentos", $ac);
 	$dashboard_router->link("edificios", $ec);

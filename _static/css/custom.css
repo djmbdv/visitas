@@ -22,7 +22,7 @@
 	position: absolute;
 	z-index: 10;
 	background:white;
-	min-width: 20%;
+	min-width: 60%;
 }
 
 .table{
@@ -30,10 +30,10 @@
 }
 .item-autocomplete{
 	padding: 2px;
-	font-size: 12px;
+	font-size: 15px;
 	width: 100%;
 	margin:2px;
-	border-radius: 5%;
+	border-radius: .25rem;
 	border: 1px solid #007bff;
 	cursor: pointer;
 }

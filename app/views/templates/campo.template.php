@@ -40,6 +40,7 @@ class CampoTemplate extends Template{
           <?php if($attributes)foreach ($attributes as $key => $value):?>
             data-<?= $key ?>="<?= $value ?>" 
           <?php endforeach; ?>
+          
           <?= $form_type == 'select' && $end_point?'end_point='.$end_point:''?>
            autocomplete="off" <?= $readonly? "readonly":"" ?> autoload=<?= $autoload?"true":"false" ?>  children=<?php if($children) foreach($children as $k => $c)echo (!$k)? $c:",$c" ?> >
           <?php  if($form_type == "select"):?>

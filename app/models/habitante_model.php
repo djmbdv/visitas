@@ -25,7 +25,7 @@ class HabitanteModel extends Model
 	public static function descriptions_array(){
 		return array(
 		'nombre' => "Nombre Completo",
-		'apartamento' => "apartamento o casa donde habita"	
+		'apartamento' => "Apartamento o casa donde habita"	
  		);
 	}
 

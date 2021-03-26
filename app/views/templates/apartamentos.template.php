@@ -24,7 +24,9 @@ class ApartamentosTemplate extends Template{
 <div class="container">
 	<div class="row">
 	<h1 class="text-center"><?= $this->T('title') ?></h1>
-	<a type="button"  data-toggle="modal" data-target="#formModal" class="btn btn-warning btn-add  m-3">Nuevo Apartamento</a>
+	<div class="col-md-3 col-sm-6">
+	<a type="button"  data-toggle="modal" data-target="#formModal" class="btn btn-warning btn-add  m-3"><i class="fa fa-home"></i> Nuevo Apartamento</a>
+	</div>
 	<hr/>
 <?php 
 if($c > 0): 

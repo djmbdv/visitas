@@ -19,6 +19,12 @@ class ApartamentoModel extends Model
 			'cliente' => 'INT (11) NOT NULL'
 	 	);
 	}
+	public static function form_types_array(){
+		return array(
+		'edificio' => "select"
+ 		);
+	}
+
 	public static function seeds(){
 		$propietarios = HabitanteModel::all();
 		for($i = 0; $i < 25; $i++){
@@ -41,7 +47,7 @@ class ApartamentoModel extends Model
 	}
 	public static function presentation($a){
 		if($a->edificio->exist())$a->edificio->load();
-		return ($a->edificio->exist()?$a->edificio->nombre.' | ':'').$a->nombre;
+		return $a->nombre.' | '.($a->edificio->exist()?$a->edificio->nombre:'Sin Edificio');
 	}
 
 }

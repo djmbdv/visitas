@@ -27,7 +27,8 @@ class UserModel extends Model{
 		return array(
 		'email' => "email",
 		'password' => "password",
-		'image' =>"file"
+		'image' =>"file",
+		'tipo' => "select"
  		);
 	}
 	public static function seeds(){

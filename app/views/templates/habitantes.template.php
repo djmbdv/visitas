@@ -23,7 +23,9 @@ class HabitantesTemplate extends Template{
 <div class="container">
 	<div class="row">
 	<h1 class="text-center"><?= $this->T('title') ?></h1>
-	<a type="button"  data-toggle="modal" data-target="#formModal" class="btn btn-add btn-warning m-3"><i class="fa fa-user"></i> Nuevo Habitante</a>
+	<div class="col-md-3 col-sm-6">
+	<a type="button"  data-toggle="modal" data-target="#formModal" class="btn btn-add btn-warning m-3"><i class="fa fa-user"></i> Nuevo Residente</a>
+	</div>
 	<hr/>
 <?php 
 if($c > 0): 

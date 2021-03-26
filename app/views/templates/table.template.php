@@ -29,7 +29,7 @@ class TableTemplate extends Template{
 <table class="table table-hover">
 	<thead class="table-light">
 	    <tr>
-	    	<th>Seleccionar</th>
+	    	<!--th>Seleccionar</th-->
 <?php
 foreach($this->T('table_vars') as  $value): ?>
 			<th scope="col"><?= ucfirst( $value) ?></th>
@@ -53,7 +53,7 @@ endforeach;
 foreach($this->T('items') as $it):
 	$it->load();?>
 	<tr>
-		<td class="text-center"><input type="checkbox" name=""></td>
+		<!--td class="text-center"><input type="checkbox" name=""></td-->
 <?php
 	foreach($this->T('table_vars') as $value):
 	if($it->get_attribute_type($value) == "mediumblob" ):?>
