@@ -42,15 +42,6 @@ class FotoTemplate extends Template
 		</form>
 	</div>
 </div>
-<div class="lead text-center text-muted card p-2 m-2">
-	<h2>Para prueba</h2>
-	<h5>Dashboard Cliente</h5>
-	<p>usuario: <b>cliente</b></p>
-	<p>password: <b>1234</b></p>
-	<h5>Dashboard Admin</h5>
-	<p>usuario: <b>admin</b></p>
-	<p>password: 1234</p>
-</div>
 </div>
 
 

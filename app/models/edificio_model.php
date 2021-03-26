@@ -5,7 +5,7 @@ require_once "core/Model.php";
 class EdificioModel extends Model
 {
 	protected $nombre;
-	protected $direccion;
+//	protected $direccion;
 	protected UserModel $cliente;
 	public static function types_array(){
 		return array(
