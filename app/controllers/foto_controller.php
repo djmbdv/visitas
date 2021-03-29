@@ -71,6 +71,6 @@ class FotoController extends ControllerRest
 		$visita->cliente = $user;
 		$visita->foto = Config::$base_url.$link.$ext;
 		$visita->save();
-		header('location: /');
+		header('location: /saludo');
 	}
 }

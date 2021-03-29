@@ -57,7 +57,7 @@ if( document.getElementsByClassName('modal').length == 0 &&  document.getElement
 
 							tracks.forEach(track => track.stop())
 							$('.info-foto').text("listo")
-							$('.button-photo').text("Tomar de nuevo")
+							$('.button-photo').text("Tomar nueva foto")
 							$(".btn-form-foto").prop("disabled",false)
 							var contexto = canvas.getContext("2d");
 							canvas.width = video.videoWidth;

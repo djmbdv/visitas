@@ -34,10 +34,10 @@ class FotoTemplate extends Template
 			    	<video id="video" style="width:100%;border-radius: 10px;min-width: 250px;background-color: gray;"></video>
 			    	<canvas id="canvas" style="display: none;"></canvas>
 			    </div>
-			    <div class="button-photo btn-sm m-2 btn-success text-center " style="margin-right: auto;margin-left: auto;" disabled>Tomar Captura</div>
+			    <div class="button-photo btn-sm m-2 btn-success text-center " style="margin-right: auto;margin-left: auto;" disabled>Tomar Foto</div>
 			</div>
 			<div class="form-group">
-				<input class="btn-form-foto form-control btn-primary " type="submit" name="" value="Tomar Foto" disabled/>
+				<input class="btn-form-foto form-control btn-primary " type="submit" name="" value="Enviar" disabled/>
 			</div>
 		</form>
 	</div>
