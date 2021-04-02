@@ -47,7 +47,7 @@ class ApartamentoModel extends Model
 	}
 	public static function presentation($a){
 		if($a->edificio->exist())$a->edificio->load();
-		return $a->nombre.' | '.($a->edificio->exist()?$a->edificio->nombre:'Sin Edificio');
+		return $a->nombre;
 	}
 
 }

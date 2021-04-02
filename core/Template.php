@@ -1,11 +1,6 @@
 <?php
 
-
-/**
- * 
- */
-class Template 
-{
+class Template {
 	public $parts;
 	public $parent;
 	public $child;

@@ -13,6 +13,7 @@ class UserModel extends Model{
 	protected $email;
 	protected TipoModel $tipo;
 	protected $image;
+	protected $titulo;
 	public static function types_array(){ 
 		return 	array(
 		'username' => "VARCHAR( 80 ) NOT NULL UNIQUE",
@@ -21,6 +22,7 @@ class UserModel extends Model{
 		'email' => 'varchar ( 100 ) NOT NULL',
 		'tipo' => 'INT( 9)  NOT NULL',
 		'image'=>	'MEDIUMBLOB ',
+		'titulo'=> 'VARCHAR (200) '
  		);
 	}
 	public static function form_types_array(){
@@ -38,12 +40,14 @@ class UserModel extends Model{
 		$client->name = 'Cliente de Prueba';
 		$client->password =md5( '1234');
 		$client->email = "client@ejemplo.com";
+		$client->titulo = "complejo de prueba";
 		$client->tipo = $tipos[1];
 		$client->save();
 		$client  = new UserModel();
 		$client->username = 'admin';
 		$client->name = 'Admin de Prueba';
 		$client->password =md5( '1234');
+		$client->titulo = "complejo de prueba";
 		$client->email = "admin@ejemplo.com";
 		$client->tipo = $tipos[0];
 		$client->save();

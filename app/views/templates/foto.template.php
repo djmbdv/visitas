@@ -16,7 +16,7 @@ class FotoTemplate extends Template
 <h1 class="text-center  mt-3 mb-2">Control de Visitas</h1>
 <div class="row" style="border-top: solid 1px  #007bff; border-radius: 3px;">
 	<div class="col-md-6 text-center">
-		<h5 class="text-center p-3 mt-3">Complejo Habitacional RPS</h5>
+		<h5 class="text-center p-3 mt-3"><?=  $this->T("user")->titulo  ?? "Complejo Habitacional RPS" ?></h5>
 		<img class="img-fluid shadow-2-strong"  src="<?=  $this->T("user")->image  ?? $this->S("images/casita.png") ?>" style="box-shadow: 1px 3px; max-width: 80%; margin: 40px;background-color: white;">
 	</div>
 

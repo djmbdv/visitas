@@ -60,7 +60,7 @@ $this->add_part("campoEdificio","campo",
 <h1 class="text-center  mt-3 mb-2">Control de Visitas</h1>
 <div class="row" style="border-top: solid 1px  #007bff;">
 	<div class="col-md-6 text-center">
-		<h4 class="text-center p-3 mt-3">Complejo Habitacional RPS</h4>
+		<h4 class="text-center p-3 mt-3"><?=  $this->T("user")->titulo  ?? "Complejo Habitacional RPS" ?></h4>
 		<img class="img-fluid shadow-2-strong"  src="<?=  $this->T("user")->image  ?? $this->S("images/casita.png") ?>" style="box-shadow: 1px 3px; max-width: 80%; margin: 40px;background-color: white;">
 	</div>
 

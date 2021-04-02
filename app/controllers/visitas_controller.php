@@ -42,9 +42,13 @@ class VisitasController extends ControllerRest
 			$count = VisitaModel::count($condicion);
 			$items = VisitaModel::all_where_and($condicion,20,$page);	
 		}else{
+			$condicion = [];
+			if($visitado)$condicion[]=["visitado",'=',$visitado];
+            if($desde)$condicion[]=["create_at",'>=', $desde];
+            if($hasta)$condicion[]=["create_at", '<=',$hasta.=" 23:59:59"];
 			$vars = VisitaModel::get_vars();
-			$count = VisitaModel::count();
-			$items = VisitaModel::all(20,$page);
+			$count = VisitaModel::count($condicion);
+			$items = VisitaModel::all_where_and($condicion,20,$page);
 		}
 		$vv = new VisitasView(array(
 			'items' => $items,
