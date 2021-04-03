@@ -13,7 +13,7 @@ function active_camera(){
 	        	var video = document.getElementById("video");
 				video.srcObject  = (stream);
 				video.play()
-	        	$('.info-foto').text("Presione \"Tomar captura\"");
+	        	$('.info-foto').text("Presione \"Tomar Foto\"");
 	        	$('.button-photo').prop('disabled', false);
 	        }, function (error) {
 	            alert("Permiso denegado o error: ", error);
@@ -26,17 +26,18 @@ function active_camera(){
 if( document.getElementsByClassName('modal').length == 0 &&  document.getElementsByTagName('video').length > 0 ) $('video').ready(active_camera);
 	$('.button-photo').click(()=>{
 			var text = $('.info-foto').text();
-			if(text == "listo"){
+			if(text == "Listo"){
 						active_camera();
-						$('.info-foto').text("Presione \"Tomar captura\"")
-						$('.button-photo').text("Tomar captura")
+						$('.info-foto').text("Presione \"Tomar Foto\"")
+						$('.button-photo').text("Tomar Foto")
 						return;
 					}
 			var t = setInterval(()=>{
 					var text = $('.info-foto').text();
-
+					var estilos =  $('.info-foto').css(["font-size"])
 					if(isNaN(text)){
 						$('.info-foto').text(3);
+						  $('.info-foto').css("font-size","18px")
 					}else {
 						text-=1;
 						if(text > 0){
@@ -56,7 +57,7 @@ if( document.getElementsByClassName('modal').length == 0 &&  document.getElement
 							video.pause();
 
 							tracks.forEach(track => track.stop())
-							$('.info-foto').text("listo")
+							$('.info-foto').text("Listo")
 							$('.button-photo').text("Tomar nueva foto")
 							$(".btn-form-foto").prop("disabled",false)
 							var contexto = canvas.getContext("2d");
@@ -66,7 +67,7 @@ if( document.getElementsByClassName('modal').length == 0 &&  document.getElement
     						
     					//	console.log(canvas.toDataURL())
     						$("#inputFoto").val(canvas.toDataURL())
-    						
+    						 $('.info-foto').css(estilos)
 							clearInterval(t);
 						}
 					}
@@ -198,11 +199,13 @@ $(".btn-edit").click(e=>{
 			input.value = a.key;
 			$("#form-modal").append(input)
 			$('#formModal').modal('show');
-
-			//console.log(data);
 		}
 	);
 });
+
+$(".btn-download").click(e=>{
+	e.preventDefault();
+})
 $(".modal-camara").on('shown.bs.modal', function(){
     active_camera();
   });

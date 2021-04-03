@@ -3,7 +3,8 @@
     "description": "Control de Visitas",
     "type": "project",
     "require": {
-        "phpoffice/phpspreadsheet": "dev-master"
+        "phpoffice/phpspreadsheet": "dev-master",
+        "phpmailer/phpmailer": "dev-master"
     },
     "license": "private",
     "authors": [

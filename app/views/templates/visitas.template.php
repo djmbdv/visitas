@@ -45,7 +45,6 @@ $this->add_part("campoApartamento","campo",
 <div class="container">
 	<div class="row">
 	<h1 class="text-center">Visitas</h1>
-	<h4>Filtros <i class="fa fa-filter"></i></h4>
 	<form class="form-row form-filter" >
 	<div class="form-group col">
 	<label class="small">Desde</label> <input name="desde" class="form-control form-control-sm" type="date" name="" value="<?= $this->filtros['desde'] ?? '' ?>">
@@ -54,9 +53,12 @@ $this->add_part("campoApartamento","campo",
 	<label class="small">Hasta</label> <input name="hasta" class="form-control form-control-sm" type="date" name="" value="<?= $this->filtros['hasta'] ?? '' ?>">
 	</div>
 			<?php $this->render_part("campoApartamento");?>
-			<?php $this->render_part("campoVisitado");?>
+			<!--?php $this->render_part("campoVisitado");?-->
 	<div class="form-group col-md-2  mt-auto "> 
-		<input class="btn btn-warning" type="submit" value="filtrar"/>
+		<button class="btn btn-warning" type="submit" ><i class="fa fa-filter"></i> Filtrar</button>
+	</div>
+	<div class="form-group col-md-2  mt-auto "> 
+		<button class="btn btn-success btn-download"  ><i class="fa fa-download"></i> Descargar Reporte</button>
 	</div>
 	</form>
 	<hr/>
@@ -65,6 +67,5 @@ $this->add_part("campoApartamento","campo",
 <?php $this->render_part("paginator");?>
 </div>
 <?php 
-
 	}
 }
