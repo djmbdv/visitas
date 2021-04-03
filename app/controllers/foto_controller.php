@@ -80,32 +80,27 @@ class FotoController extends ControllerRest
 		$mail = new PHPMailer(true);
 		try {
 		    //Server settings
-		    $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
-		    $mail->isSMTP();                                            //Send using SMTP
-		    $mail->Host       = Config::$mail_host;                     //Set the SMTP server to send through
-		    $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-		    $mail->Username   = "djmbdv@gmail.com";                     //SMTP username
-		    $mail->Password   = "4363747rosy";                               //SMTP password
-		    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;         //Enable TLS encryption; 
-		    $mail->Port       = Config::$mail_port;                                     //TCP port to connect to, use 465 
+		    $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      
+		    $mail->isSMTP();                                           
+		    $mail->Host       = Config::$mail_host;                   
+		    $mail->SMTPAuth   = true;                                  
+		    $mail->Username   = Config::$mail_username;                    
+		    $mail->Password   = Config::$mail_password;                            
+		    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;          
+		    $mail->Port       = Config::$mail_port;                                 
 		    $mail->setFrom('djmbdv@gmail.com', 'David Marquez');
 		    $mail->addAddress($vis->email, $vis->nombre);     //Add a recipient
-	//	    $mail->addAddress('ellen@example.com');               //Name is optional
-	//	    $mail->addReplyTo('info@example.com', 'Information');
-		//    $mail->addCC('cc@example.com');
-		//    $mail->addBCC('bcc@example.com');
-
-		    //Attachments
-			//$mail->addAttachment('/var/tmp/file.tar.gz');         //Add attachments
-			//$mail->addAttachment('/tmp/image.jpg', 'new.jpg');    //Optional name
+	
+			$mail->addAttachment($vis->foto, 'foto.jpg');    //Optional name
 
 		    //Content
 		    $mail->isHTML(true);                                  //Set email format to HTML
 		    $mail->Subject = 'Nueva Visita';
 		    $mail->Body    = "<h1>Sistema de control de visitas</h1>"
 		    ."<h2>{$user->titulo}</h2>"
-		    .'<h3>Tiene una nueva visita <b>in bold!</b><h3>'
-		    ."<p> Nombre: {$visita->nombre}";
+		    .'<h3>Tiene una nueva visita<h3>'
+		    ."<p> Nombre: {$visita->nombre}"
+		    ."<p> Identificación: {$visita->identificacion}";
 		 //   $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 
 		    $mail->send();

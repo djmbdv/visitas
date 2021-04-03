@@ -37,7 +37,7 @@ if( document.getElementsByClassName('modal').length == 0 &&  document.getElement
 					var estilos =  $('.info-foto').css(["font-size"])
 					if(isNaN(text)){
 						$('.info-foto').text(3);
-						  $('.info-foto').css("font-size","18px")
+						$('.info-foto').css("font-size","18px")
 					}else {
 						text-=1;
 						if(text > 0){
@@ -45,11 +45,11 @@ if( document.getElementsByClassName('modal').length == 0 &&  document.getElement
 							$('.info-foto').text(text)
 						}else{
 							document.getElementById("captura").classList.add('marco-foto')
-							
-							setTimeout(function() {
-							document.getElementById("captura").classList.remove('marco-foto')
-								
-							}, 1);
+							setTimeout(
+								function() {
+									document.getElementById("captura").classList.remove('marco-foto')
+								}, 1
+							);
 							var video = document.getElementById("video")
 							var canvas = document.getElementById("canvas")
 							var mediaStream = video.srcObject;
@@ -65,7 +65,6 @@ if( document.getElementsByClassName('modal').length == 0 &&  document.getElement
     						canvas.height = video.videoHeight;
     						contexto.drawImage(video, 0, 0, canvas.width, canvas.height);
     						
-    					//	console.log(canvas.toDataURL())
     						$("#inputFoto").val(canvas.toDataURL())
     						 $('.info-foto').css(estilos)
 							clearInterval(t);
@@ -123,6 +122,8 @@ $(".btn-aceptar").click(e=>{
 	  }
 	})  
 })
+
+
 
 $(".btn-view").click(e=>{
 	var a = $(e.currentTarget).data();
@@ -205,6 +206,10 @@ $(".btn-edit").click(e=>{
 
 $(".btn-download").click(e=>{
 	e.preventDefault();
+//alert("hola")
+	str = "$desde="+$("#inputDesde").val();
+	str+="$hasta="+$("#inputHasta").val();
+	window.location = "/dashboard/reporte/"+str;
 })
 $(".modal-camara").on('shown.bs.modal', function(){
     active_camera();

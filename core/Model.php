@@ -39,6 +39,7 @@ abstract class Model{
 		$sql=" where $att LIKE '%$value%'";
 		return self::all($count, $page,$loaded,$sql);
 	}
+
 	public static function all_where_and($a = array(),$count = null, $page = null,$loaded = false){
 		if(!self::table_exist())self::create_table();
 		$sql = "";
@@ -46,9 +47,19 @@ abstract class Model{
 			if($key == 0)$sql=" where $value[0] $value[1] '$value[2]'";
 			else $sql.=" and $value[0] $value[1] '$value[2]'";
 		}
-	//	print_r($sql);
 		return self::all($count, $page,$loaded,$sql);
 	}
+
+	public static function all_where_or($a = array(),$count = null, $page = null,$loaded = false){
+		if(!self::table_exist())self::create_table();
+		$sql = "";
+		foreach ($a as $key => $value) {
+			if($key == 0)$sql=" where $value[0] $value[1] '$value[2]'";
+			else $sql.=" or $value[0] $value[1] '$value[2]'";
+		}
+		return self::all($count, $page,$loaded,$sql);
+	}
+	
 	public function get_json($hide = array()){
 		$o = $this->no_class_values($hide);
 		return json_encode($o);

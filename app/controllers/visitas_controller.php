@@ -1,11 +1,9 @@
 <?php
-
-
-
 require_once "core/Controller.php";
 require_once "core/Session.php";
-
-
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use PhpOffice\PhpSpreadsheet\Writer\Html;
 /**
  * 
  */
@@ -34,7 +32,6 @@ class VisitasController extends ControllerRest
 		$page = $page?$page:1;
 		if(!$user->is_admin()){
 			$condicion = [['cliente','=',$user->get_key()]];
-         //   if($apartamento)$condicion[]=["apartamento",'=',$apartamento];
             if($visitado)$condicion[]=["visitado",'=',$visitado];
             if($desde)$condicion[]=["create_at",'>=', $desde];
             if($hasta)$condicion[]=["create_at", '<=',$hasta.=" 23:59:59"];
@@ -61,5 +58,57 @@ class VisitasController extends ControllerRest
             'hide_actions' => true
 		));
 		return $vv->render();
+	}
+
+	function reporte(){
+		Session::load();
+		$user = UserModel::user_logged();
+		$spreadsheet = new Spreadsheet();
+		$cc = [];
+		$desde = $this->get_param("desde");
+		$hasta = $this->get_param("hasta");
+		if(!$user->is_admin()){
+			$cc = [['cliente','=',$user->get_key()]];
+		}
+		$condv = $cc;
+		if($desde)$condv[]=["create_at",'>=', $desde];
+        if($hasta)$condv[]=["create_at", '<=',$hasta.=" 23:59:59"];
+		$apartamento =  $this->get_param("apartamento");
+
+		$edi =  EdificioModel::all_where_and($cc,null,true);
+	//	$sheet = $spreadsheet->getActiveSheet();
+		foreach ($edi as $edificio) {
+			$linea = 1;
+			$myWorkSheet = new \PhpOffice\PhpSpreadsheet\Worksheet\Worksheet($spreadsheet,$edificio->nombre);
+			$condicion = $cc;
+			$condicion[] = ["edificio", "=","{$edificio->ID}"];
+			$apartamentos = ApartamentoModel::all_where_and($condicion,null,null, false);
+			$myWorkSheet->setCellValue('C'.$linea, "NOMBRE");
+			$myWorkSheet->setCellValue('B'.$linea, "IDENTIFICACIÓN");
+			$myWorkSheet->setCellValue('A'.$linea, "FECHA");
+			$myWorkSheet->setCellValue('D'.$linea, "DESTINO");
+			$linea++;
+			foreach ($apartamentos as $apartamento) {
+				$cond = $condv;
+				$cond[] = ["destino","=","{$apartamento->ID}"];
+				$visitas = VisitaModel::all_where_and($cond,null,null,true);
+				foreach ($visitas as $visita) {
+					$myWorkSheet->setCellValue('C'.$linea, $visita->nombre);
+					$myWorkSheet->setCellValue('B'.$linea, $visita->identificacion);
+					$myWorkSheet->setCellValue('A'.$linea, $visita->get_create_at());
+					$myWorkSheet->setCellValue('D'.$linea, $visita->destino->load()->nombre);
+					$linea++;
+				}
+					
+			}
+			$spreadsheet->addSheet($myWorkSheet);
+		}
+
+		$spreadsheet->removeSheetByIndex(0);
+		$writer = new Html($spreadsheet);
+		$file  = "_static/reporte".uniqid().".html";
+		$writer->save($file);
+		echo file_get_contents($file);
+		unlink($file);
 	}
 }

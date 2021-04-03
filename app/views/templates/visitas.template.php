@@ -47,10 +47,10 @@ $this->add_part("campoApartamento","campo",
 	<h1 class="text-center">Visitas</h1>
 	<form class="form-row form-filter" >
 	<div class="form-group col">
-	<label class="small">Desde</label> <input name="desde" class="form-control form-control-sm" type="date" name="" value="<?= $this->filtros['desde'] ?? '' ?>">
+	<label class="small">Desde</label> <input id="inputDesde" name="desde" class="form-control form-control-sm" type="date" name="" value="<?= $this->filtros['desde'] ?? '' ?>">
 	</div>
 	<div class="form-group col "> 
-	<label class="small">Hasta</label> <input name="hasta" class="form-control form-control-sm" type="date" name="" value="<?= $this->filtros['hasta'] ?? '' ?>">
+	<label class="small">Hasta</label> <input id="inputHasta" name="hasta" class="form-control form-control-sm" type="date" name="" value="<?= $this->filtros['hasta'] ?? '' ?>">
 	</div>
 			<?php $this->render_part("campoApartamento");?>
 			<!--?php $this->render_part("campoVisitado");?-->
@@ -58,7 +58,7 @@ $this->add_part("campoApartamento","campo",
 		<button class="btn btn-warning" type="submit" ><i class="fa fa-filter"></i> Filtrar</button>
 	</div>
 	<div class="form-group col-md-2  mt-auto "> 
-		<button class="btn btn-success btn-download"  ><i class="fa fa-download"></i> Descargar Reporte</button>
+		<a class="btn btn-success btn-download"  ><i class="fa fa-download"></i> Descargar Reporte</a>
 	</div>
 	</form>
 	<hr/>
