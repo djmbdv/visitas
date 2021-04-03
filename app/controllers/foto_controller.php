@@ -86,9 +86,9 @@ class FotoController extends ControllerRest
 		    $mail->SMTPAuth   = true;                                  
 		    $mail->Username   = Config::$mail_username;                    
 		    $mail->Password   = Config::$mail_password;                            
-		    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;          
+	//	    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;          
 		    $mail->Port       = Config::$mail_port;                                 
-		    $mail->setFrom('djmbdv@gmail.com', 'David Marquez');
+		    $mail->setFrom('asistencia@remotepcsolutions.com', 'Control de Visitas');
 		    $mail->addAddress($vis->email, $vis->nombre);     //Add a recipient
 	
 			$mail->addAttachment($vis->foto, 'foto.jpg');    //Optional name
