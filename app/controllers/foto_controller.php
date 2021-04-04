@@ -80,7 +80,7 @@ class FotoController extends ControllerRest
 		$mail = new PHPMailer(true);
 		try {
 		    //Server settings
-		    $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      
+		//    $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      
 		    $mail->isSMTP();                                           
 		    $mail->Host       = Config::$mail_host;                   
 		    $mail->SMTPAuth   = true;                                  
@@ -107,8 +107,9 @@ class FotoController extends ControllerRest
 		  //  echo 'Message has been sent';
 		} catch (Exception $e) {
 		    echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
-		    return;
+		   
+		   // return;
 		}
-		header('location: /saludo');
+		 header('location: /saludo');
 	}
 }
