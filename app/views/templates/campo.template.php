@@ -36,7 +36,7 @@ class CampoTemplate extends Template{
       <?php endif;?>
       <?php else: ?>
         <?php if(!($readonly && $file)):?> 
-          <<?= ($form_type == 'select'?'select':'input') ?> id="input<?= $r ?><?= ucfirst($name) ?>" entrada="input<?= $r ?><?= ucfirst($name) ?>1" class="<?= ($form_type == 'select'?'custom-select':'') ?> form-control<?=$file?'-file':''?><?= $size?'-'.$size:'' ?> " <?= $autocomplete?" data-clase=\"".$this->T('clase').'"':'' ?> type="<?= $form_type ? $form_type : 'text'?>" name="<?= (($autocomplete || $file)?'_':'').$name ?>" placeholder="<?= $placeholder ?>" <?= $required?'required':''?>
+          <<?= ($form_type == 'select'?'select':'input') ?> id="input<?= $r ?><?= ucfirst($name) ?>" entrada="input<?= $r ?><?= ucfirst($name) ?>1" class="<?= ($form_type == 'select'?'custom-select':'') ?> form-control<?=$file?'-file':''?><?= $size?'-'.$size:'' ?> " <?= $autocomplete?" data-clase=\"".$this->T('clase').'"':'' ?> type="<?= $form_type ? $form_type : 'text'?>" name="<?= (($autocomplete || $file)?'_':'').$name ?>" placeholder="<?= $placeholder ?>" <?= $required?'required=""':''?>
           <?php if($attributes)foreach ($attributes as $key => $value):?>
             data-<?= $key ?>="<?= $value ?>" 
           <?php endforeach; ?>

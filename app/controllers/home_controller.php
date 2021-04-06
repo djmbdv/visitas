@@ -1,8 +1,7 @@
 <?php
 
 require_once "core/Controller.php";
-	use PhpOffice\PhpSpreadsheet\Spreadsheet;
-	use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+
 
 /**
  * 
@@ -35,17 +34,6 @@ class HomeController extends Controller
 		$user->load();
 		//print_r($user);
 		$main_view = new SaludoView(['user'=>$user]);
-
-
-
-
-	$spreadsheet = new Spreadsheet();
-	$sheet = $spreadsheet->getActiveSheet();
-	$sheet->setCellValue('A1', 'Hello World !');
-
-	$writer = new Xlsx($spreadsheet);
-	$writer->save('hello world.xlsx');
-
 		return $main_view->render();
 	}
 	function error(){

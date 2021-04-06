@@ -33,6 +33,7 @@ class HabitanteModel extends Model
 		return array(
 		'email' => "email",
 		'telefono' => "tel",
+		'apartamento' => "select"
  		);
 	}
 	public static function search_nombre($nombre, $cantidad = 20, $apartamento = null){

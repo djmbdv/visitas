@@ -6,7 +6,7 @@ class HabitantesTemplate extends Template{
 		$this->add_part("paginator","paginator");
 		$this->add_part("topbar","topbar");
 		$this->add_part("table","table");
-		$this->add_part("modal","modal");
+		$this->add_part("modalresidente","modalresidente");
 		$this->add_part("viewmodal","viewmodal");
 		$this->add_part("askmodal","askmodal");
 	}
@@ -15,7 +15,7 @@ class HabitantesTemplate extends Template{
 		$c = $this->T("count");
 		$p = $this->T("page");
 		$this->render_part("topbar"); 
-		$this->render_part("modal");
+		$this->render_part("modalresidente");
 		$this->render_part("viewmodal");
 		$this->render_part("askmodal");
 		?>

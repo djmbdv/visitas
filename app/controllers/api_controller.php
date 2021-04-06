@@ -23,7 +23,7 @@ class ApiController extends Controller{
 	}
 	public function search_apartamentos(){
 		header("Content-type:application/json");
-		$nombre = $_POST["s"];
+		$nombre = $_POST["s"] ??  "";
 		$edificio = $_POST["edificio"]??null;
 		print_r(ApartamentoModel::search_nombre($nombre,12,$edificio));
 	}

@@ -1,5 +1,5 @@
 <?php
-class ModalTemplate extends Template{
+class ModalresidenteTemplate extends Template{
 	public $camara;
 
 function config(){
@@ -10,7 +10,7 @@ function config(){
 				'label' => ucfirst($v),
 		 		'autocomplete' => is_subclass_of($this->T("modal_class")::get_attribute_class($v), 'Model') && !isset( $this->T("modal_class")::form_types_array()[$v] ),
 		 		'required' => true,
-		 		'autoload'=>true,
+		 		'autoload'=>false,
 		 		'placeholder'=> $this->T("modal_class")::search_description($v),
 		 		'end_point'=> isset($matches[1])? '/api/'.strtolower($matches[1]).'s/':null,
 		 		'autocomplete_att'=>'s',
@@ -18,8 +18,26 @@ function config(){
 		 		'clase' => isset($matches[1])?strtolower($matches[1]):""
 		  ); 
 		if($campo['form_type'] == 'foto')$this->camara = true; 
+
 		$this->add_part("campo".ucfirst($v),"campo", $campo);
 	}
+	$this->add_part("campoEdificio","campo",
+		 array('name' => "edificio" ,
+		 		'autocomplete' => false,
+		 		'required' => true,
+		 		'label' =>"Edificio",
+		 		'placeholder'=> "Torre a donde se dirige",
+		 		'end_point'=> '/api/edificios/',
+		 		'autocomplete_att'=>'s',
+		 		'clase'=> 'edificio',
+		 	//	'add_class' => 'col-md-6',
+		 		'form_type' => 'select',
+		 //		'size'=> 'lg',
+		 		'autoload'=>true,
+		 		'attributes'=>  array('s' => "" ),
+		 		'children' => ['inputApartamento']
+		  )
+		);
 }
 	
 function render(){?>
@@ -33,6 +51,7 @@ function render(){?>
 	      </div>
 	      <div class="modal-body">
 	        <form id="form-modal" method="post">
+	        <?php $this->render_part("campoEdificio"); ?>
 			  <?php foreach ($this->T("modal_vars") as $v):
 			  	$this->render_part("campo".ucfirst($v));
 			  	?>

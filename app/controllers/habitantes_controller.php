@@ -116,11 +116,13 @@ class HabitantesController extends ControllerRest
 		}else {
 			$u->cliente = $user;
 		}
+
+
 		$respose = new stdClass;
-		if($u->save())
-		
+		if($u->nombre != ""  && $u->save())
 		$respose->ok = true;
 		else $respose->errorMsj = "Error al crear";
+		if($u->nombre == "")$respose->errorMsj.= "\nDebe indicar nombre.";
 		header("Content-type:application/json");
 		print_r(json_encode($respose));
 	}
