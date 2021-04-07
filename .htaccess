@@ -1,3 +1,5 @@
 RewriteEngine On
 RewriteBase /
+RewriteCond %{HTTPS} off
+RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} 
 RewriteRule ^([A-Za-z0-9/\$=áéíóúÁÉÍÓÚçÇ\+-]*)$ "index.php?g=$1" [NC]
