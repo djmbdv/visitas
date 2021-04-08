@@ -25,6 +25,12 @@ class ApartamentoModel extends Model
  		);
 	}
 
+	public static function descriptions_array(){
+		return array(
+		'nombre' => "Nombre o Número de apartamento",
+ 		);
+	}
+
 	public static function seeds(){
 		$propietarios = HabitanteModel::all();
 		for($i = 0; $i < 25; $i++){
