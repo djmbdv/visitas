@@ -25,7 +25,7 @@ class HabitanteModel extends Model
 	public static function descriptions_array(){
 		return array(
 		'nombre' => "Nombre Completo",
-		'apartamento' => "Apartamento o casa donde habita"	
+		'apartamento' => "Seleccione un Apartamento"	
  		);
 	}
 
@@ -36,6 +36,21 @@ class HabitanteModel extends Model
 		'apartamento' => "select"
  		);
 	}
+
+	public static function p_torre($x){
+		$str ="";
+		if($x->apartamento->exist()){
+		 $x->apartamento->load();
+		 $x->apartamento->edificio->load();
+		 $str= $x->apartamento->edificio->nombre;
+		}
+		return $str;
+	}
+	public static function array_presentation(){
+		return [ "torre" => "p_torre"];
+	}
+
+
 	public static function search_nombre($nombre, $cantidad = 20, $apartamento = null){
 		$usuario = UserModel::user_logged();
 		if(!$usuario)return;

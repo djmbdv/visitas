@@ -56,7 +56,10 @@ foreach($this->T('items') as $it):
 		<!--td class="text-center"><input type="checkbox" name=""></td-->
 <?php
 	foreach($this->T('table_vars') as $value):
-	if($it->get_attribute_type($value) == "mediumblob" ):?>
+	if(isset($this->T('modal_class')::array_presentation()[$value])):?>
+		<td><?= $this->T('modal_class')::presentation_field($it,$value); ?></td>
+	<?php
+	elseif($it->get_attribute_type($value) == "mediumblob" ):?>
 		<td><img src="<?= $it->{$value} ?>" class="image-table"></img></td>
 <?php
 	elseif(is_subclass_of($it->{$value}, "Model")): 

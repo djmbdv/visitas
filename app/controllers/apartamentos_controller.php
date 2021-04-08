@@ -75,11 +75,11 @@ class ApartamentosController extends ControllerRest
 			$a->ID = $this->_PUT["edificio"];
 			$u->edificio = $a;
 		}
-		if(isset($this->_PUT["propietario"])){
+	/*	if(isset($this->_PUT["propietario"])){
 			$a  = new HabitanteModel();
 			$a->ID = $this->_PUT["propietario"];
 			$u->propietario = $a;
-		}
+		}*/
 		if(isset($this->_PUT["cliente"]) && $user->is_admin()){
 			$a  = new UserModel();
 			$a->ID = $this->_PUT["cliente"];
@@ -96,6 +96,7 @@ class ApartamentosController extends ControllerRest
 		print_r(json_encode($respose));
 	}
 	public function post(){
+		$error = false;
 		$user = UserModel::user_logged();
 		if(is_null($user)){
 			header('location: /login/');
@@ -109,11 +110,11 @@ class ApartamentosController extends ControllerRest
 			$a->ID = $this->_POST["edificio"];
 			$u->edificio = $a;
 		}
-		if(isset($this->_POST["propietario"])){
+	/*	if(isset($this->_POST["propietario"])){
 			$a  = new HabitanteModel();
 			$a->ID = $this->_POST["propietario"];
 			$u->propietario = $a;
-		}
+		}*/
 		if(isset($this->_POST["cliente"]) && $user->is_admin()){
 			$a  = new UserModel();
 			$a->ID = $this->_POST["cliente"];
@@ -121,11 +122,14 @@ class ApartamentosController extends ControllerRest
 		}else {
 			$u->cliente = $user;
 		}
+		$cond = [["nombre","=",$u->nombre], ["edificio","=",$u->edificio->ID]];
+		if(count(ApartamentoModel::all_where_and($cond)))$error = true;
 		$respose = new stdClass;
-		if($u->save())
+		if(!$error && $u->save())
 		
 		$respose->ok = true;
 		else $respose->errorMsj = "Error al ingresar";
+		if($error) $respose->errorMsj.="\nNombre ya existe.";
 		header("Content-type:application/json");
 		print_r(json_encode($respose));
 	}

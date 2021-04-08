@@ -12,10 +12,8 @@ class DashboardTemplate extends Template{
 	<h1 class="text-center m-2 p-4">Dashboard</h1>
 	<a href="./edificios/" class="btn btn-primary m-2 p-3 px-4" style="height: 3rem;"><i class="fa fa-building fa-lg"></i> Crear Edificio</a>
 	<a href="./apartamentos/" class="btn btn-primary m-2 p-3 px-4" style="height: 3rem;"><i class="fa fa-home fa-lg"></i> Crear Apartamento</a>
-	<a href="./visitas/" class="btn btn-info m-2 p-3 px-4" style="height: 3rem;"><i class="fa fa-users fa-lg"></i> Visitas</a>
-
 	<a href="./residentes/" class="btn btn-warning m-2 p-3 px-4" style="height: 3rem;"><i class="fa fa-users fa-lg "></i> Residentes</a>
-	
+	<a href="./visitas/" class="btn btn-info m-2 p-3 px-4" style="height: 3rem;"><i class="fa fa-users fa-lg"></i>Ver Visitas</a>
 	
 <?php
 	$t = $this->T("user")->tipo;

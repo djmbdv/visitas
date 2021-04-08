@@ -26,7 +26,7 @@ function config(){
 		 		'autocomplete' => false,
 		 		'required' => true,
 		 		'label' =>"Edificio",
-		 		'placeholder'=> "Torre a donde se dirige",
+		 		'placeholder'=> "Seleccione un Edificio",
 		 		'end_point'=> '/api/edificios/',
 		 		'autocomplete_att'=>'s',
 		 		'clase'=> 'edificio',
@@ -45,7 +45,7 @@ function render(){?>
 	  <div class="modal-dialog modal-lg" role="document">
 	    <div class="modal-content">
 	      <div class="modal-header  bg-warning text-white d-flex ">
-	        <h5 class="modal-title" id="formModalLabel">Datos de <?= $this->T("title") ?></h5>
+	        <h5 class="modal-title" id="formModalLabel">Agregar <?= $this->T("title") ?></h5>
 	        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
 	        </button>
 	      </div>

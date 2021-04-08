@@ -24,4 +24,16 @@ class VisitaModel extends Model
 		'cliente' => 'int (11) NOT NULL'
  		);
 	}
+	public static function p_destino($x){
+		$str ="";
+		if($x->destino->exist()){
+		 $x->destino->load();
+		 $x->destino->edificio->load();
+		 $str="Torre: ". $x->destino->edificio->nombre." |  Apartamento:".$x->destino->nombre ;
+		}
+		return $str;
+	}
+	public static function array_presentation(){
+		return [ "destino" => "p_destino"];
+	}
 }

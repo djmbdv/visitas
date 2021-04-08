@@ -8,13 +8,13 @@ class ApartamentoModel extends Model
 
 	protected $nombre;
 	protected EdificioModel $edificio;
-	protected HabitanteModel $propietario;
+//	protected HabitanteModel $propietario;
 	protected UserModel $cliente;
 	
 	public static function types_array(){
 		return array(
 			'nombre' => "VARCHAR( 150 ) NOT NULL",
-			'propietario' => "INT( 11 )",
+	//		'propietario' => "INT( 11 )",
 			'edificio' => 'VARCHAR( 11 ) NOT NULL',
 			'cliente' => 'INT (11) NOT NULL'
 	 	);

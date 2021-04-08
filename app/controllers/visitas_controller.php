@@ -54,6 +54,7 @@ class VisitasController extends ControllerRest
 			"table_vars" => $vars,
 			'page'=> $page,
 			'count'=>$count,
+			"modal_class" => 'VisitaModel',
             'hide_modified' => true,
             'hide_actions' => true
 		));

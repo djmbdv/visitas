@@ -31,10 +31,12 @@ class HabitantesController extends ControllerRest
 			$count = HabitanteModel::count();
 			$items = HabitanteModel::all(20,$page);
 		}
+		$varst  =  $vars;
+		array_unshift($varst, "torre");
 		$hv = new HabitantesView( array(
 			'items' => $items,
 			'user'=> $user,
-			"table_vars" => $vars,
+			"table_vars" => $varst,
 			"modal_vars" => $vars,
 			"modal_class" => 'HabitanteModel',
 			'page'=> $page,

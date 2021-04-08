@@ -59,7 +59,14 @@ abstract class Model{
 		}
 		return self::all($count, $page,$loaded,$sql);
 	}
+	public static function array_presentation(){
+		return [];
+	}
 	
+	public static  function presentation_field($x, $s){
+		$fun = get_called_class()::array_presentation()[$s];
+		return get_called_class()::$fun($x);
+	}
 	public function get_json($hide = array()){
 		$o = $this->no_class_values($hide);
 		return json_encode($o);
