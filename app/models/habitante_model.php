@@ -10,10 +10,10 @@ class HabitanteModel extends Model
 	
 	protected ApartamentoModel $apartamento;
 	protected $email;
-	protected $telefono;
+//	protected $telefono;
 	protected $nombre;
 //	protected $foto;
-	protected $identificacion;
+//	protected $identificacion;
 	protected UserModel $cliente;
 	public static function types_array(){
 		return array(
@@ -32,7 +32,7 @@ class HabitanteModel extends Model
 	public static function form_types_array(){
 		return array(
 		'email' => "email",
-		'telefono' => "tel",
+	//	'telefono' => "tel",
 		'apartamento' => "select"
  		);
 	}
@@ -73,10 +73,10 @@ class HabitanteModel extends Model
 			$array =array("Juan" ,"Peres",
 				"Alfredo","Jaime","Adolfo","Casimiro", "Fabio", "Jean", "Doni","Tarek","Daniel", "Maria", "Espejo","Fabian", "Rosa", "David", "Juan","Pedro","McGregor", "Messi", "Antonia", "Adriana", "Jonh", "Linda" );
 			$h->apartamento = new ApartamentoModel();
-			$h->telefono = random_int(1000, 2000);
+	//		$h->telefono = random_int(1000, 2000);
 			$h->email = strtolower($array[random_int(0,count($array)-1)].random_int(1000, 2000).'@gmail.com');
 			$h->nombre =ucfirst( $array[random_int(0,count($array)-1)])." ".ucfirst($apellidos[random_int(0,count($apellidos)-1)]);
-			$h->identificacion =  random_int(1000000, 90000000);
+		//	$h->identificacion =  random_int(1000000, 90000000);
 			$h->foto = $foto;
 		//var_dump($h);
 			$h->cliente = UserModel::all()[0];
