@@ -22,14 +22,15 @@ class HabitantesController extends ControllerRest
 		$page = $this->get_param("page");
 		$page = $page?$page:1;
 		if(!$user->is_admin()){
-			$condicion = [['cliente','=',$user->get_key()]];	
+			$condicion = [[['cliente','=',$user->get_key()]]];	
 			$vars = array_filter(HabitanteModel::get_vars(),function($a){ return $a != 'cliente';});
 			$count = HabitanteModel::count($condicion);
-			$items = HabitanteModel::all_where_and($condicion,20,$page);	
+			$items = HabitanteModel::all_inner_join_and("apartamentos",$condicion,20,$page);
 		}else{
+			$condicion = [[["apartamentos.id","=","habitantes.apartamento"]],[["edificios.id","=","apartamentos.edificio"]]];
 			$vars = HabitanteModel::get_vars();
 			$count = HabitanteModel::count();
-			$items = HabitanteModel::all(20,$page);
+			$items = HabitanteModel::all_inner_join_and(["apartamentos","edificios"],$condicion,20,$page,false, "edificios.nombre", $false);
 		}
 		$varst  =  $vars;
 		array_unshift($varst, "torre");

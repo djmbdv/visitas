@@ -40,14 +40,26 @@ abstract class Model{
 		return self::all($count, $page,$loaded,$sql);
 	}
 
-	public static function all_where_and($a = array(),$count = null, $page = null,$loaded = false){
+	public static function all_where_and($a = array(),$count = null, $page = null,$loaded = false, $order = "create_at", $desc = true ){
 		if(!self::table_exist())self::create_table();
 		$sql = "";
 		foreach ($a as $key => $value) {
 			if($key == 0)$sql=" where $value[0] $value[1] '$value[2]'";
 			else $sql.=" and $value[0] $value[1] '$value[2]'";
 		}
-		return self::all($count, $page,$loaded,$sql);
+		return self::all($count, $page,$loaded,$sql, $order,$desc);
+	}
+
+	public function all_inner_join_and($tables,$condiciones = array(),$count = null, $page = null,$loaded = false, $order = "create_at", $desc = true ){
+		if(!self::table_exist())self::create_table();
+		$sql = "";
+		foreach ($tables as $key => $table) {
+			foreach ($condiciones[$key] as $key2 => $value) {
+				if($key2 == 0)$sql.=" inner join $table on $value[0] $value[1] $value[2]";
+				else $sql.=" and $value[0] $value[1] $value[2]";
+			}
+		}
+		return self::all($count, $page,$loaded,$sql, $order,$desc);
 	}
 
 	public static function all_where_or($a = array(),$count = null, $page = null,$loaded = false){
@@ -203,14 +215,15 @@ abstract class Model{
 		return array();
 	}
 
-	public static function all($count = null, $page = null,$loaded = false,$sql_aditiional = ""){
+	public static function all($count = null, $page = null,$loaded = false,$sql_aditiional = "", $order = "create_at", $desc = true){
 		if(!get_called_class()::table_exist())self::create_table();
 		$pdo = DB::get();
 		$table = self::get_table_name();
 		$index = self::$index_name; 
-		$sql = "select $index from $table ";
+		$sql = "select $table.$index from $table ";
 		$sql.=$sql_aditiional;
-		$sql.= "  ORDER BY `create_at` DESC";
+		$desc = $desc? "DESC":"ASC";
+		$sql.= "  ORDER BY $order $desc";
 		if(!is_null($count)){
 			$sql .=" limit $count";
 			if (!is_null($page)) {
