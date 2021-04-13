@@ -28,6 +28,7 @@ $main_router->link("visita",$fc,"visita");
 		$uc = new UsersController();
 		$ac = new ApartamentosController();
 		$ec = new EdificiosController();
+		$adc = new AdministracionController();
 
 	$dashboard_router->link("visitas",$vc);
 	$dashboard_router->link("reporte", $vc, "reporte");
@@ -35,7 +36,7 @@ $main_router->link("visita",$fc,"visita");
 	$dashboard_router->link("usuarios", $uc);
 	$dashboard_router->link("apartamentos", $ac);
 	$dashboard_router->link("edificios", $ec);
-
+	$dashboard_router->link("administracion", $adc);
 	$api_router = new Router();
 	$api_router->link("habitante",$apic,"get_habitante");
 	$api_router->link("habitantes",$apic,"search_habitantes");

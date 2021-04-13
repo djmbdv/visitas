@@ -12,6 +12,7 @@ class UserModel extends Model{
 	protected $password;
 	protected $email;
 	protected TipoModel $tipo;
+	protected PlanModel $plan;
 	protected $image;
 	protected $titulo;
 	public static function types_array(){ 
@@ -21,6 +22,7 @@ class UserModel extends Model{
 		'password' => "VARCHAR( 80 ) NOT NULL",
 		'email' => 'varchar ( 100 ) NOT NULL',
 		'tipo' => 'INT( 9)  NOT NULL',
+		'plan' => 'INT( 9)  NOT NULL',
 		'image'=>	'MEDIUMBLOB ',
 		'titulo'=> 'VARCHAR (200) '
  		);
@@ -30,8 +32,23 @@ class UserModel extends Model{
 		'email' => "email",
 		'password' => "password",
 		'image' =>"file",
-		'tipo' => "select"
+		'tipo' => "select",
+		'plan'=> "select"
  		);
+	}
+
+	public function get_habitantes_count(){
+		$cond = [["cliente","=",$this->get_key()]];
+		return HabitanteModel::count($cond);
+	}
+	public function get_edificios_count(){
+
+		$cond = [["cliente","=",$this->get_key()]];
+		return EdificioModel::count($cond);
+	}
+	public function get_apartamentos_count(){
+		$cond = [["cliente","=",$this->get_key()]];
+		return ApartamentoModel::count($cond);
 	}
 	public static function seeds(){
 		$tipos = TipoModel::all();
@@ -42,6 +59,7 @@ class UserModel extends Model{
 		$client->email = "client@ejemplo.com";
 		$client->titulo = "complejo de prueba";
 		$client->tipo = $tipos[1];
+		$client->plan = PlanModel::all()[0];
 		$client->save();
 		$client  = new UserModel();
 		$client->username = 'admin';
@@ -51,6 +69,7 @@ class UserModel extends Model{
 		$client->email = "admin@ejemplo.com";
 		$client->tipo = $tipos[0];
 		$client->save();
+		//exit();
 	}
 	public static function user_logged(){
 		Session::load();
@@ -86,6 +105,13 @@ class UserModel extends Model{
 	}
 	public static function presentation($h){
 		return $h->username.' | '.$h->name; 
+	}
+
+	public static function p_cargo($c){
+		return "Apartamentos: ".$c->get_apartamentos_count()."<br>Edificios: ".$c->get_edificios_count();
+	}
+	public static function array_presentation(){
+		return [ "cargo" => "p_cargo"];
 	}
 
 	public static function login($username, $password){

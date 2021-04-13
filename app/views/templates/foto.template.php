@@ -43,9 +43,6 @@ class FotoTemplate extends Template
 	</div>
 </div>
 </div>
-
-
-
 <?php
 	}
 }

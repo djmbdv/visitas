@@ -28,6 +28,7 @@ class VisitasController extends ControllerRest
 		$desde = $this->get_param("desde");
 		$hasta = $this->get_param("hasta");
 		$apartamento =  $this->get_param("apartamento");
+		
 		$visitado = $this->get_param("visitado");
 		$page = $page?$page:1;
 		if(!$user->is_admin()){
@@ -77,23 +78,32 @@ class VisitasController extends ControllerRest
 		$apartamento =  $this->get_param("apartamento");
 
 		$edi =  EdificioModel::all_where_and($cc,null,true);
-	//	$sheet = $spreadsheet->getActiveSheet();
+	
 		foreach ($edi as $edificio) {
 			$linea = 1;
 			$myWorkSheet = new \PhpOffice\PhpSpreadsheet\Worksheet\Worksheet($spreadsheet,$edificio->nombre);
 			$condicion = $cc;
 			$condicion[] = ["edificio", "=","{$edificio->ID}"];
 			$apartamentos = ApartamentoModel::all_where_and($condicion,null,null, false);
+			//print_r($apartamentos);
 			$myWorkSheet->setCellValue('C'.$linea, "NOMBRE");
 			$myWorkSheet->setCellValue('B'.$linea, "IDENTIFICACIÓN");
 			$myWorkSheet->setCellValue('A'.$linea, "FECHA");
-			$myWorkSheet->setCellValue('D'.$linea, "DESTINO");
+			$myWorkSheet->setCellValue('D'.$linea, "DESeeTINO");
 			$linea++;
-			foreach ($apartamentos as $apartamento) {
+			foreach($apartamentos as $apartamento) {
 				$cond = $condv;
 				$cond[] = ["destino","=","{$apartamento->ID}"];
 				$visitas = VisitaModel::all_where_and($cond,null,null,true);
+				//print_r($visitas);
 				foreach ($visitas as $visita) {
+					print_r($visita);
+/*
+						$myWorkSheet->setCellValue('C'.$linea, "NOMBRE");
+				$myWorkSheet->setCellValue('B'.$linea, "IDENTIFICACIÓN");
+				$myWorkSheet->setCellValue('A'.$linea, "FECHA");
+				$myWorkSheet->setCellValue('D'.$linea, "DESeeTINO");*/
+					//$visita->load();
 					$myWorkSheet->setCellValue('C'.$linea, $visita->nombre);
 					$myWorkSheet->setCellValue('B'.$linea, $visita->identificacion);
 					$myWorkSheet->setCellValue('A'.$linea, $visita->get_create_at());
@@ -106,10 +116,10 @@ class VisitasController extends ControllerRest
 		}
 
 		$spreadsheet->removeSheetByIndex(0);
-		$writer = new Html($spreadsheet);
-		$file  = "_static/reporte".uniqid().".html";
+		$writer = new Xlsx($spreadsheet);
+		$file  = "_static/reporte".uniqid().".xlsx";
 		$writer->save($file);
 		echo file_get_contents($file);
-		unlink($file);
+		//unlink($file);
 	}
 }

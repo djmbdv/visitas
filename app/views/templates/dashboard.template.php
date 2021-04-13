@@ -20,7 +20,9 @@ class DashboardTemplate extends Template{
 	$t->load();
  if( $t->descripcion == "admin"):?>
 	<a href="./usuarios/" class="btn btn-dark m-2 p-3" style="height: 3rem;"><i class="fa fa-user fa-lg"></i> Usuarios</a>
+	<a href="./administracion/" class="btn btn-danger m-2 p-3" style="height: 3rem;"><i class="fa fa-money fa-lg"></i> Administración</a>
 <?php endif;?>
+<a href="./account/" class="btn btn-light m-2 p-3" style="height: 3rem;"><i class="fa fa-cog fa-lg"></i> Cuenta</a>
 </div>
 <?php 
 	}
