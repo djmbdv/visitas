@@ -30,7 +30,7 @@ class HabitantesController extends ControllerRest
 			$condicion = [[["apartamentos.id","=","habitantes.apartamento"]],[["edificios.id","=","apartamentos.edificio"]]];
 			$vars = HabitanteModel::get_vars();
 			$count = HabitanteModel::count();
-			$items = HabitanteModel::all_inner_join_and(["apartamentos","edificios"],$condicion,20,$page,false, "edificios.nombre", $false);
+			$items = HabitanteModel::all_inner_join_and(["apartamentos","edificios"],$condicion,20,$page,false, "edificios.nombre", false);
 		}
 		$varst  =  $vars;
 		array_unshift($varst, "torre");

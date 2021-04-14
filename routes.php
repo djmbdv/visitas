@@ -49,6 +49,8 @@ $main_router->link("visita",$fc,"visita");
 	$api_router->link("apartamento",$apic,"get_apartamento");
 	$api_router->link("apartamentos",$apic,"search_apartamentos");
 	$api_router->link("edificios",$apic,"search_edificios");
+	$api_router->link("plans",$apic,"search_plans");
+
 	$api_router->link("edificio",$apic,"get_edificio");
 	
 

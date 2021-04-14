@@ -61,6 +61,11 @@ class UsersController extends ControllerRest
 			$t->ID = $this->_PUT["tipo"];
 			$u->tipo = $t;
 		}
+		$p = new PlanModel();
+		if(isset($this->_PUT["plan"])){
+			$p->ID =  $this->_PUT["plan"]; 
+			$u->plan = $p;
+		}
 		$respose = new stdClass;
 		if($u->save())
 		$respose->ok = true;
@@ -70,12 +75,18 @@ class UsersController extends ControllerRest
 	}
 	public function post(){
 		$u = new UserModel();
+		
 		if(isset($this->_POST["name"]))$u->name = $this->_POST["name"]; 
 		if(isset($this->_POST["username"]))$u->username = $this->_POST["username"]; 
 		if(isset($this->_POST["password"]))$u->password = $this->_POST["password"]; 
 		if(isset($this->_POST["email"]))$u->email = $this->_POST["email"]; 
 		if(isset($this->_POST["image"]))$u->image = $this->_POST["image"]; 
 		if(isset($this->_POST["titulo"]))$u->titulo = $this->_POST["titulo"]; 
+		$p = new PlanModel();
+		if(isset($this->_POST["plan"])){
+			$p->ID =  $this->_POST["plan"]; 
+			$u->plan = $p;
+		}
 		if(isset($this->_POST["tipo"])){
 			$t  = new TipoModel();
 			$t->ID = $this->_POST["tipo"];

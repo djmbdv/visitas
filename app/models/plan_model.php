@@ -49,7 +49,11 @@ class PlanModel extends Model
 	public static function presentation($n){
 		return $n->descripcion;
 	}
-
+	public static function search_descripcion($aa, $cantidad = 10){
+		$a = self::all($cantidad,null,true);
+		$k = array_map(function($a){return $a->no_class_values(); }, $a);
+		return json_encode($k);
+	}
 	public static function types_array(){ 
 		return 	array(
 		'descripcion' => "VARCHAR (150) NOT NULL",

@@ -21,6 +21,11 @@ class ApiController extends Controller{
 		$nombre = $_POST["s"] ?? "";
 		print_r(TipoModel::search_descripcion($nombre,12));
 	}
+	public function search_plans(){
+		header("Content-type:application/json");
+		$nombre = $_POST["s"] ?? "";
+		print_r(PlanModel::search_descripcion($nombre,12));
+	}
 	public function search_apartamentos(){
 		header("Content-type:application/json");
 		$nombre = $_POST["s"] ??  "";
