@@ -2,8 +2,8 @@
 require_once "core/Controller.php";
 require_once "core/Session.php";
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
-use PhpOffice\PhpSpreadsheet\Writer\Html;
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 /**
  * 
  */
@@ -79,47 +79,68 @@ class VisitasController extends ControllerRest
 
 		$edi =  EdificioModel::all_where_and($cc,null,true);
 	
+
+		// Set document properties
+		$spreadsheet->getProperties()->setCreator('Gestor de Visitas')
+			    ->setLastModifiedBy('RemotePCSolutions')
+			    ->setTitle('Reporte de Visitas')
+			    ->setSubject('Reporte de Visitas')
+			    ->setDescription('Reporte de Visitas XLSX.')
+			    ->setCategory('Test result file');
+
+		$spreadsheet->setActiveSheetIndex(0);
+		$build = 1;
 		foreach ($edi as $edificio) {
+			$spreadsheet->createSheet();
 			$linea = 1;
-			$myWorkSheet = new \PhpOffice\PhpSpreadsheet\Worksheet\Worksheet($spreadsheet,$edificio->nombre);
 			$condicion = $cc;
 			$condicion[] = ["edificio", "=","{$edificio->ID}"];
 			$apartamentos = ApartamentoModel::all_where_and($condicion,null,null, false);
 			//print_r($apartamentos);
-			$myWorkSheet->setCellValue('C'.$linea, "NOMBRE");
-			$myWorkSheet->setCellValue('B'.$linea, "IDENTIFICACIÓN");
-			$myWorkSheet->setCellValue('A'.$linea, "FECHA");
-			$myWorkSheet->setCellValue('D'.$linea, "DESeeTINO");
+			$spreadsheet->setActiveSheetIndex($build)
+
+			->setCellValue('C'.$linea, "NOMBRE")
+			->setCellValue('B'.$linea, "IDENTIFICACION")
+			->setCellValue('A'.$linea, "FECHA")
+			->setCellValue('D'.$linea, "DESTINO");
+			
 			$linea++;
+			
 			foreach($apartamentos as $apartamento) {
 				$cond = $condv;
 				$cond[] = ["destino","=","{$apartamento->ID}"];
 				$visitas = VisitaModel::all_where_and($cond,null,null,true);
 				//print_r($visitas);
 				foreach ($visitas as $visita) {
-					print_r($visita);
-/*
-						$myWorkSheet->setCellValue('C'.$linea, "NOMBRE");
-				$myWorkSheet->setCellValue('B'.$linea, "IDENTIFICACIÓN");
-				$myWorkSheet->setCellValue('A'.$linea, "FECHA");
-				$myWorkSheet->setCellValue('D'.$linea, "DESeeTINO");*/
-					//$visita->load();
-					$myWorkSheet->setCellValue('C'.$linea, $visita->nombre);
-					$myWorkSheet->setCellValue('B'.$linea, $visita->identificacion);
-					$myWorkSheet->setCellValue('A'.$linea, $visita->get_create_at());
-					$myWorkSheet->setCellValue('D'.$linea, $visita->destino->load()->nombre);
+					//print_r($myWorkSheet);
+					$spreadsheet->setActiveSheetIndex($build)
+					->setCellValue('C'.$linea, $visita->nombre)
+					->setCellValue('B'.$linea, "".$visita->identificacion)
+					->setCellValue('A'.$linea, "".$visita->get_create_at())
+					->setCellValue('D'.$linea,$visita->destino->load()->nombre);
 					$linea++;
 				}
 					
 			}
-			$spreadsheet->addSheet($myWorkSheet);
+            
+            $invalidCharacters = $spreadsheet->setActiveSheetIndex($build)->getInvalidCharacters();
+            $title = str_replace($invalidCharacters, '_', $edificio->load()->nombre);
+            $spreadsheet->getActiveSheet()->setTitle($title);
+			$build++;
+			
 		}
-
+		
 		$spreadsheet->removeSheetByIndex(0);
-		$writer = new Xlsx($spreadsheet);
-		$file  = "_static/reporte".uniqid().".xlsx";
-		$writer->save($file);
-		echo file_get_contents($file);
-		//unlink($file);
+		
+		$writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
+		header('Cache-Control: max-age=0');
+		header('Cache-Control: max-age=1');
+		header("Content-type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+		header('Content-disposition: attachment;filename="reporte.xlsx"');
+		header('Cache-Control: cache, must-revalidate'); // HTTP/1.1
+		header('Pragma: public'); // HTTP/1.0
+		$writer->save('php://output');
+
+
 	}
 }

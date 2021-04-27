@@ -100,4 +100,20 @@ class UsersController extends ControllerRest
 		header("Content-type:application/json");
 		print_r(json_encode($respose));
 	}
+	public function account(){
+		$user = UserModel::user_logged();
+		if(is_null($user)){
+			header('location: /login/');
+			return;
+		}
+		if(Session::g('control_visitas')){
+			header('location: /');
+			return;
+		}
+		$user = UserModel::user_logged();
+		$hv = new AccountView( array(
+			'user'=> $user
+		));
+		return $hv->render();
+	}
 }

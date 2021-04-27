@@ -17,6 +17,7 @@ class CampoTemplate extends Template{
     $autoload = $this->T("autoload") ?? false;
     $attributes = $this->T("attributes");
     $children = $this->T("children");
+    $valor = $this->T("value");
     ?>
     <div class="form-group <?=$autocomplete?'autocomplete':''?> <?= $add_class ?>">
      <?php if($label):?>
@@ -42,7 +43,7 @@ class CampoTemplate extends Template{
           <?php endforeach; ?>
           
           <?= $form_type == 'select' && $end_point?'end_point='.$end_point:''?>
-           autocomplete="off" <?= $readonly? "readonly":"" ?> autoload=<?= $autoload?"true":"false" ?>  <?= $readonly? "disabled":"" ?>  children=<?php if($children) foreach($children as $k => $c)echo (!$k)? $c:",$c" ?> >
+           autocomplete="off" <?= $readonly? "readonly":"" ?> autoload=<?= $autoload?"true":"false" ?>  <?= $readonly? "disabled":"" ?> <?= $valor ?'value='."'$valor'":''?> children=<?php if($children) foreach($children as $k => $c)echo (!$k)? $c:",$c" ?> >
           <?php  if($form_type == "select"):?>
           <option disabled="true" value="" selected="true" hidden="true"><?= $placeholder ?></option>
         <?php endif; ?>

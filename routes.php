@@ -34,6 +34,7 @@ $main_router->link("visita",$fc,"visita");
 	$dashboard_router->link("reporte", $vc, "reporte");
 	$dashboard_router->link("residentes", $hc);
 	$dashboard_router->link("usuarios", $uc);
+	$dashboard_router->link("account",$uc,"account");
 	$dashboard_router->link("apartamentos", $ac);
 	$dashboard_router->link("edificios", $ec);
 	$dashboard_router->link("administracion", $adc);

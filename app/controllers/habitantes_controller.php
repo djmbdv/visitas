@@ -22,10 +22,11 @@ class HabitantesController extends ControllerRest
 		$page = $this->get_param("page");
 		$page = $page?$page:1;
 		if(!$user->is_admin()){
-			$condicion = [[['cliente','=',$user->get_key()]]];	
+			$condicion = [[['cliente','=',$user->get_key()]]];
+			$condicion2 = [[["apartamentos.id","=","habitantes.apartamento"],['apartamentos.cliente',"=",$user->get_key()]],[["edificios.id","=","apartamentos.edificio"]]];	
 			$vars = array_filter(HabitanteModel::get_vars(),function($a){ return $a != 'cliente';});
-			$count = HabitanteModel::count($condicion);
-			$items = HabitanteModel::all_inner_join_and("apartamentos",$condicion,20,$page);
+			$count = HabitanteModel::count($condicion[0]);
+			$items = HabitanteModel::all_inner_join_and(["apartamentos"],$condicion2,20,$page);
 		}else{
 			$condicion = [[["apartamentos.id","=","habitantes.apartamento"]],[["edificios.id","=","apartamentos.edificio"]]];
 			$vars = HabitanteModel::get_vars();
