@@ -20,6 +20,22 @@ class VisitasTemplate extends Template{
 		 		'attributes'=>  array('s' => "" ),
 		  )
 		);
+$this->add_part("campoEdificio","campo",
+		 array('name' => "edificio" ,
+		 		'autocomplete' => false,
+		 		'placeholder'=> "Edificio",
+		 		'end_point'=> '/api/edificios/',
+		 		'autocomplete_att'=>'s',
+		 		'clase'=> 'edificio',
+		 		'add_class' => 'mt-auto col',
+		 		'form_type' => 'select',
+		 		'size'=>'sm',
+		 		'autoload'=>true,
+		 		'attributes'=>  array('s' => "" ),
+		 		'children' => ['inputApartamento'],
+		  )
+		);
+
 $this->add_part("campoApartamento","campo",
 		 array('name' => "apartamento" ,
 		 		'autocomplete' => false,
@@ -43,6 +59,7 @@ $this->add_part("campoApartamento","campo",
 		?>
 <?php $this->render_part("topbar"); ?>
 <div class="container">
+	<a class="btn " href=".."><i class="fa fa-arrow-left"></i> Menú </a>
 	<div class="row">
 	<h1 class="text-center">Visitas</h1>
 	<form class="form-row form-filter" >
@@ -52,6 +69,7 @@ $this->add_part("campoApartamento","campo",
 	<div class="form-group col "> 
 	<label class="small">Hasta</label> <input id="inputHasta" name="hasta" class="form-control form-control-sm" type="date" name="" value="<?= $this->filtros['hasta'] ?? '' ?>">
 	</div>
+	<?php $this->render_part("campoEdificio");?>
 			<?php $this->render_part("campoApartamento");?>
 			<!--?php $this->render_part("campoVisitado");?-->
 	<div class="form-group col-md-2  mt-auto "> 

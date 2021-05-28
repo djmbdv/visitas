@@ -22,6 +22,7 @@ class ApartamentosTemplate extends Template{
 		?>
 
 <div class="container">
+	<a class="btn " href=".."><i class="fa fa-arrow-left"></i> Menú </a>
 	<div class="row">
 	<h1 class="text-center"><?= $this->T('title') ?></h1>
 	<div class="col-md-3 col-sm-6">

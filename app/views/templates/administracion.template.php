@@ -18,6 +18,7 @@ class AdministracionTemplate extends Template{
 		?>
 <?php $this->render_part("topbar"); ?>
 <div class="container">
+	<a class="btn " href=".."><i class="fa fa-arrow-left"></i> Menú </a>
 	<div class="row">
 	<h1 class="text-center">Administración</h1>
 

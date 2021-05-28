@@ -20,8 +20,24 @@ class PlanModel extends Model
 		$plan->gracia = 0;
 		$plan->precio_edificio= 0;
 		$plan->precio_habitante = 0;
-		$plan->precio_apartamento = 3500;
+		$plan->precio_apartamento = 2500;
 		$plan->descripcion = "Plan Basico";
+		$plan->save();
+				$plan = new PlanModel();
+		$plan->iva = 0.19;
+		$plan->gracia = 0;
+		$plan->precio_edificio= 0;
+		$plan->precio_habitante = 0;
+		$plan->precio_apartamento = 2300;
+		$plan->descripcion = "Plan Standard";
+		$plan->save();
+				$plan = new PlanModel();
+		$plan->iva = 0.19;
+		$plan->gracia = 0;
+		$plan->precio_edificio= 0;
+		$plan->precio_habitante = 0;
+		$plan->precio_apartamento = 2000;
+		$plan->descripcion = "Plan Premium";
 		$plan->save();
 	}
 

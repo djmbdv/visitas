@@ -57,7 +57,7 @@ class EdificiosController extends ControllerRest
 			return;
 		}
 		$u = new EdificioModel();
-		if(isset($this->_POST["nombre"]))$u->nombre = $this->_POST["nombre"]; 
+		if(isset($this->_POST["nombre"])  && strlen($this->_POST["nombre"]) >= 1)$u->nombre = $this->_POST["nombre"]; 
 	//	if(isset($this->_POST["direccion"]))$u->direccion = $this->_POST["direccion"];
 		if(isset($this->_POST["cliente"]) && $user->is_admin()){
 			$a  = new UserModel();

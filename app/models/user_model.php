@@ -22,7 +22,7 @@ class UserModel extends Model{
 		'password' => "VARCHAR( 80 ) NOT NULL",
 		'email' => 'varchar ( 100 ) NOT NULL',
 		'tipo' => 'INT( 9)  NOT NULL',
-		'plan' => 'INT( 9)  NOT NULL',
+		'plan' => 'INT( 9) ',
 		'image'=>	'MEDIUMBLOB ',
 		'titulo'=> 'VARCHAR (200) '
  		);

@@ -26,7 +26,7 @@ class HabitantesController extends ControllerRest
 			$condicion2 = [[["apartamentos.id","=","habitantes.apartamento"],['apartamentos.cliente',"=",$user->get_key()]],[["edificios.id","=","apartamentos.edificio"]]];	
 			$vars = array_filter(HabitanteModel::get_vars(),function($a){ return $a != 'cliente';});
 			$count = HabitanteModel::count($condicion[0]);
-			$items = HabitanteModel::all_inner_join_and(["apartamentos"],$condicion2,20,$page);
+			$items = HabitanteModel::all_inner_join_and(["apartamentos","edificios"],$condicion2,20,$page,false, "edificios.nombre");
 		}else{
 			$condicion = [[["apartamentos.id","=","habitantes.apartamento"]],[["edificios.id","=","apartamentos.edificio"]]];
 			$vars = HabitanteModel::get_vars();

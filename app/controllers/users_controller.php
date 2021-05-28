@@ -78,7 +78,7 @@ class UsersController extends ControllerRest
 		
 		if(isset($this->_POST["name"]))$u->name = $this->_POST["name"]; 
 		if(isset($this->_POST["username"]))$u->username = $this->_POST["username"]; 
-		if(isset($this->_POST["password"]))$u->password = $this->_POST["password"]; 
+		if(isset($this->_POST["password"] ) && strlen($this->_POST["password"] >= 4) )$u->password = $this->_POST["password"]; 
 		if(isset($this->_POST["email"]))$u->email = $this->_POST["email"]; 
 		if(isset($this->_POST["image"]))$u->image = $this->_POST["image"]; 
 		if(isset($this->_POST["titulo"]))$u->titulo = $this->_POST["titulo"]; 
