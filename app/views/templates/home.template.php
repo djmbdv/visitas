@@ -2,11 +2,13 @@
 class HomeTemplate extends Template{
 
 	function config(){
-		$this->set_parent("layout");	
+		$this->set_parent("layout");
+		$this->add_part("pin","pin");
 	}
 
 	function render(){
 		/*
+
 */	$this->add_part("campoVisitado","campo",
 		 array('name' => "visitado" ,
 		 		'autocomplete' => false,
@@ -52,10 +54,12 @@ $this->add_part("campoEdificio","campo",
 		  )
 		);
 
-
+	$this->render_part("pin");
 		?>
+
 <div class="fullscreen bg-white">
 <a class="btn btn-sm" href="/logout/"><i class="fa fa-sign-out fa-sm fa-fw mr-2 text-gray-400"></i></a>
+<a class="btn btn-sm btn-pin-modal" href="#"><i class="fa fa-cog fa-sm fa-fw mr-2 text-gray-400"></i></a>
 <div class="container">
 <h1 class="text-center  mt-3 mb-2">Control de Visitas</h1>
 <div class="row" style="border-top: solid 1px  #007bff;">

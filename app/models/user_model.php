@@ -15,6 +15,7 @@ class UserModel extends Model{
 	protected PlanModel $plan;
 	protected $image;
 	protected $titulo;
+	protected $pin;
 	public static function types_array(){ 
 		return 	array(
 		'username' => "VARCHAR( 80 ) NOT NULL UNIQUE",
@@ -24,7 +25,8 @@ class UserModel extends Model{
 		'tipo' => 'INT( 9)  NOT NULL',
 		'plan' => 'INT( 9) ',
 		'image'=>	'MEDIUMBLOB ',
-		'titulo'=> 'VARCHAR (200) '
+		'titulo'=> 'VARCHAR (200) ',
+		'pin' => 'VARCHAR (200)'
  		);
 	}
 	public static function form_types_array(){
@@ -57,17 +59,19 @@ class UserModel extends Model{
 		$client->name = 'Cliente de Prueba';
 		$client->password =md5( '1234');
 		$client->email = "client@ejemplo.com";
-		$client->titulo = "complejo de prueba";
+		$client->titulo = "Complejo de prueba";
 		$client->tipo = $tipos[1];
+		$client->pin = "1234";
 		$client->plan = PlanModel::all()[0];
 		$client->save();
 		$client  = new UserModel();
-		$client->username = 'admin';
-		$client->name = 'Admin de Prueba';
-		$client->password =md5( '1234');
-		$client->titulo = "complejo de prueba";
-		$client->email = "admin@ejemplo.com";
+		$client->username = 'fabian';
+		$client->name = 'Fabian Espejo';
+		$client->password =md5( 'fabianjose');
+		$client->titulo = "Complejo de prueba";
+		$client->email = "fabian@remotepcsolutions.com";
 		$client->tipo = $tipos[0];
+		$client->pin = "1234";
 		$client->save();
 		//exit();
 	}

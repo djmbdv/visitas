@@ -158,7 +158,9 @@ $(".btn-view").click(e=>{
 			$('#viewModal').modal('show');
 		})
 })
-
+$(".btn-pin-modal").click(e=>{
+	$("#pinModal").modal("show")
+})
 $(".btn-edit").click(e=>{
 	var a = $(e.currentTarget).data();
 //	console.log(a);
@@ -284,21 +286,11 @@ $(".image-table").click(e=>{
 	$("#imageTable").attr("src",e.currentTarget.src)
 	$("#imageModal").modal("show")
 })
-$(document).ready(e=>{
-	o = get_params()
-	Object.entries(o).forEach(e=>{
-		if(e[0] != '')
-		$("input[name="+e[0]+"]").val(e[1])
-			console.log(e)
-	})
 
-})
 $("select").change(e=> {
 	sel = e.currentTarget
 	a = sel.getAttribute("children");
 	if(!a.forEach)a = [a];
-	//for(i = 1; i < sel.children.length; i++)sel.removeChild(sel.children[1]);
-//	sel.disabled = true;
 	a.forEach(b => {
 		if(b=="")return;
 		$('#'+b).data(e.currentTarget.getAttribute("name"), e.currentTarget.value)

@@ -29,6 +29,13 @@ class RegistroController extends Controller
 		return $rv->render();
 	}
 
+
+	function access(){
+		Session::load();
+		$user = UserModel::user_logged();
+		if(isset($this->_POST["pin"])){}
+	}
+
 	function menu(){
 		Session::load();
 		$user = UserModel::user_logged();
