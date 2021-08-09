@@ -9,10 +9,8 @@ require_once "core/Session.php";
  */
 class ApartamentosController extends ControllerRest
 {
-
 	public function get()
 	{
-
 		$user = UserModel::user_logged();
 		if(is_null($user)){
 			header('location: /login/');
@@ -24,7 +22,7 @@ class ApartamentosController extends ControllerRest
 		}
 		$page = $this->get_param("page");
 		$page = $page?$page:1;	
-//		var_dump(EdificioModel::all());
+
 		if(!$user->is_admin()){
 			$condicion = [['cliente','=',$user->get_key()]];	
 			$vars = array_filter(ApartamentoModel::get_vars(),function($a){ return $a != 'cliente';});
@@ -75,11 +73,6 @@ class ApartamentosController extends ControllerRest
 			$a->ID = $this->_PUT["edificio"];
 			$u->edificio = $a;
 		}
-	/*	if(isset($this->_PUT["propietario"])){
-			$a  = new HabitanteModel();
-			$a->ID = $this->_PUT["propietario"];
-			$u->propietario = $a;
-		}*/
 		if(isset($this->_PUT["cliente"]) && $user->is_admin()){
 			$a  = new UserModel();
 			$a->ID = $this->_PUT["cliente"];
@@ -95,6 +88,15 @@ class ApartamentosController extends ControllerRest
 		header("Content-type:application/json");
 		print_r(json_encode($respose));
 	}
+
+
+	public function crear_apartamentos(){
+		$user = UserModel::user_logged();
+		$data = ['user'=> $user];
+		$amv = new ApartamentosmenuView($data);
+		$amv->render();
+	}
+
 	public function post(){
 		$error = false;
 		$user = UserModel::user_logged();

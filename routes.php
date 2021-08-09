@@ -36,6 +36,8 @@ $main_router->link("visita",$fc,"visita");
 	$dashboard_router->link("usuarios", $uc);
 	$dashboard_router->link("account",$uc,"account");
 	$dashboard_router->link("apartamentos", $ac);
+	$dashboard_router->link("apartamentos/edificio", $ac);
+	$dashboard_router->link("crearApartamentos",$ac,"crear_apartamentos");
 	$dashboard_router->link("edificios", $ec);
 	$dashboard_router->link("administracion", $adc);
 	$api_router = new Router();

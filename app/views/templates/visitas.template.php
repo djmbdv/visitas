@@ -71,7 +71,6 @@ $this->add_part("campoApartamento","campo",
 	</div>
 	<?php $this->render_part("campoEdificio");?>
 			<?php $this->render_part("campoApartamento");?>
-			<!--?php $this->render_part("campoVisitado");?-->
 	<div class="form-group col-md-2  mt-auto "> 
 		<button class="btn btn-warning" type="submit" ><i class="fa fa-filter"></i> Filtrar</button>
 	</div>
