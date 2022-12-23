@@ -10,7 +10,7 @@ class DB{
 		$dbname = Config::$dbname;
 		$servername = Config::$servername;
 		$password = Config::$password;
-		if(is_null(self::$conn))self::$conn =  new PDO("mysql:host=$servername;dbname=$dbname;charset=utf8mb4", $username, $password);
+		if(is_null(self::$conn))self::$conn =  new PDO("mysql:host=$servername;port=3306;dbname=$dbname;charset=utf8mb4", $username, $password);
 		self::$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		return self::$conn;
 	}
